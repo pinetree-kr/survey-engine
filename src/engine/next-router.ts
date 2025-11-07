@@ -6,7 +6,7 @@ import type { AnswersMap } from "./visibility";
  * 우선순위:
  * 1. 현재 질문의 nextQuestionId (최우선)
  * 2. 답변에 따른 분기 (옵션/컴포지트의 nextQuestionId)
- * 3. branch_logic 평가
+ * 3. branchLogic 평가
  * 4. 선형 다음 질문 또는 완료
  */
 export function getNextQuestionId(
@@ -25,7 +25,7 @@ export function getNextQuestionId(
     return answerBasedNext;
   }
 
-  // 3. branch_logic 평가
+  // 3. branchLogic 평가
   const branchBasedNext = getBranchBasedNext(currentQuestion, answers);
   if (branchBasedNext) {
     return branchBasedNext;
@@ -131,18 +131,18 @@ function getCompositeNext(
 }
 
 /**
- * branch_logic 기반 다음 질문 결정 (AND 평가, 첫 매칭)
+ * branchLogic 기반 다음 질문 결정 (AND 평가, 첫 매칭)
  */
 function getBranchBasedNext(
   question: Question,
   answers: AnswersMap
 ): string | null {
-  if (!question.branch_logic || question.branch_logic.length === 0) {
+  if (!question.branchLogic || question.branchLogic.length === 0) {
     return null;
   }
 
   // 배열 순서대로 평가
-  for (const rule of question.branch_logic) {
+  for (const rule of question.branchLogic) {
     // AND 평가: 모든 조건이 충족되어야 함
     const allConditionsMet = rule.conditions.every((condition) =>
       evaluateBranchCondition(condition, answers)
@@ -165,8 +165,8 @@ function evaluateBranchCondition(
 ): boolean {
   const answerValue = getAnswerValue(
     answers,
-    condition.question_id,
-    condition.sub_key
+    condition.questionId,
+    condition.subKey
   );
 
   if (answerValue === undefined) {
@@ -177,7 +177,7 @@ function evaluateBranchCondition(
 }
 
 /**
- * 답변 값 가져오기 (sub_key 지원)
+ * 답변 값 가져오기 (subKey 지원)
  */
 function getAnswerValue(
   answers: AnswersMap,
@@ -190,7 +190,7 @@ function getAnswerValue(
     return undefined;
   }
 
-  // sub_key가 있으면 객체에서 추출
+  // subKey가 있으면 객체에서 추출
   if (
     subKey &&
     typeof answer === "object" &&

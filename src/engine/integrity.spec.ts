@@ -20,7 +20,7 @@ describe("integrity", () => {
 
       const result = validateSurvey(questions);
       expect(result.ok).toBe(false);
-      expect(result.errors.some((e) => e.code === "DUPLICATE_QUESTION_ID")).toBe(
+      expect(result.errors.some((e) => e.code === "DUPLICATE_questionId")).toBe(
         true
       );
     });
@@ -79,12 +79,12 @@ describe("integrity", () => {
       expect(result.ok).toBe(false);
       expect(
         result.errors.some(
-          (e) => e.code === "INVALID_NEXT_QUESTION_ID"
+          (e) => e.code === "INVALID_NEXT_questionId"
         )
       ).toBe(true);
     });
 
-    it("존재하지 않는 branch_logic 참조를 검출해야 함", () => {
+    it("존재하지 않는 branchLogic 참조를 검출해야 함", () => {
       const questions: Question[] = [
         {
           id: "q1",
@@ -95,11 +95,11 @@ describe("integrity", () => {
           id: "q2",
           title: "질문 2",
           type: "short_text",
-          branch_logic: [
+          branchLogic: [
             {
               conditions: [
                 {
-                  question_id: "q999",
+                  questionId: "q999",
                   operator: "eq",
                   value: "test",
                 },
@@ -114,7 +114,7 @@ describe("integrity", () => {
       expect(result.ok).toBe(false);
       expect(
         result.errors.some(
-          (e) => e.code === "INVALID_BRANCH_CONDITION_QUESTION_ID"
+          (e) => e.code === "INVALID_BRANCH_CONDITION_questionId"
         )
       ).toBe(true);
     });

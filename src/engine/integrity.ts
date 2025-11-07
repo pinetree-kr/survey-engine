@@ -52,7 +52,7 @@ function validateUniqueness(questions: Question[]): ValidationError[] {
   for (const q of questions) {
     if (questionIds.has(q.id)) {
       errors.push({
-        code: "DUPLICATE_QUESTION_ID",
+        code: "DUPLICATE_questionId",
         message: `중복된 질문 ID: ${q.id}`,
         meta: { questionId: q.id },
       });
@@ -108,7 +108,7 @@ function validateReferences(questions: Question[]): ValidationError[] {
     // nextQuestionId 검사
     if (q.nextQuestionId && !questionIds.has(q.nextQuestionId)) {
       errors.push({
-        code: "INVALID_NEXT_QUESTION_ID",
+        code: "INVALID_NEXT_questionId",
         message: `질문 ${q.id}의 nextQuestionId가 존재하지 않음: ${q.nextQuestionId}`,
         meta: { questionId: q.id, nextQuestionId: q.nextQuestionId },
       });
@@ -119,7 +119,7 @@ function validateReferences(questions: Question[]): ValidationError[] {
       for (const opt of q.options) {
         if (opt.nextQuestionId && !questionIds.has(opt.nextQuestionId)) {
           errors.push({
-            code: "INVALID_OPTION_NEXT_QUESTION_ID",
+            code: "INVALID_OPTION_NEXT_questionId",
             message: `질문 ${q.id}의 옵션 ${opt.key}의 nextQuestionId가 존재하지 않음: ${opt.nextQuestionId}`,
             meta: {
               questionId: q.id,
@@ -136,7 +136,7 @@ function validateReferences(questions: Question[]): ValidationError[] {
       for (const item of q.compositeItems) {
         if (item.nextQuestionId && !questionIds.has(item.nextQuestionId)) {
           errors.push({
-            code: "INVALID_COMPOSITE_NEXT_QUESTION_ID",
+            code: "INVALID_COMPOSITE_NEXT_questionId",
             message: `질문 ${q.id}의 컴포지트 ${item.key}의 nextQuestionId가 존재하지 않음: ${item.nextQuestionId}`,
             meta: {
               questionId: q.id,
@@ -148,13 +148,13 @@ function validateReferences(questions: Question[]): ValidationError[] {
       }
     }
 
-    // branch_logic의 nextQuestionId 및 question_id 검사
-    if (q.branch_logic) {
-      for (const rule of q.branch_logic) {
+    // branchLogic의 nextQuestionId 및 questionId 검사
+    if (q.branchLogic) {
+      for (const rule of q.branchLogic) {
         if (!questionIds.has(rule.nextQuestionId)) {
           errors.push({
-            code: "INVALID_BRANCH_NEXT_QUESTION_ID",
-            message: `질문 ${q.id}의 branch_logic의 nextQuestionId가 존재하지 않음: ${rule.nextQuestionId}`,
+            code: "INVALID_BRANCH_NEXT_questionId",
+            message: `질문 ${q.id}의 branchLogic의 nextQuestionId가 존재하지 않음: ${rule.nextQuestionId}`,
             meta: {
               questionId: q.id,
               nextQuestionId: rule.nextQuestionId,
@@ -162,13 +162,13 @@ function validateReferences(questions: Question[]): ValidationError[] {
           });
         }
         for (const cond of rule.conditions) {
-          if (!questionIds.has(cond.question_id)) {
+          if (!questionIds.has(cond.questionId)) {
             errors.push({
-              code: "INVALID_BRANCH_CONDITION_QUESTION_ID",
-              message: `질문 ${q.id}의 branch_logic 조건의 question_id가 존재하지 않음: ${cond.question_id}`,
+              code: "INVALID_BRANCH_CONDITION_questionId",
+              message: `질문 ${q.id}의 branchLogic 조건의 questionId가 존재하지 않음: ${cond.questionId}`,
               meta: {
                 questionId: q.id,
-                conditionQuestionId: cond.question_id,
+                conditionQuestionId: cond.questionId,
               },
             });
           }
@@ -176,16 +176,16 @@ function validateReferences(questions: Question[]): ValidationError[] {
       }
     }
 
-    // show_conditions의 question_id 검사
-    if (q.show_conditions) {
-      for (const cond of q.show_conditions) {
-        if (!questionIds.has(cond.question_id)) {
+    // showConditions의 questionId 검사
+    if (q.showConditions) {
+      for (const cond of q.showConditions) {
+        if (!questionIds.has(cond.questionId)) {
           errors.push({
-            code: "INVALID_SHOW_CONDITION_QUESTION_ID",
-            message: `질문 ${q.id}의 show_conditions의 question_id가 존재하지 않음: ${cond.question_id}`,
+            code: "INVALID_SHOW_CONDITION_questionId",
+            message: `질문 ${q.id}의 showConditions의 questionId가 존재하지 않음: ${cond.questionId}`,
             meta: {
               questionId: q.id,
-              conditionQuestionId: cond.question_id,
+              conditionQuestionId: cond.questionId,
             },
           });
         }
@@ -245,9 +245,9 @@ function validateReachability(questions: Question[]): ValidationError[] {
       }
     }
 
-    // branch_logic의 nextQuestionId
-    if (question.branch_logic) {
-      for (const rule of question.branch_logic) {
+    // branchLogic의 nextQuestionId
+    if (question.branchLogic) {
+      for (const rule of question.branchLogic) {
         dfs(rule.nextQuestionId);
       }
     }
@@ -318,9 +318,9 @@ function validateCycles(questions: Question[]): ValidationError[] {
         }
       }
 
-      // branch_logic의 nextQuestionId
-      if (question.branch_logic) {
-        for (const rule of question.branch_logic) {
+      // branchLogic의 nextQuestionId
+      if (question.branchLogic) {
+        for (const rule of question.branchLogic) {
           if (hasCycle(rule.nextQuestionId)) {
             return true;
           }

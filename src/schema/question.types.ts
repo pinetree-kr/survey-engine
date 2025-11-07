@@ -48,8 +48,8 @@ export type CompositeItem = {
 };
 
 export type BranchCondition = {
-  question_id: string;
-  sub_key?: string;
+  questionId: string;
+  subKey?: string;
   operator: Operator;
   value: string | number | boolean;
 };
@@ -79,8 +79,8 @@ export type Question = {
     maxLength?: number;
     minLength?: number;
   };
-  branch_logic?: BranchRule[]; // default []
-  show_conditions?: ShowCondition[]; // default []
+  branchLogic?: BranchRule[]; // default []
+  showConditions?: ShowCondition[]; // default []
   nextQuestionId?: string; // highest priority
 };
 

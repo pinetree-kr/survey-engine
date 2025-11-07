@@ -21,14 +21,14 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        show_conditions: [
+        showConditions: [
           {
-            question_id: "q1",
+            questionId: "q1",
             operator: "eq",
             value: "value1",
           },
           {
-            question_id: "q1",
+            questionId: "q1",
             operator: "eq",
             value: "value2",
           },
@@ -44,14 +44,14 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        show_conditions: [
+        showConditions: [
           {
-            question_id: "q1",
+            questionId: "q1",
             operator: "eq",
             value: "value1",
           },
           {
-            question_id: "q1",
+            questionId: "q1",
             operator: "eq",
             value: "value2",
           },
@@ -67,9 +67,9 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        show_conditions: [
+        showConditions: [
           {
-            question_id: "q1",
+            questionId: "q1",
             operator: "eq",
             value: "test",
           },
@@ -88,9 +88,9 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        show_conditions: [
+        showConditions: [
           {
-            question_id: "q1",
+            questionId: "q1",
             operator: "neq",
             value: "test",
           },
@@ -109,9 +109,9 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        show_conditions: [
+        showConditions: [
           {
-            question_id: "q1",
+            questionId: "q1",
             operator: "contains",
             value: "test",
           },
@@ -130,9 +130,9 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        show_conditions: [
+        showConditions: [
           {
-            question_id: "q1",
+            questionId: "q1",
             operator: "gt",
             value: 10,
           },
@@ -146,15 +146,15 @@ describe("visibility", () => {
       expect(evaluateShowConditions(question, answers2)).toBe(false);
     });
 
-    it("sub_key를 사용하여 컴포지트 값에 접근해야 함", () => {
+    it("subKey를 사용하여 컴포지트 값에 접근해야 함", () => {
       const question: Question = {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        show_conditions: [
+        showConditions: [
           {
-            question_id: "q1",
-            sub_key: "email",
+            questionId: "q1",
+            subKey: "email",
             operator: "neq",
             value: "",
           },
@@ -179,9 +179,9 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        show_conditions: [
+        showConditions: [
           {
-            question_id: "q1",
+            questionId: "q1",
             operator: "eq",
             value: "test",
           },

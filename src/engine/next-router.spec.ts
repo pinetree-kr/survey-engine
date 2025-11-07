@@ -136,7 +136,7 @@ describe("next-router", () => {
       expect(nextId).toBe("q2");
     });
 
-    it("branch_logic에서 AND 평가 후 첫 매칭 rule의 nextQuestionId를 반환해야 함", () => {
+    it("branchLogic에서 AND 평가 후 첫 매칭 rule의 nextQuestionId를 반환해야 함", () => {
       const questions: Question[] = [
         {
           id: "q1",
@@ -151,16 +151,16 @@ describe("next-router", () => {
             { label: "옵션 1", key: "opt1" },
             { label: "옵션 2", key: "opt2" },
           ],
-          branch_logic: [
+          branchLogic: [
             {
               conditions: [
                 {
-                  question_id: "q1",
+                  questionId: "q1",
                   operator: "eq",
                   value: "test",
                 },
                 {
-                  question_id: "q2",
+                  questionId: "q2",
                   operator: "eq",
                   value: "opt1",
                 },
@@ -170,7 +170,7 @@ describe("next-router", () => {
             {
               conditions: [
                 {
-                  question_id: "q1",
+                  questionId: "q1",
                   operator: "eq",
                   value: "test",
                 },

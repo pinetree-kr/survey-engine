@@ -9,13 +9,13 @@ export type AnswersMap = Map<
 >;
 
 /**
- * show_conditions 평가: OR 결합 (조건 중 하나라도 충족하면 true)
+ * showConditions 평가: OR 결합 (조건 중 하나라도 충족하면 true)
  */
 export function evaluateShowConditions(
   question: Question,
   answers: AnswersMap
 ): boolean {
-  const conditions = question.show_conditions || [];
+  const conditions = question.showConditions || [];
   
   // 조건이 없으면 항상 표시
   if (conditions.length === 0) {
@@ -35,7 +35,7 @@ function evaluateCondition(
   condition: ShowCondition,
   answers: AnswersMap
 ): boolean {
-  const answerValue = getAnswerValue(answers, condition.question_id, condition.sub_key);
+  const answerValue = getAnswerValue(answers, condition.questionId, condition.subKey);
   
   if (answerValue === undefined) {
     return false;
@@ -45,7 +45,7 @@ function evaluateCondition(
 }
 
 /**
- * 답변 값 가져오기 (sub_key 지원)
+ * 답변 값 가져오기 (subKey 지원)
  */
 function getAnswerValue(
   answers: AnswersMap,
@@ -58,7 +58,7 @@ function getAnswerValue(
     return undefined;
   }
 
-  // sub_key가 있으면 객체에서 추출
+  // subKey가 있으면 객체에서 추출
   if (subKey && typeof answer === "object" && answer !== null && !Array.isArray(answer)) {
     return (answer as Record<string, unknown>)[subKey];
   }

@@ -57,8 +57,8 @@ export const CompositeItemSchema = z.object({
 
 // 분기 조건 스키마
 export const BranchConditionSchema = z.object({
-  question_id: z.string().min(1),
-  sub_key: z.string().optional(),
+  questionId: z.string().min(1),
+  subKey: z.string().optional(),
   operator: OperatorSchema,
   value: z.union([z.string(), z.number(), z.boolean()]),
 });
@@ -102,8 +102,8 @@ export const QuestionSchema = z.object({
       minLength: z.number().positive().optional(),
     })
     .optional(),
-  branch_logic: z.array(BranchRuleSchema).optional().default([]),
-  show_conditions: z.array(ShowConditionSchema).optional().default([]),
+  branchLogic: z.array(BranchRuleSchema).optional().default([]),
+  showConditions: z.array(ShowConditionSchema).optional().default([]),
   nextQuestionId: z.string().optional(),
 });
 

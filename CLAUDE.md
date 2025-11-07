@@ -61,8 +61,8 @@ survey-engine/
 - **nextQuestionId**: 최우선 분기 (질문 레벨)
 - **옵션별 분기**: 선택지의 `nextQuestionId`
 - **컴포지트 분기**: 입력 항목의 `nextQuestionId`
-- **branch_logic**: 복잡한 조건 기반 분기 (AND 평가)
-- **show_conditions**: 조건부 표시 (OR 평가)
+- **branchLogic**: 복잡한 조건 기반 분기 (AND 평가)
+- **showConditions**: 조건부 표시 (OR 평가)
 
 ### 3. 정적 무결성 검사
 
@@ -153,12 +153,12 @@ npm run test:watch
 **우선순위**:
 1. 현재 질문의 `nextQuestionId` (최우선)
 2. 답변 기반 분기 (옵션/컴포지트)
-3. `branch_logic` 평가
+3. `branchLogic` 평가
 4. 선형 다음 질문 또는 완료
 
 ### `evaluateShowConditions(question, answers): boolean`
 
-질문의 표시 조건을 평가합니다. `show_conditions`는 OR 결합으로 평가됩니다.
+질문의 표시 조건을 평가합니다. `showConditions`는 OR 결합으로 평가됩니다.
 
 ### `validateAnswer(question, value): ValidationResult`
 
@@ -184,11 +184,11 @@ const question: Question = {
       key: "opt2"
     }
   ],
-  branch_logic: [
+  branchLogic: [
     {
       conditions: [
         {
-          question_id: "q0",
+          questionId: "q0",
           operator: "eq",
           value: "yes"
         }
@@ -196,9 +196,9 @@ const question: Question = {
       nextQuestionId: "q3"
     }
   ],
-  show_conditions: [
+  showConditions: [
     {
-      question_id: "q0",
+      questionId: "q0",
       operator: "neq",
       value: ""
     }
@@ -213,16 +213,16 @@ const question: Question = {
    - `single_choice`/`dropdown`: 선택된 옵션의 `nextQuestionId`
    - `multiple_choice`: 선택된 키 배열에서 첫 매칭 옵션의 `nextQuestionId`
    - `composite_*`: 정의 순서대로 첫 매칭 항목의 `nextQuestionId`
-3. **`branch_logic`**: 배열 순서대로 AND 평가, 첫 매칭 rule의 `nextQuestionId`
+3. **`branchLogic`**: 배열 순서대로 AND 평가, 첫 매칭 rule의 `nextQuestionId`
 4. **선형 다음 질문**: 위 조건이 모두 없으면 배열의 다음 질문
 
-## 표시 조건 (`show_conditions`)
+## 표시 조건 (`showConditions`)
 
 - OR 결합: 조건 중 하나라도 충족하면 표시
-- `sub_key`를 사용하여 컴포지트/옵션의 서브 값 참조 가능
+- `subKey`를 사용하여 컴포지트/옵션의 서브 값 참조 가능
 - 연산자: `eq`, `neq`, `contains`, `gt`, `lt`, `gte`, `lte`
 
-## 분기 규칙 (`branch_logic`)
+## 분기 규칙 (`branchLogic`)
 
 - 각 rule 내 조건들은 AND 결합
 - 배열 순서대로 평가, 첫 매칭 rule의 `nextQuestionId` 사용

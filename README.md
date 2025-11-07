@@ -96,7 +96,7 @@ if (!result.ok) {
 
 #### `evaluateShowConditions(question: Question, answers: AnswersMap): boolean`
 
-질문의 표시 조건을 평가합니다. `show_conditions`는 OR 결합으로 평가됩니다.
+질문의 표시 조건을 평가합니다. `showConditions`는 OR 결합으로 평가됩니다.
 
 ```typescript
 const shouldShow = evaluateShowConditions(question, answers);
@@ -108,7 +108,7 @@ const shouldShow = evaluateShowConditions(question, answers);
 
 1. 현재 질문의 `nextQuestionId` (최우선)
 2. 답변 기반 분기 (옵션/컴포지트의 `nextQuestionId`)
-3. `branch_logic` 평가
+3. `branchLogic` 평가
 4. 선형 다음 질문 또는 완료 (`null`)
 
 ```typescript
@@ -172,8 +172,8 @@ type Question = {
     maxLength?: number;
     minLength?: number;
   };
-  branch_logic?: BranchRule[];
-  show_conditions?: ShowCondition[];
+  branchLogic?: BranchRule[];
+  showConditions?: ShowCondition[];
   nextQuestionId?: string;
 };
 ```
@@ -185,8 +185,8 @@ type Question = {
 - 단일 선택 + 옵션별 분기
 - 다중 선택 + minSelect/maxSelect
 - 컴포지트 입력 (이름/이메일/전화번호)
-- `show_conditions`로 표시 제어
-- `branch_logic`로 분기
+- `showConditions`로 표시 제어
+- `branchLogic`로 분기
 - `nextQuestionId` 강제 연결
 
 ## Design Notes
@@ -198,15 +198,15 @@ type Question = {
    - `single_choice`/`dropdown`: 선택된 옵션의 `nextQuestionId`
    - `multiple_choice`: 선택된 키 배열에서 첫 매칭 옵션의 `nextQuestionId`
    - `composite_*`: 정의 순서대로 첫 매칭 항목의 `nextQuestionId`
-3. **`branch_logic`**: 배열 순서대로 AND 평가, 첫 매칭 rule의 `nextQuestionId`
+3. **`branchLogic`**: 배열 순서대로 AND 평가, 첫 매칭 rule의 `nextQuestionId`
 4. **선형 다음 질문**: 위 조건이 모두 없으면 배열의 다음 질문
 
-### 표시 조건 (`show_conditions`)
+### 표시 조건 (`showConditions`)
 
 - OR 결합: 조건 중 하나라도 충족하면 표시
-- `sub_key`를 사용하여 컴포지트/옵션의 서브 값 참조 가능
+- `subKey`를 사용하여 컴포지트/옵션의 서브 값 참조 가능
 
-### 분기 규칙 (`branch_logic`)
+### 분기 규칙 (`branchLogic`)
 
 - 각 rule 내 조건들은 AND 결합
 - 배열 순서대로 평가, 첫 매칭 rule의 `nextQuestionId` 사용

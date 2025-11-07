@@ -141,10 +141,10 @@
     "description": "이 설문의 만족도를 평가해주세요.",
     "type": "single_choice",
     "required": true,
-    "show_conditions": [
+    "showConditions": [
       {
-        "question_id": "q6",
-        "sub_key": "email",
+        "questionId": "q6",
+        "subKey": "email",
         "operator": "neq",
         "value": ""
       }
@@ -176,11 +176,11 @@
     "validations": {
       "maxLength": 500
     },
-    "branch_logic": [
+    "branchLogic": [
       {
         "conditions": [
           {
-            "question_id": "q7",
+            "questionId": "q7",
             "operator": "eq",
             "value": "satisfaction_very"
           }
@@ -190,7 +190,7 @@
       {
         "conditions": [
           {
-            "question_id": "q7",
+            "questionId": "q7",
             "operator": "eq",
             "value": "satisfaction_good"
           }
