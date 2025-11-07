@@ -1,33 +1,16 @@
-export type QuestionType = 
-  | 'short-text'
-  | 'long-text'
-  | 'single-choice'
-  | 'multiple-choice'
-  | 'dropdown'
-  | 'composite-input'
-  | 'description';
+import { Question } from '@/schema/question.types';
 
-export interface Question {
-  id: string;
-  type: QuestionType;
-  title: string;
-  description?: string;
-  required: boolean;
-  hasOther?: boolean;
-  options?: string[];
-  validation?: string;
-  branchLogic?: {
-    questionId: string;
-    condition: string;
-  }[];
-  showConditions?: string;
-  design?: {
-    imageUrl?: string;
-    themeColor?: string;
-    backgroundStyle?: string;
-  };
-}
+// 새로운 스키마 타입을 재사용
+export type {
+  QuestionType,
+  Question,
+  BranchRule,
+  Condition,
+  Option,
+  Operator,
+} from '@/schema/question.types';
 
+// UI 빌더용 호환 타입 (기존 코드와의 호환성 유지)
 export interface Survey {
   title: string;
   questions: Question[];

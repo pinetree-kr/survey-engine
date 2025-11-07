@@ -13,10 +13,15 @@ export const OperatorSchema = z.enum([
   "eq",
   "neq",
   "contains",
+  "contains_any",
+  "contains_all",
   "gt",
   "lt",
   "gte",
   "lte",
+  "regex",
+  "is_empty",
+  "not_empty",
 ]);
 
 // 옵션 스키마
@@ -35,6 +40,32 @@ export const OptionSchema = z.object({
     .optional(),
 });
 
+// 조건 스키마 (재귀적 구조)
+export const ConditionSchema: z.ZodType<any> = z.lazy(() =>
+  z.union([SingleConditionSchema, ConditionGroupSchema])
+);
+
+const SingleConditionSchema: z.ZodType<any> = z.object({
+  kind: z.literal("condition"),
+  question_id: z.string().min(1),
+  sub_key: z.string().optional(),
+  operator: OperatorSchema,
+  value: z
+    .union([
+      z.string(),
+      z.number(),
+      z.boolean(),
+      z.array(z.union([z.string(), z.number()])),
+    ])
+    .optional(),
+});
+
+const ConditionGroupSchema: z.ZodType<any> = z.object({
+  kind: z.literal("group"),
+  aggregator: z.enum(["AND", "OR"]),
+  children: z.array(ConditionSchema),
+});
+
 // 컴포지트 아이템 스키마
 export const CompositeItemSchema = z.object({
   label: z.string().min(1),
@@ -44,6 +75,7 @@ export const CompositeItemSchema = z.object({
   key: z.string().min(1),
   required: z.boolean().optional(),
   nextQuestionId: z.string().optional(),
+  show_conditions: ConditionSchema.optional(),
   validations: z
     .object({
       regex: z.string().optional(),
@@ -55,22 +87,14 @@ export const CompositeItemSchema = z.object({
     .optional(),
 });
 
-// 분기 조건 스키마
-export const BranchConditionSchema = z.object({
-  questionId: z.string().min(1),
-  subKey: z.string().optional(),
-  operator: OperatorSchema,
-  value: z.union([z.string(), z.number(), z.boolean()]),
-});
-
 // 분기 규칙 스키마
 export const BranchRuleSchema = z.object({
-  conditions: z.array(BranchConditionSchema).min(1),
-  nextQuestionId: z.string().min(1),
+  when: ConditionSchema.optional(),
+  next_question_id: z.string().min(1),
 });
 
-// 표시 조건 스키마 (BranchCondition과 동일)
-export const ShowConditionSchema = BranchConditionSchema;
+// 표시 조건 스키마 (Condition과 동일)
+export const ShowConditionSchema = ConditionSchema;
 
 // 질문 스키마
 export const QuestionSchema = z.object({
@@ -103,7 +127,7 @@ export const QuestionSchema = z.object({
     })
     .optional(),
   branchLogic: z.array(BranchRuleSchema).optional().default([]),
-  showConditions: z.array(ShowConditionSchema).optional().default([]),
+  showConditions: ShowConditionSchema.optional(),
   nextQuestionId: z.string().optional(),
 });
 
@@ -116,7 +140,9 @@ export type {
   Operator,
   Option,
   CompositeItem,
-  BranchCondition,
+  SingleCondition,
+  ConditionGroup,
+  Condition,
   BranchRule,
   ShowCondition,
   Question,

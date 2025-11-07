@@ -8,7 +8,7 @@ import { QuestionBlock } from '@/components/QuestionBlock';
 import { InspectorPanel } from '@/components/InspectorPanel';
 import { Header } from '@/components/Header';
 import { AddQuestionBar } from '@/components/AddQuestionBar';
-import { Question, QuestionType, Survey } from '@/types/survey';
+import { Question, QuestionType, Survey, Option } from '@/types/survey';
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -27,8 +27,8 @@ export function FormBuilder() {
             title: '',
             description: type !== 'description' ? '' : undefined,
             required: false,
-            options: ['single-choice', 'multiple-choice', 'dropdown'].includes(type)
-                ? ['옵션 1']
+            options: ['single_choice', 'multiple_choice', 'dropdown'].includes(type)
+                ? [{ label: '옵션 1' }] as Option[]
                 : undefined,
             design: {
                 themeColor: '#6366f1',
@@ -177,6 +177,7 @@ export function FormBuilder() {
                     {/* Right Sidebar - Inspector Panel */}
                     <InspectorPanel
                         question={selectedQuestion}
+                        allQuestions={survey.questions}
                         onUpdate={(updates) => {
                             if (selectedQuestionId) {
                                 handleUpdateQuestion(selectedQuestionId, updates);
@@ -186,7 +187,7 @@ export function FormBuilder() {
                 </div>
 
                 {/* Bottom Bar */}
-                <AddQuestionBar onClick={() => handleAddQuestion('short-text')} />
+                <AddQuestionBar onClick={() => handleAddQuestion('short_text')} />
 
                 <Toaster position="bottom-right" />
             </div>

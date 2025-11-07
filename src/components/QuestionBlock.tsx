@@ -1,6 +1,6 @@
 import { useDrag, useDrop } from 'react-dnd';
 import { GripVertical, Trash2, Copy } from 'lucide-react';
-import { Question } from '../types/survey';
+import { Question } from '@/schema/question.types';
 import { QuestionPreview } from './QuestionPreview';
 import { useRef } from 'react';
 
@@ -149,7 +149,7 @@ export function QuestionBlock({
       <div className="absolute right-4 top-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
         <button
           onClick={(e) => {
-            e.stopPropagation();
+            // e.stopPropagation();
             onDuplicate();
           }}
           className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -158,7 +158,7 @@ export function QuestionBlock({
         </button>
         <button
           onClick={(e) => {
-            e.stopPropagation();
+            // e.stopPropagation();
             onDelete();
           }}
           className="p-2 rounded-lg hover:bg-red-50 transition-colors"
@@ -169,18 +169,18 @@ export function QuestionBlock({
 
       {/* Question content */}
       <div className="space-y-4 pl-8">
-        <div>
+        <div className="flex items-start">
+          {question.required && (
+            <span className="text-red-500 mr-1">*</span>
+          )}
           <input
             type="text"
             value={question.title}
             onChange={(e) => onUpdate({ title: e.target.value })}
             placeholder="질문을 입력하세요..."
             className="w-full bg-transparent border-none outline-none text-gray-900 placeholder-gray-400"
-            onClick={(e) => e.stopPropagation()}
+          // onClick={(e) => e.stopPropagation()}
           />
-          {question.required && (
-            <span className="text-red-500 ml-1">*</span>
-          )}
         </div>
 
         {question.description !== undefined && (
@@ -190,7 +190,7 @@ export function QuestionBlock({
             onChange={(e) => onUpdate({ description: e.target.value })}
             placeholder="설명 추가 (선택사항)"
             className="w-full bg-transparent border-none outline-none text-gray-600 placeholder-gray-400"
-            onClick={(e) => e.stopPropagation()}
+          // onClick={(e) => e.stopPropagation()}
           />
         )}
 
