@@ -1,0 +1,210 @@
+[
+  {
+    "id": "q1",
+    "title": "안녕하세요! 설문에 참여해주셔서 감사합니다.",
+    "description": "이 설문은 여러분의 의견을 듣기 위한 것입니다.",
+    "type": "description",
+    "required": false,
+    "nextQuestionId": "q2"
+  },
+  {
+    "id": "q2",
+    "title": "귀하의 연령대를 선택해주세요.",
+    "type": "single_choice",
+    "required": true,
+    "options": [
+      {
+        "label": "10대",
+        "key": "age_10",
+        "nextQuestionId": "q3"
+      },
+      {
+        "label": "20대",
+        "key": "age_20",
+        "nextQuestionId": "q4"
+      },
+      {
+        "label": "30대 이상",
+        "key": "age_30",
+        "nextQuestionId": "q5"
+      }
+    ]
+  },
+  {
+    "id": "q3",
+    "title": "10대 분들을 위한 추가 질문입니다.",
+    "description": "학생이신가요?",
+    "type": "single_choice",
+    "required": false,
+    "options": [
+      {
+        "label": "예",
+        "key": "student_yes"
+      },
+      {
+        "label": "아니오",
+        "key": "student_no"
+      }
+    ]
+  },
+  {
+    "id": "q4",
+    "title": "20대 분들을 위한 질문입니다.",
+    "description": "현재 직업을 선택해주세요 (복수 선택 가능)",
+    "type": "multiple_choice",
+    "required": true,
+    "minSelect": 1,
+    "maxSelect": 3,
+    "options": [
+      {
+        "label": "학생",
+        "key": "job_student"
+      },
+      {
+        "label": "직장인",
+        "key": "job_employee"
+      },
+      {
+        "label": "프리랜서",
+        "key": "job_freelancer"
+      },
+      {
+        "label": "기타",
+        "key": "job_other",
+        "isOther": true,
+        "freeText": {
+          "placeholder": "직접 입력해주세요",
+          "required": true
+        }
+      }
+    ]
+  },
+  {
+    "id": "q5",
+    "title": "30대 이상 분들을 위한 질문입니다.",
+    "description": "가장 관심있는 분야를 선택해주세요.",
+    "type": "single_choice",
+    "required": false,
+    "options": [
+      {
+        "label": "기술",
+        "key": "interest_tech"
+      },
+      {
+        "label": "경제",
+        "key": "interest_economy"
+      },
+      {
+        "label": "문화",
+        "key": "interest_culture"
+      }
+    ]
+  },
+  {
+    "id": "q6",
+    "title": "연락처 정보를 입력해주세요.",
+    "description": "나중에 결과를 공유하기 위해 필요합니다.",
+    "type": "composite_single",
+    "required": true,
+    "compositeItems": [
+      {
+        "label": "이름",
+        "key": "name",
+        "input_type": "text",
+        "required": true,
+        "validations": {
+          "minLength": 2,
+          "maxLength": 50
+        }
+      },
+      {
+        "label": "이메일",
+        "key": "email",
+        "input_type": "email",
+        "required": true,
+        "validations": {
+          "regex": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+        }
+      },
+      {
+        "label": "전화번호",
+        "key": "phone",
+        "input_type": "tel",
+        "required": false,
+        "placeholder": "010-1234-5678"
+      }
+    ]
+  },
+  {
+    "id": "q7",
+    "title": "만족도 조사",
+    "description": "이 설문의 만족도를 평가해주세요.",
+    "type": "single_choice",
+    "required": true,
+    "show_conditions": [
+      {
+        "question_id": "q6",
+        "sub_key": "email",
+        "operator": "neq",
+        "value": ""
+      }
+    ],
+    "options": [
+      {
+        "label": "매우 만족",
+        "key": "satisfaction_very"
+      },
+      {
+        "label": "만족",
+        "key": "satisfaction_good"
+      },
+      {
+        "label": "보통",
+        "key": "satisfaction_normal"
+      },
+      {
+        "label": "불만족",
+        "key": "satisfaction_bad"
+      }
+    ]
+  },
+  {
+    "id": "q8",
+    "title": "추가 의견이 있으시면 작성해주세요.",
+    "type": "long_text",
+    "required": false,
+    "validations": {
+      "maxLength": 500
+    },
+    "branch_logic": [
+      {
+        "conditions": [
+          {
+            "question_id": "q7",
+            "operator": "eq",
+            "value": "satisfaction_very"
+          }
+        ],
+        "nextQuestionId": "q9"
+      },
+      {
+        "conditions": [
+          {
+            "question_id": "q7",
+            "operator": "eq",
+            "value": "satisfaction_good"
+          }
+        ],
+        "nextQuestionId": "q9"
+      }
+    ]
+  },
+  {
+    "id": "q9",
+    "title": "설문이 완료되었습니다!",
+    "description": "참여해주셔서 감사합니다.",
+    "type": "description",
+    "required": false
+  }
+]
+
