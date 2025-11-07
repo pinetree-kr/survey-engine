@@ -1,5 +1,3 @@
-'use client';
-
 import { useDrag, useDrop } from 'react-dnd';
 import { GripVertical, Trash2, Copy } from 'lucide-react';
 import { Question } from '../types/survey';
@@ -35,18 +33,54 @@ export function QuestionBlock({
 }: QuestionBlockProps) {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [{ handlerId }, drop] = useDrop({
+  // const [{ handlerId }, drop] = useDrop({
+  //   accept: 'question',
+  //   collect(monitor) {
+  //     return {
+  //       handlerId: monitor.getHandlerId(),
+  //     };
+  //   },
+  //   hover(item: DragItem, monitor) {
+  //     if (!ref.current) {
+  //       return;
+  //     }
+  //     const dragIndex = item.index;
+  //     const hoverIndex = index;
+
+  //     if (dragIndex === hoverIndex) {
+  //       return;
+  //     }
+
+  //     const hoverBoundingRect = ref.current?.getBoundingClientRect();
+  //     const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+  //     const clientOffset = monitor.getClientOffset();
+  //     const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
+
+  //     if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+  //       return;
+  //     }
+
+  //     if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+  //       return;
+  //     }
+
+  //     onMove(dragIndex, hoverIndex);
+  //     item.index = hoverIndex;
+  //   },
+  // });
+  const [collectedProps, drop] = useDrop({
     accept: 'question',
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item: DragItem, monitor) {
+    hover(item, monitor) {
+      const dragItem = item as DragItem;
       if (!ref.current) {
         return;
       }
-      const dragIndex = item.index;
+      const dragIndex = dragItem.index;
       const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
@@ -67,7 +101,7 @@ export function QuestionBlock({
       }
 
       onMove(dragIndex, hoverIndex);
-      item.index = hoverIndex;
+      dragItem.index = hoverIndex;
     },
   });
 
@@ -86,7 +120,7 @@ export function QuestionBlock({
   return (
     <div
       ref={ref}
-      data-handler-id={handlerId}
+      data-handler-id={collectedProps.handlerId}
       className={`
         relative group bg-white rounded-2xl border-2 p-6 transition-all duration-200
         ${isSelected ? 'border-indigo-500 shadow-lg' : 'border-gray-200 hover:border-gray-300'}
@@ -96,7 +130,11 @@ export function QuestionBlock({
     >
       {/* Drag handle */}
       <div
-        ref={drag}
+        ref={(el) => {
+          if (el) {
+            drag(el);
+          }
+        }}
         className="absolute left-2 top-6 cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-100 transition-opacity"
       >
         <GripVertical className="w-5 h-5 text-gray-400" />
