@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Question, Section } from '../types/survey';
+import { Question, Section, QuestionType } from '../types/survey';
 import { BranchNode, PredicateNode, GroupNode, BranchRule, ShowNode, ShowRule, Option, Operator, SelectLimit } from '@/types/survey';
 import { Switch } from './ui/switch';
 import { Label } from './ui/label';
@@ -131,31 +131,66 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
             <h3 className="mb-4 text-gray-900">질문 설정</h3>
 
             <div className="space-y-4">
-              {sections.length > 0 && (
-                <div>
-                  <Label htmlFor="section" className="mb-2 block">섹션</Label>
-                  <Select
-                    value={question.sectionId || 'no-section'}
-                    onValueChange={(value) => onUpdate({ sectionId: value === 'no-section' ? undefined : value })}
-                  >
-                    <SelectTrigger className="bg-white">
-                      <SelectValue placeholder="섹션 선택">
-                        {question.sectionId
-                          ? sections.find(s => s.id === question.sectionId)?.title || '섹션 없음'
-                          : '섹션 없음'}
-                      </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border-gray-200">
-                      <SelectItem value="no-section">섹션 없음</SelectItem>
-                      {sections.map((section) => (
-                        <SelectItem key={section.id} value={section.id}>
-                          {section.title}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
+              <div>
+                <Label htmlFor="questionType" className="mb-2 block">문항 타입</Label>
+                <Select
+                  value={question.type}
+                  onValueChange={(value) => {
+                    const newType = value as QuestionType;
+                    const updates: Partial<Question> = { type: newType };
+
+                    // 타입별 초기화
+                    if (newType === 'choice') {
+                      // choice 타입으로 변경: options 초기화
+                      if (!question.options || question.options.length === 0) {
+                        updates.options = [{ label: '', key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[];
+                      }
+                    } else {
+                      // choice가 아닌 타입으로 변경: choice 관련 필드 제거
+                      updates.options = undefined;
+                      updates.isMultiple = undefined;
+                      updates.isDropdown = undefined;
+                      updates.selectLimit = undefined;
+                    }
+
+                    if (newType === 'composite_single' || newType === 'composite_multiple') {
+                      // composite 타입으로 변경: compositeItems 초기화
+                      if (!question.compositeItems || question.compositeItems.length === 0) {
+                        updates.compositeItems = [];
+                      }
+                    } else {
+                      // composite가 아닌 타입으로 변경: compositeItems 제거
+                      updates.compositeItems = undefined;
+                    }
+
+                    if (newType === 'description') {
+                      // description 타입: description 필드 초기화
+                      updates.description = '';
+                    }
+
+                    onUpdate(updates);
+                  }}
+                >
+                  <SelectTrigger className="bg-white">
+                    <SelectValue placeholder="문항 타입 선택">
+                      {question.type === 'short_text' && '단답형'}
+                      {question.type === 'long_text' && '장문형'}
+                      {question.type === 'choice' && '선택형'}
+                      {question.type === 'composite_single' && '복합 입력 (단일)'}
+                      {question.type === 'composite_multiple' && '복합 입력 (다중)'}
+                      {question.type === 'description' && '설명'}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border-gray-200">
+                    <SelectItem value="short_text">단답형</SelectItem>
+                    <SelectItem value="long_text">장문형</SelectItem>
+                    <SelectItem value="choice">선택형</SelectItem>
+                    <SelectItem value="composite_single">복합 입력 (단일)</SelectItem>
+                    <SelectItem value="composite_multiple">복합 입력 (다중)</SelectItem>
+                    <SelectItem value="description">설명</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
 
               <div className="flex items-center justify-between">
                 <Label htmlFor="required" className="cursor-pointer">필수 항목</Label>

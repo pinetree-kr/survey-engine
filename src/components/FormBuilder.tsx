@@ -7,7 +7,6 @@ import { QuestionTypePalette } from '@/components/QuestionTypePalette';
 import { QuestionBlock } from '@/components/QuestionBlock';
 import { InspectorPanel } from '@/components/InspectorPanel';
 import { Header } from '@/components/Header';
-import { AddQuestionBar } from '@/components/AddQuestionBar';
 import { SectionHeader } from '@/components/SectionHeader';
 import { SectionDropZone } from '@/components/SectionDropZone';
 import { Question, QuestionType, Survey, Option, Section } from '@/types/survey';
@@ -569,9 +568,6 @@ export function FormBuilder() {
                         }}
                     />
                 </div>
-
-                {/* Bottom Bar */}
-                <AddQuestionBar onClick={() => handleAddQuestion('short_text')} />
 
                 <Toaster position="bottom-right" />
             </div>
