@@ -181,9 +181,8 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
       );
     }
 
-    case 'composite_single':
-    case 'composite_multiple':
-      if (!question.compositeItems || question.compositeItems.length === 0) {
+    case 'complex_choice':
+      if (!question.complexItems || question.complexItems.length === 0) {
         return (
           <div className="pt-2 text-gray-500 text-sm">
             복합 필드를 추가하려면 설정 패널에서 항목을 추가하세요
@@ -192,7 +191,7 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
       }
       return (
         <div className="space-y-3 pt-2">
-          {question.compositeItems.map((item) => (
+          {question.complexItems.map((item) => (
             <div key={item.key} className="space-y-1">
               <label className="text-sm text-gray-700 font-medium">
                 {item.label}

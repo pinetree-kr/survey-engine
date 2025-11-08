@@ -45,8 +45,7 @@ export function validateAnswer(
       // 하위 호환성을 위해 유지하지만 choice로 처리
       errors.push(...validateSingleChoice(q, value));
       break;
-    case "composite_single":
-    case "composite_multiple":
+    case "complex_choice":
       errors.push(...validateComposite(q, value));
       break;
     case "description":

@@ -405,8 +405,7 @@ function renderQuestionInput(
       }
     }
 
-    case "composite_single":
-    case "composite_multiple":
+    case "complex_choice":
       if (!question.compositeItems) return null;
       const compositeAnswer =
         (currentAnswer as Record<string, unknown>) || {};

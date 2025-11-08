@@ -50,8 +50,7 @@ function getAnswerBasedNext(
       // 하위 호환성을 위해 유지하지만 choice로 처리
       return getSingleChoiceNext(question, answer as string);
 
-    case "composite_single":
-    case "composite_multiple":
+    case "complex_choice":
       return getCompositeNext(question, answer as Record<string, unknown>);
 
     default:

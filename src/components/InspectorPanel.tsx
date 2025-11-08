@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Question, Section, QuestionType } from '../types/survey';
-import { BranchNode, PredicateNode, GroupNode, BranchRule, ShowNode, ShowRule, Option, Operator, SelectLimit } from '@/types/survey';
+import { BranchNode, PredicateNode, GroupNode, BranchRule, ShowNode, ShowRule, Option, Operator, ComplexItem } from '@/types/survey';
 import { Switch } from './ui/switch';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
@@ -55,10 +55,11 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
   const questionType = question.type as string;
   const isChoiceType = questionType === 'choice';
   const showChoiceOptions = isChoiceType;
-  const isComposite = ['composite-input', 'composite_single', 'composite_multiple'].includes(questionType);
+  const isComplexChoiceType = questionType === 'complex_choice';
+  const showComplexChoiceOptions = isComplexChoiceType;
 
   // dropdown 타입을 choice로 통합 (하위 호환성 유지)
-  const isDropdown = questionType === 'dropdown' || question.isDropdown;
+  const isDropdown = isChoiceType && question.isDropdown;
 
   // 분기 규칙과 표시 규칙
   const branchRules = question.branchRules || [];
@@ -148,19 +149,28 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                     } else {
                       // choice가 아닌 타입으로 변경: choice 관련 필드 제거
                       updates.options = undefined;
-                      updates.isMultiple = undefined;
                       updates.isDropdown = undefined;
-                      updates.selectLimit = undefined;
+                      // complex_choice는 isMultiple과 selectLimit을 유지
+                      if (newType !== 'complex_choice') {
+                        updates.isMultiple = undefined;
+                        updates.selectLimit = undefined;
+                      }
                     }
 
-                    if (newType === 'composite_single' || newType === 'composite_multiple') {
-                      // composite 타입으로 변경: compositeItems 초기화
-                      if (!question.compositeItems || question.compositeItems.length === 0) {
-                        updates.compositeItems = [];
+                    if (newType === 'complex_choice') {
+                      // complex_choice 타입으로 변경: complexItems 초기화
+                      if (!question.complexItems || question.complexItems.length === 0) {
+                        updates.complexItems = [];
+                      }
+                      // isMultiple 기본값 설정 (없으면 false)
+                      if (question.isMultiple === undefined) {
+                        updates.isMultiple = false;
                       }
                     } else {
-                      // composite가 아닌 타입으로 변경: compositeItems 제거
-                      updates.compositeItems = undefined;
+                      // complex_choice가 아닌 타입으로 변경: complexItems 제거
+                      if (newType !== 'choice') {
+                        updates.complexItems = undefined;
+                      }
                     }
 
                     if (newType === 'description') {
@@ -176,8 +186,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                       {question.type === 'short_text' && '단답형'}
                       {question.type === 'long_text' && '장문형'}
                       {question.type === 'choice' && '선택형'}
-                      {question.type === 'composite_single' && '복합 입력 (단일)'}
-                      {question.type === 'composite_multiple' && '복합 입력 (다중)'}
+                      {question.type === 'complex_choice' && '복합 입력'}
                       {question.type === 'description' && '설명'}
                     </SelectValue>
                   </SelectTrigger>
@@ -185,8 +194,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                     <SelectItem value="short_text">단답형</SelectItem>
                     <SelectItem value="long_text">장문형</SelectItem>
                     <SelectItem value="choice">선택형</SelectItem>
-                    <SelectItem value="composite_single">복합 입력 (단일)</SelectItem>
-                    <SelectItem value="composite_multiple">복합 입력 (다중)</SelectItem>
+                    <SelectItem value="complex_choice">복합 입력</SelectItem>
                     <SelectItem value="description">설명</SelectItem>
                   </SelectContent>
                 </Select>
@@ -336,7 +344,154 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              {!showChoiceOptions && (
+              {showComplexChoiceOptions && (
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="complexIsMultiple" className="cursor-pointer">다중선택 허용</Label>
+                  <Switch
+                    id="complexIsMultiple"
+                    checked={question.isMultiple || false}
+                    onCheckedChange={(checked) => {
+                      onUpdate({ isMultiple: checked });
+                      // 다중선택을 끄면 selectLimit 제거
+                      if (!checked) {
+                        onUpdate({ selectLimit: undefined });
+                      } else if (!question.selectLimit) {
+                        // 다중선택을 켤 때 기본값으로 무제한 설정
+                        onUpdate({ selectLimit: { type: 'unlimited' } });
+                      }
+                    }}
+                  />
+                </div>
+              )}
+
+              {showComplexChoiceOptions && (
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <Label>복합 필드</Label>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        const newItem: ComplexItem = {
+                          label: '',
+                          input_type: 'text',
+                          key: `item-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+                          required: false,
+                        };
+                        onUpdate({
+                          complexItems: [...(question.complexItems || []), newItem],
+                        });
+                      }}
+                      className="h-8"
+                    >
+                      <Plus className="w-4 h-4 mr-1" />
+                      필드 추가
+                    </Button>
+                  </div>
+                  <div className="space-y-3">
+                    {(question.complexItems || []).map((item, index) => (
+                      <div key={item.key} className="p-3 border border-gray-200 rounded-lg bg-white">
+                        <div className="flex items-start justify-between mb-2">
+                          <span className="text-sm font-medium text-gray-700">필드 {index + 1}</span>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => {
+                              const updated = (question.complexItems || []).filter((_, i) => i !== index);
+                              onUpdate({ complexItems: updated });
+                            }}
+                            className="h-6 w-6 p-0 text-gray-400 hover:text-red-600"
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </div>
+                        <div className="space-y-2">
+                          <div>
+                            <Label className="text-xs text-gray-500">라벨</Label>
+                            <Input
+                              value={item.label}
+                              onChange={(e) => {
+                                const updated = [...(question.complexItems || [])];
+                                updated[index] = { ...updated[index], label: e.target.value };
+                                onUpdate({ complexItems: updated });
+                              }}
+                              placeholder="필드 라벨"
+                              className="mt-1 bg-white text-sm"
+                            />
+                          </div>
+                          <div>
+                            <Label className="text-xs text-gray-500">입력 타입</Label>
+                            <Select
+                              value={item.input_type}
+                              onValueChange={(value) => {
+                                const updated = [...(question.complexItems || [])];
+                                updated[index] = { ...updated[index], input_type: value as 'text' | 'number' | 'email' | 'tel' };
+                                onUpdate({ complexItems: updated });
+                              }}
+                            >
+                              <SelectTrigger className="mt-1 bg-white text-sm h-8">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-white border-gray-200">
+                                <SelectItem value="text">텍스트</SelectItem>
+                                <SelectItem value="number">숫자</SelectItem>
+                                <SelectItem value="email">이메일</SelectItem>
+                                <SelectItem value="tel">전화번호</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div>
+                            <Label className="text-xs text-gray-500">플레이스홀더 (선택)</Label>
+                            <Input
+                              value={item.placeholder || ''}
+                              onChange={(e) => {
+                                const updated = [...(question.complexItems || [])];
+                                updated[index] = { ...updated[index], placeholder: e.target.value || undefined };
+                                onUpdate({ complexItems: updated });
+                              }}
+                              placeholder="플레이스홀더"
+                              className="mt-1 bg-white text-sm"
+                            />
+                          </div>
+                          <div>
+                            <Label className="text-xs text-gray-500">단위 (선택)</Label>
+                            <Input
+                              value={item.unit || ''}
+                              onChange={(e) => {
+                                const updated = [...(question.complexItems || [])];
+                                updated[index] = { ...updated[index], unit: e.target.value || undefined };
+                                onUpdate({ complexItems: updated });
+                              }}
+                              placeholder="예: kg, cm"
+                              className="mt-1 bg-white text-sm"
+                            />
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <Label className="text-xs text-gray-500 cursor-pointer">필수 항목</Label>
+                            <Switch
+                              checked={item.required || false}
+                              onCheckedChange={(checked) => {
+                                const updated = [...(question.complexItems || [])];
+                                updated[index] = { ...updated[index], required: checked };
+                                onUpdate({ complexItems: updated });
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                    {(!question.complexItems || question.complexItems.length === 0) && (
+                      <div className="text-center py-4 text-gray-500 text-sm">
+                        복합 필드가 없습니다. 필드를 추가하세요.
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {!showChoiceOptions && !showComplexChoiceOptions && (
                 <div>
                   <Label htmlFor="validation">유효성 검사</Label>
                   <Input
@@ -817,8 +972,8 @@ function DefaultPredicateNode({
   onChange,
 }: DefaultPredicateNodeProps) {
   const selectedType = selectedQuestion?.type as string;
-  const isComposite = ['composite-input', 'composite_single', 'composite_multiple'].includes(selectedType || '');
-  const compositeItems = (selectedQuestion as any)?.compositeItems || [];
+  const isComposite = selectedType === 'complex_choice';
+  const complexItems = (selectedQuestion as any)?.complexItems || [];
 
   return (
     <div className="p-3 border border-gray-200 rounded-lg bg-white">
@@ -840,7 +995,7 @@ function DefaultPredicateNode({
                   <SelectValue placeholder="전체" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border-gray-200">
-                  {compositeItems.map((item: any) => (
+                  {complexItems.map((item: any) => (
                     <SelectItem key={item.key} value={item.key || ''} className="text-sm bg-white">
                       {item.label || item.key}
                     </SelectItem>
@@ -1053,3 +1208,4 @@ function DefaultGroupNode({
     </div>
   );
 }
+

@@ -81,6 +81,8 @@ export function FormBuilder() {
                 ? [{ label: '', key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[]
                 : undefined,
             isDropdown: undefined,
+            complexItems: type === 'complex_choice' ? [] : undefined,
+            isMultiple: false,
             design: {
                 themeColor: '#6366f1',
             },

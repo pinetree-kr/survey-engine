@@ -11,7 +11,7 @@ const questionTypes = [
   { type: 'short_text' as QuestionType, icon: Type, label: '단답형', description: '한 줄 텍스트' },
   { type: 'long_text' as QuestionType, icon: AlignLeft, label: '장문형', description: '여러 줄 텍스트' },
   { type: 'choice' as QuestionType, icon: CheckSquare, label: '선택형', description: '라디오/체크박스/드롭다운' },
-  { type: 'composite-input' as QuestionType, icon: LayoutGrid, label: '복합 입력', description: '여러 필드' },
+  { type: 'complex_choice' as QuestionType, icon: LayoutGrid, label: '복합 입력', description: '여러 필드' },
   { type: 'description' as QuestionType, icon: FileText, label: '설명', description: '텍스트 블록만' },
 ];
 

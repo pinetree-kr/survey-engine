@@ -2,8 +2,7 @@ export type QuestionType =
   | "short_text"
   | "long_text"
   | "choice"
-  | "composite_single"
-  | "composite_multiple"
+  | "complex_choice"
   | "description";
 
 
@@ -59,7 +58,7 @@ export type GroupNode = {
 // BranchNode: 분기 로직의 트리 구조 노드
 export type BranchNode = PredicateNode | GroupNode;
 
-export type CompositeItem = {
+export type ComplexItem = {
   label: string;
   input_type: "text" | "number" | "email" | "tel";
   unit?: string;
@@ -127,12 +126,12 @@ export type Question = {
 
   type: QuestionType;
   required?: boolean;
-  isMultiple?: boolean; // choice 타입에서 다중선택 허용 여부
+  isMultiple?: boolean; // choice/complex_choice 타입에서 다중선택 허용 여부
   selectLimit?: SelectLimit; // isMultiple이 true일 때 선택 제한 설정
   isDropdown?: boolean; // choice 타입에서 드롭다운 렌더링 여부
 
-  // composite 문항일 경우
-  compositeItems?: CompositeItem[];
+  // complex_choice 문항일 경우
+  complexItems?: ComplexItem[];
 
   // 분기 로직: 여러 브랜치 규칙 (우선순위는 인덱스 순)
   branchRules?: BranchRule[];
@@ -145,3 +144,11 @@ export type Question = {
   validations?: Validation;
   sectionId?: string; // 섹션 ID (섹션에 속한 문항인 경우)
 };
+
+
+// 섹션 타입
+export interface Section {
+  id: string;
+  title: string;
+  order: number;
+}
