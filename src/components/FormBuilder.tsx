@@ -20,7 +20,7 @@ export function FormBuilder() {
     // 기본 섹션 생성 함수
     const createDefaultSection = (): Section => ({
         id: `section-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-        title: '새 섹션',
+        title: '섹션 1',
         order: 0,
     });
 
@@ -68,7 +68,7 @@ export function FormBuilder() {
         return grouped;
     }, [survey.questions, sortedSections]);
 
-    const handleAddQuestion = useCallback((type: QuestionType, sectionId?: string) => {
+    const handleAddQuestion = useCallback((type: QuestionType, sectionId?: string, targetIndex?: number) => {
         // dropdown 타입을 choice로 통합하고 isDropdown 필드 설정
         const isDropdown = type === 'dropdown';
         const questionType = isDropdown ? 'choice' : type;
@@ -92,10 +92,28 @@ export function FormBuilder() {
             sectionId: targetSectionId,
         };
 
-        setSurvey((prev) => ({
-            ...prev,
-            questions: [...prev.questions, newQuestion],
-        }));
+        setSurvey((prev) => {
+            const allQuestions = [...prev.questions];
+            
+            // targetIndex가 지정된 경우 해당 위치에 삽입
+            if (targetIndex !== undefined && targetIndex >= 0 && targetIndex <= allQuestions.length) {
+                allQuestions.splice(targetIndex, 0, newQuestion);
+            } else {
+                // targetIndex가 없으면 해당 섹션의 마지막에 추가
+                const sectionQuestions = allQuestions.filter(q => q.sectionId === targetSectionId);
+                if (sectionQuestions.length > 0) {
+                    const lastSectionQuestionIndex = allQuestions.findIndex(q => q.id === sectionQuestions[sectionQuestions.length - 1].id);
+                    allQuestions.splice(lastSectionQuestionIndex + 1, 0, newQuestion);
+                } else {
+                    allQuestions.push(newQuestion);
+                }
+            }
+
+            return {
+                ...prev,
+                questions: allQuestions,
+            };
+        });
 
         setSelectedQuestionId(newQuestion.id);
         toast.success('질문이 추가되었습니다');
@@ -124,14 +142,17 @@ export function FormBuilder() {
     }, [selectedQuestionId]);
 
     const handleDuplicateQuestion = useCallback((id: string) => {
+        let duplicatedQuestionId: string | null = null;
+        
         setSurvey((prev) => {
             const questionIndex = prev.questions.findIndex((q) => q.id === id);
             if (questionIndex === -1) return prev;
 
             const originalQuestion = prev.questions[questionIndex];
+            duplicatedQuestionId = `q-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
             const duplicatedQuestion: Question = {
                 ...originalQuestion,
-                id: `q-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+                id: duplicatedQuestionId,
                 title: `${originalQuestion.title} (사본)`,
             };
 
@@ -144,6 +165,10 @@ export function FormBuilder() {
             };
         });
 
+        if (duplicatedQuestionId) {
+            setSelectedQuestionId(duplicatedQuestionId);
+        }
+        
         toast.success('질문이 복제되었습니다');
     }, []);
 
@@ -252,9 +277,13 @@ export function FormBuilder() {
                 ? Math.max(...prev.sections.map(s => s.order), -1)
                 : -1;
             
+            // 섹션 개수를 세어서 다음 번호 결정
+            const sectionCount = prev.sections ? prev.sections.length : 0;
+            const nextSectionNumber = sectionCount + 1;
+            
             const newSection: Section = {
                 id: `section-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-                title: '새 섹션',
+                title: `섹션 ${nextSectionNumber}`,
                 order: maxOrder + 1,
             };
 
@@ -436,6 +465,12 @@ export function FormBuilder() {
                                             survey.questions.findIndex(sq => sq.id === q.id)
                                         ).filter(idx => idx !== -1);
 
+                                        // 섹션 순서를 고려한 전역 넘버링 시작점 계산
+                                        // 이전 섹션들의 문항 개수 합산
+                                        const previousSectionsQuestionCount = sortedSections
+                                            .slice(0, sectionIndex)
+                                            .reduce((sum, s) => sum + (questionsBySection[s.id]?.length || 0), 0);
+
                                         return (
                                             <div 
                                                 key={section.id} 
@@ -460,6 +495,7 @@ export function FormBuilder() {
                                                         <SectionDropZone
                                                             sectionId={section.id}
                                                             onDrop={handleMoveQuestionToSection}
+                                                            onAddQuestion={(sectionId) => handleAddQuestion('short_text', sectionId)}
                                                             isEmpty={true}
                                                         />
                                                     ) : (
@@ -468,17 +504,22 @@ export function FormBuilder() {
                                                             <SectionDropZone
                                                                 sectionId={section.id}
                                                                 onDrop={handleMoveQuestionToSection}
+                                                                onAddQuestion={(sectionId, targetIndex) => handleAddQuestion('short_text', sectionId, targetIndex)}
                                                                 isEmpty={false}
                                                                 targetIndex={globalQuestionIndices[0] || 0}
                                                             />
                                                             {sectionQuestions.map((question, localIndex) => {
                                                                 const globalIndex = globalQuestionIndices[localIndex];
                                                                 const nextGlobalIndex = globalQuestionIndices[localIndex + 1];
+                                                                // 섹션 순서를 고려한 전역 넘버링 (1부터 시작)
+                                                                const globalQuestionNumber = previousSectionsQuestionCount + localIndex;
+                                                                
                                                                 return (
                                                                     <div key={question.id} className="mb-0">
                                                                         <QuestionBlock
                                                                             question={question}
                                                                             index={globalIndex}
+                                                                            sectionLocalIndex={globalQuestionNumber}
                                                                             isSelected={selectedQuestionId === question.id}
                                                                             onSelect={() => setSelectedQuestionId(question.id)}
                                                                             onUpdate={(updates) => handleUpdateQuestion(question.id, updates)}
@@ -490,6 +531,7 @@ export function FormBuilder() {
                                                                         <SectionDropZone
                                                                             sectionId={section.id}
                                                                             onDrop={handleMoveQuestionToSection}
+                                                                            onAddQuestion={(sectionId, targetIndex) => handleAddQuestion('short_text', sectionId, targetIndex)}
                                                                             isEmpty={false}
                                                                             targetIndex={nextGlobalIndex !== undefined ? nextGlobalIndex : globalIndex + 1}
                                                                         />

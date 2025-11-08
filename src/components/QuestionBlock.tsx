@@ -6,7 +6,8 @@ import { useRef } from 'react';
 
 interface QuestionBlockProps {
   question: Question;
-  index: number;
+  index: number; // 전역 인덱스 (드래그 앤 드롭용)
+  sectionLocalIndex?: number; // 섹션 내 로컬 인덱스 (넘버링용)
   isSelected: boolean;
   onSelect: () => void;
   onUpdate: (updates: Partial<Question>) => void;
@@ -24,6 +25,7 @@ interface DragItem {
 export function QuestionBlock({
   question,
   index,
+  sectionLocalIndex,
   isSelected,
   onSelect,
   onUpdate,
@@ -69,7 +71,7 @@ export function QuestionBlock({
 
       {/* Question number */}
       <div className="absolute -left-3 -top-3 w-8 h-8 bg-indigo-100 text-indigo-700 rounded-full flex items-center justify-center">
-        {index + 1}
+        {(sectionLocalIndex !== undefined ? sectionLocalIndex : index) + 1}
       </div>
 
       {/* Action buttons */}
