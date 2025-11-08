@@ -6,6 +6,7 @@ import { QuestionType, Question, Option } from '../types/survey';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from './ui/dialog';
@@ -41,7 +42,7 @@ interface QuestionTypeItem {
 }
 
 // 통합된 아이템 타입
-type UnifiedItem = 
+type UnifiedItem =
   | { kind: 'type'; data: QuestionTypeItem }
   | { kind: 'template'; data: QuestionTemplate };
 
@@ -59,6 +60,48 @@ const unifiedCategories = ['Contact info', 'Choice', 'Text'];
 
 // 템플릿 정의
 const questionTemplates: QuestionTemplate[] = [
+  {
+    id: 'contact_info',
+    label: '개인 정보',
+    description: '여러 개인정보를 한 번에 입력받습니다',
+    icon: User,
+    category: 'Contact info',
+    template: {
+      type: 'complex_input',
+      title: '연락처 정보',
+      required: undefined,
+      complexItems: [
+        {
+          label: '이름',
+          input_type: 'text',
+          key: 'name',
+          required: true,
+          placeholder: '이름을 입력하세요',
+        },
+        {
+          label: '이메일',
+          input_type: 'email',
+          key: 'email',
+          required: true,
+          placeholder: 'example@email.com',
+        },
+        {
+          label: '전화번호',
+          input_type: 'tel',
+          key: 'phone',
+          required: true,
+          placeholder: '010-1234-5678',
+        },
+        {
+          label: '주소',
+          input_type: 'text',
+          key: 'address',
+          required: false,
+          placeholder: '주소를 입력하세요',
+        },
+      ],
+    },
+  },
   {
     id: 'name',
     label: '이름',
@@ -128,48 +171,7 @@ const questionTemplates: QuestionTemplate[] = [
       placeholder: 'https://example.com',
     },
   },
-  {
-    id: 'contact_info',
-    label: 'Contact Info',
-    description: '여러 개인정보를 한 번에 입력받습니다',
-    icon: User,
-    category: 'Contact info',
-    template: {
-      type: 'complex_input',
-      title: '연락처 정보',
-      required: true,
-      complexItems: [
-        {
-          label: '이름',
-          input_type: 'text',
-          key: 'name',
-          required: true,
-          placeholder: '이름을 입력하세요',
-        },
-        {
-          label: '이메일',
-          input_type: 'email',
-          key: 'email',
-          required: true,
-          placeholder: 'example@email.com',
-        },
-        {
-          label: '전화번호',
-          input_type: 'tel',
-          key: 'phone',
-          required: true,
-          placeholder: '010-1234-5678',
-        },
-        {
-          label: '주소',
-          input_type: 'text',
-          key: 'address',
-          required: false,
-          placeholder: '주소를 입력하세요',
-        },
-      ],
-    },
-  },
+
   {
     id: 'gender',
     label: '성별',
@@ -208,13 +210,13 @@ const questionTemplates: QuestionTemplate[] = [
   },
 ];
 
-export function QuestionTypeModal({ 
-  open, 
-  onOpenChange, 
+export function QuestionTypeModal({
+  open,
+  onOpenChange,
   onSelectType,
   onSelectTemplate,
   sectionId,
-  targetIndex 
+  targetIndex
 }: QuestionTypeModalProps) {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -262,28 +264,28 @@ export function QuestionTypeModal({
   const recommendedItems = useMemo(() => {
     const recommendedTypes = allQuestionTypes.filter(item => item.recommended);
     const recommendedTemplates = questionTemplates.slice(0, 2); // 처음 2개 템플릿
-    
+
     const items: UnifiedItem[] = [
       ...recommendedTypes.map(item => ({ kind: 'type' as const, data: item })),
       ...recommendedTemplates.map(item => ({ kind: 'template' as const, data: item })),
     ];
-    
+
     return items.slice(0, 3); // 최대 3개
   }, []);
 
   // 카테고리별로 그룹화된 아이템들
   const itemsByCategory = useMemo(() => {
     const grouped: Record<string, UnifiedItem[]> = {};
-    
+
     filteredItems.forEach(item => {
       const category = item.data.category;
-      
+
       if (!grouped[category]) {
         grouped[category] = [];
       }
       grouped[category].push(item);
     });
-    
+
     return grouped;
   }, [filteredItems]);
 
@@ -292,8 +294,11 @@ export function QuestionTypeModal({
       <DialogContent className="sm:max-w-4xl max-h-[90vh] overflow-hidden flex flex-col p-0">
         <DialogHeader className="px-6 pt-6 pb-4 border-b">
           <DialogTitle>문항 추가</DialogTitle>
+          <DialogDescription className="sr-only">
+            문항 유형을 선택하거나 템플릿을 선택하여 새 문항을 추가합니다.
+          </DialogDescription>
         </DialogHeader>
-        
+
         <div className="flex flex-1 overflow-hidden">
           {/* Left Sidebar */}
           <div className="w-64 border-r border-gray-200 bg-gray-50 p-4 overflow-y-auto">
@@ -317,7 +322,7 @@ export function QuestionTypeModal({
                   {recommendedItems.map((item) => {
                     const Icon = item.data.icon;
                     const label = item.data.label;
-                    
+
                     return (
                       <button
                         key={item.kind === 'type' ? item.data.type : item.data.id}
@@ -359,7 +364,7 @@ export function QuestionTypeModal({
                           const label = item.data.label;
                           const description = item.data.description;
                           const key = item.kind === 'type' ? item.data.type : item.data.id;
-                          
+
                           return (
                             <button
                               key={key}
@@ -399,7 +404,7 @@ export function QuestionTypeModal({
                 {unifiedCategories.map(category => {
                   const items = itemsByCategory[category] || [];
                   if (items.length === 0) return null;
-                  
+
                   return (
                     <div key={category}>
                       <h3 className="text-sm font-semibold text-gray-700 mb-3">{category}</h3>
@@ -409,7 +414,7 @@ export function QuestionTypeModal({
                           const label = item.data.label;
                           const description = item.data.description;
                           const key = item.kind === 'type' ? item.data.type : item.data.id;
-                          
+
                           return (
                             <button
                               key={key}

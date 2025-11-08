@@ -37,6 +37,9 @@ const OPERATORS: { value: Operator; label: string }[] = [
 
 export function InspectorPanel({ question, allQuestions = [], sections = [], onUpdate }: InspectorPanelProps) {
   const [activeTab, setActiveTab] = useState<'settings' | 'branching' | 'visibility'>('settings');
+  
+  // 분기 탭 표시 여부 결정
+  const showBranchingTab = question && (question.type === 'choice' || question.type === 'complex_choice');
 
   if (!question) {
     return (
@@ -57,8 +60,8 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
   const showChoiceOptions = isChoiceType;
   const isComplexChoiceType = questionType === 'complex_choice';
   const isComplexInputType = questionType === 'complex_input';
-  const showComplexChoiceOptions = isComplexChoiceType;
-  const showComplexInputOptions = isComplexInputType;
+  const isComplexType = isComplexChoiceType || isComplexInputType;
+  const showComplexOptions = isComplexType;
 
   // dropdown 타입을 choice로 통합 (하위 호환성 유지)
   const isDropdown = isChoiceType && question.isDropdown;
@@ -115,12 +118,14 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
           >
             설정
           </TabsTrigger>
-          <TabsTrigger
-            value="branching"
-            className="px-4 py-2 rounded-none border-b-2 border-transparent data-[state=active]:bg-gray-100 data-[state=active]:border-gray-400 data-[state=active]:text-gray-900 text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            분기
-          </TabsTrigger>
+          {showBranchingTab && (
+            <TabsTrigger
+              value="branching"
+              className="px-4 py-2 rounded-none border-b-2 border-transparent data-[state=active]:bg-gray-100 data-[state=active]:border-gray-400 data-[state=active]:text-gray-900 text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              분기
+            </TabsTrigger>
+          )}
           <TabsTrigger
             value="visibility"
             className="px-4 py-2 rounded-none border-b-2 border-transparent data-[state=active]:bg-gray-100 data-[state=active]:border-gray-400 data-[state=active]:text-gray-900 text-gray-600 hover:text-gray-900 transition-colors"
@@ -152,34 +157,34 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                       // choice가 아닌 타입으로 변경: choice 관련 필드 제거
                       updates.options = undefined;
                       updates.isDropdown = undefined;
-                    // complex_choice는 isMultiple을 유지
-                    if (newType !== 'complex_choice' && newType !== 'complex_input') {
-                      updates.isMultiple = undefined;
+                      // complex_choice는 isMultiple을 유지
+                      if (newType !== 'complex_choice' && newType !== 'complex_input') {
+                        updates.isMultiple = undefined;
+                      }
                     }
-                  }
 
-                  if (newType === 'complex_choice') {
-                    // complex_choice 타입으로 변경: complexItems 초기화
-                    if (!question.complexItems || question.complexItems.length === 0) {
-                      updates.complexItems = [];
+                    if (newType === 'complex_choice') {
+                      // complex_choice 타입으로 변경: complexItems 초기화
+                      if (!question.complexItems || question.complexItems.length === 0) {
+                        updates.complexItems = [];
+                      }
+                      // isMultiple 기본값 설정 (없으면 false)
+                      if (question.isMultiple === undefined) {
+                        updates.isMultiple = false;
+                      }
+                    } else if (newType === 'complex_input') {
+                      // complex_input 타입으로 변경: complexItems 초기화
+                      if (!question.complexItems || question.complexItems.length === 0) {
+                        updates.complexItems = [];
+                      }
+                      // complex_input은 선택 기능이 없으므로 isMultiple 제거
+                      updates.isMultiple = undefined;
+                    } else {
+                      // complex_choice/complex_input이 아닌 타입으로 변경: complexItems 제거
+                      if (newType !== 'choice') {
+                        updates.complexItems = undefined;
+                      }
                     }
-                    // isMultiple 기본값 설정 (없으면 false)
-                    if (question.isMultiple === undefined) {
-                      updates.isMultiple = false;
-                    }
-                  } else if (newType === 'complex_input') {
-                    // complex_input 타입으로 변경: complexItems 초기화
-                    if (!question.complexItems || question.complexItems.length === 0) {
-                      updates.complexItems = [];
-                    }
-                    // complex_input은 선택 기능이 없으므로 isMultiple 제거
-                    updates.isMultiple = undefined;
-                  } else {
-                    // complex_choice/complex_input이 아닌 타입으로 변경: complexItems 제거
-                    if (newType !== 'choice') {
-                      updates.complexItems = undefined;
-                    }
-                  }
 
                     if (newType === 'description') {
                       // description 타입: description 필드 초기화
@@ -258,14 +263,18 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              <div className="flex items-center justify-between">
-                <Label htmlFor="required" className="cursor-pointer">필수 항목</Label>
-                <Switch
-                  id="required"
-                  checked={question.required}
-                  onCheckedChange={(checked) => onUpdate({ required: checked })}
-                />
-              </div>
+              {
+                !isComplexType && (
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="required" className="cursor-pointer">필수 항목</Label>
+                    <Switch
+                      id="required"
+                      checked={question.required}
+                      onCheckedChange={(checked) => onUpdate({ required: checked })}
+                    />
+                  </div>
+                )
+              }
 
               {showChoiceOptions && (
                 <div className="flex items-center justify-between">
@@ -313,7 +322,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              {showComplexChoiceOptions && (
+              {isComplexChoiceType && (
                 <div className="flex items-center justify-between">
                   <Label htmlFor="complexIsMultiple" className="cursor-pointer">다중선택 허용</Label>
                   <Switch
@@ -326,10 +335,10 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              {(showComplexChoiceOptions || showComplexInputOptions) && (
+              {showComplexOptions && (
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <Label>{showComplexChoiceOptions ? '복합 선택 필드' : '복합 입력 필드'}</Label>
+                    <Label>{isComplexChoiceType ? '복합 선택 필드' : '복합 입력 필드'}</Label>
                     <Button
                       type="button"
                       variant="outline"
@@ -441,7 +450,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              {!showChoiceOptions && !showComplexChoiceOptions && !showComplexInputOptions && (
+              {!showChoiceOptions && !showComplexOptions && (
                 <div>
                   <Label htmlFor="validation">유효성 검사</Label>
                   <Input
@@ -525,7 +534,8 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
           </div>
         </TabsContent>
 
-        <TabsContent value="branching" className="space-y-4">
+        {showBranchingTab && (
+          <TabsContent value="branching" className="space-y-4">
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-gray-900">분기 로직</h3>
@@ -561,7 +571,8 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
               </div>
             )}
           </div>
-        </TabsContent>
+          </TabsContent>
+        )}
 
         <TabsContent value="visibility" className="space-y-4">
           <div>
