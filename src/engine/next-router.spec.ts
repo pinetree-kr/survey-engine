@@ -34,12 +34,12 @@ describe("next-router", () => {
       expect(nextId).toBe("q3");
     });
 
-    it("single_choice에서 선택된 옵션의 nextQuestionId를 반환해야 함", () => {
+    it("choice에서 선택된 옵션의 nextQuestionId를 반환해야 함", () => {
       const questions: Question[] = [
         {
           id: "q1",
           title: "질문 1",
-          type: "single_choice",
+          type: "choice",
           options: [
             { label: "옵션 1", key: "opt1" },
             { label: "옵션 2", key: "opt2" },
@@ -50,7 +50,7 @@ describe("next-router", () => {
                 kind: "condition",
                 question_id: "q1",
                 operator: "eq" as Operator,
-                value: "opt1" as string | number | boolean | Array<string | number>,
+                value: "opt1",
               },
               next_question_id: "q2",
             },
@@ -59,7 +59,7 @@ describe("next-router", () => {
                 kind: "condition",
                 question_id: "q1",
                 operator: "eq" as Operator,
-                value: "opt2" as string | number | boolean | Array<string | number>,
+                value: "opt2",
               },
               next_question_id: "q3",
             }
@@ -82,12 +82,13 @@ describe("next-router", () => {
       expect(nextId).toBe("q3");
     });
 
-    it("multiple_choice에서 첫 매칭 옵션의 nextQuestionId를 반환해야 함", () => {
+    it("choice (isMultiple)에서 첫 매칭 옵션의 nextQuestionId를 반환해야 함", () => {
       const questions: Question[] = [
         {
           id: "q1",
           title: "질문 1",
-          type: "multiple_choice",
+          type: "choice",
+          isMultiple: true,
           options: [
             { label: "옵션 1", key: "opt1" },
             { label: "옵션 2", key: "opt2" },
@@ -98,8 +99,8 @@ describe("next-router", () => {
               when: {
                 kind: "condition",
                 question_id: "q1",
-                operator: "eq" as Operator,
-                value: "opt1" as string | number | boolean | Array<string | number>,
+                operator: "contains" as Operator,
+                value: "opt1",
               },
               next_question_id: "q2",
             },
@@ -107,8 +108,8 @@ describe("next-router", () => {
               when: {
                 kind: "condition",
                 question_id: "q1",
-                operator: "eq" as Operator,
-                value: "opt2" as string | number | boolean | Array<string | number>,
+                operator: "contains" as Operator,
+                value: "opt2",
               },
               next_question_id: "q3",
             },
@@ -149,7 +150,7 @@ describe("next-router", () => {
                     kind: "condition",
                     question_id: "q1",
                     operator: "eq" as Operator,
-                    value: "name" as string | number | boolean | Array<string | number>,
+                    value: "name",
                   },
                   next_question_id: "q2",
                 }
@@ -165,7 +166,7 @@ describe("next-router", () => {
                     kind: "condition",
                     question_id: "q1",
                     operator: "eq" as Operator,
-                    value: "email" as string | number | boolean | Array<string | number>,
+                    value: "email",
                   },
                   next_question_id: "q3",
                 },
@@ -181,7 +182,7 @@ describe("next-router", () => {
                     kind: "condition",
                     question_id: "q1",
                     operator: "eq" as Operator,
-                    value: "phone" as string | number | boolean | Array<string | number>,
+                    value: "phone",
                   },
                   next_question_id: "q4",
                 },
@@ -190,145 +191,148 @@ describe("next-router", () => {
           ]
         },
       ];
+      // 이 테스트는 composite의 branchLogic이 실제로 동작하는지 확인하는 것이므로
+      // 실제 구현에 따라 테스트를 작성해야 합니다.
+      // 현재는 구조만 확인합니다.
+    });
 
-      it("branchLogic에서 AND 평가 후 첫 매칭 rule의 nextQuestionId를 반환해야 함", () => {
-        const questions: Question[] = [
-          {
-            id: "q1",
-            title: "질문 1",
-            type: "short_text",
-          },
-          {
-            id: "q2",
-            title: "질문 2",
-            type: "single_choice",
-            options: [
-              { label: "옵션 1", key: "opt1" },
-              { label: "옵션 2", key: "opt2" },
-            ],
-            branchLogic: [
-              {
-                when: {
-                  kind: "condition",
-                  question_id: "q1",
-                  operator: "eq" as Operator,
-                  value: "test" as string | number | boolean | Array<string | number>,
-                },
-                next_question_id: "q3",
+    it("branchLogic에서 AND 평가 후 첫 매칭 rule의 nextQuestionId를 반환해야 함", () => {
+      const questions: Question[] = [
+        {
+          id: "q1",
+          title: "질문 1",
+          type: "short_text",
+        },
+        {
+          id: "q2",
+          title: "질문 2",
+          type: "choice",
+          options: [
+            { label: "옵션 1", key: "opt1" },
+            { label: "옵션 2", key: "opt2" },
+          ],
+          branchLogic: [
+            {
+              when: {
+                kind: "condition",
+                question_id: "q1",
+                operator: "eq" as Operator,
+                value: "test",
               },
-            ],
-          },
-          {
-            id: "q3",
-            title: "질문 3",
-            type: "short_text",
-          },
-          {
-            id: "q4",
-            title: "질문 4",
-            type: "short_text",
-          },
-        ];
+              next_question_id: "q3",
+            },
+          ],
+        },
+        {
+          id: "q3",
+          title: "질문 3",
+          type: "short_text",
+        },
+        {
+          id: "q4",
+          title: "질문 4",
+          type: "short_text",
+        },
+      ];
 
-        // 첫 번째 rule의 모든 조건 충족
-        const answers1: AnswersMap = new Map([
-          ["q1", "test"],
-          ["q2", "opt1"],
-        ]);
-        const nextId1 = getNextQuestionId(questions[1], questions, answers1);
-        expect(nextId1).toBe("q3");
+      // 첫 번째 rule의 모든 조건 충족
+      const answers1: AnswersMap = new Map([
+        ["q1", "test"],
+        ["q2", "opt1"],
+      ]);
+      const nextId1 = getNextQuestionId(questions[1], questions, answers1);
+      expect(nextId1).toBe("q3");
 
-        // 첫 번째 rule 실패, 두 번째 rule 성공
-        const answers2: AnswersMap = new Map([
-          ["q1", "test"],
-          ["q2", "opt2"],
-        ]);
-        const nextId2 = getNextQuestionId(questions[1], questions, answers2);
-        expect(nextId2).toBe("q4");
-      });
+      // 첫 번째 rule 실패, 두 번째 rule 성공
+      const answers2: AnswersMap = new Map([
+        ["q1", "test"],
+        ["q2", "opt2"],
+      ]);
+      const nextId2 = getNextQuestionId(questions[1], questions, answers2);
+      expect(nextId2).toBe("q4");
+    });
 
-      it("모든 분기 조건이 없으면 선형 다음 질문을 반환해야 함", () => {
-        const questions: Question[] = [
-          {
-            id: "q1",
-            title: "질문 1",
-            type: "short_text",
-          },
-          {
-            id: "q2",
-            title: "질문 2",
-            type: "short_text",
-          },
-          {
-            id: "q3",
-            title: "질문 3",
-            type: "short_text",
-          },
-        ];
+    it("모든 분기 조건이 없으면 선형 다음 질문을 반환해야 함", () => {
+      const questions: Question[] = [
+        {
+          id: "q1",
+          title: "질문 1",
+          type: "short_text",
+        },
+        {
+          id: "q2",
+          title: "질문 2",
+          type: "short_text",
+        },
+        {
+          id: "q3",
+          title: "질문 3",
+          type: "short_text",
+        },
+      ];
 
-        const answers: AnswersMap = new Map();
-        const nextId = getNextQuestionId(questions[0], questions, answers);
-        expect(nextId).toBe("q2");
-      });
+      const answers: AnswersMap = new Map();
+      const nextId = getNextQuestionId(questions[0], questions, answers);
+      expect(nextId).toBe("q2");
+    });
 
-      it("마지막 질문이면 null을 반환해야 함", () => {
-        const questions: Question[] = [
-          {
-            id: "q1",
-            title: "질문 1",
-            type: "short_text",
-          },
-          {
-            id: "q2",
-            title: "질문 2",
-            type: "short_text",
-          },
-        ];
+    it("마지막 질문이면 null을 반환해야 함", () => {
+      const questions: Question[] = [
+        {
+          id: "q1",
+          title: "질문 1",
+          type: "short_text",
+        },
+        {
+          id: "q2",
+          title: "질문 2",
+          type: "short_text",
+        },
+      ];
 
-        const answers: AnswersMap = new Map();
-        const nextId = getNextQuestionId(questions[1], questions, answers);
-        expect(nextId).toBe(null);
-      });
+      const answers: AnswersMap = new Map();
+      const nextId = getNextQuestionId(questions[1], questions, answers);
+      expect(nextId).toBe(null);
+    });
 
-      it("답변이 없어도 선형 다음 질문을 반환해야 함", () => {
-        const questions: Question[] = [
-          {
-            id: "q1",
-            title: "질문 1",
-            type: "single_choice",
-            options: [
-              { label: "옵션 1", key: "opt1" },
-              { label: "옵션 2", key: "opt2" },
-            ],
-            branchLogic: [
-              {
-                when: {
-                  kind: "condition",
-                  question_id: "q1",
-                  operator: "eq" as Operator,
-                  value: "opt1" as string | number | boolean | Array<string | number>,
-                },
-                next_question_id: "q2",
+    it("답변이 없어도 선형 다음 질문을 반환해야 함", () => {
+      const questions: Question[] = [
+        {
+          id: "q1",
+          title: "질문 1",
+          type: "choice",
+          options: [
+            { label: "옵션 1", key: "opt1" },
+            { label: "옵션 2", key: "opt2" },
+          ],
+          branchLogic: [
+            {
+              when: {
+                kind: "condition",
+                question_id: "q1",
+                operator: "eq" as Operator,
+                value: "opt1",
               },
-            ],
-          },
-          {
-            id: "q2",
-            title: "질문 2",
-            type: "short_text",
-          },
-          {
-            id: "q3",
-            title: "질문 3",
-            type: "short_text",
-          },
-        ];
+              next_question_id: "q2",
+            },
+          ],
+        },
+        {
+          id: "q2",
+          title: "질문 2",
+          type: "short_text",
+        },
+        {
+          id: "q3",
+          title: "질문 3",
+          type: "short_text",
+        },
+      ];
 
-        const answers: AnswersMap = new Map();
-        const nextId = getNextQuestionId(questions[0], questions, answers);
-        // 답변이 없으므로 선형 다음 질문 반환
-        expect(nextId).toBe("q2");
-      });
+      const answers: AnswersMap = new Map();
+      const nextId = getNextQuestionId(questions[0], questions, answers);
+      // 답변이 없으므로 선형 다음 질문 반환
+      expect(nextId).toBe("q2");
     });
   });
 });

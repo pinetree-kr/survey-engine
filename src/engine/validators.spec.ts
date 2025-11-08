@@ -69,11 +69,11 @@ describe("validators", () => {
       expect(result2.ok).toBe(false);
     });
 
-    it("single_choice에서 유효하지 않은 옵션 키를 검출해야 함", () => {
+    it("choice에서 유효하지 않은 옵션 키를 검출해야 함", () => {
       const question: Question = {
         id: "q1",
         title: "질문 1",
-        type: "single_choice",
+        type: "choice",
         options: [
           { label: "옵션 1", key: "opt1" },
           { label: "옵션 2", key: "opt2" },
@@ -87,12 +87,14 @@ describe("validators", () => {
       );
     });
 
-    it("multiple_choice에서 minSelect/maxSelect 검증이 동작해야 함", () => {
+    it("choice (isMultiple)에서 selectLimit 검증이 동작해야 함", () => {
       const question: Question = {
         id: "q1",
         title: "질문 1",
-        type: "multiple_choice",
-        validations: {
+        type: "choice",
+        isMultiple: true,
+        selectLimit: {
+          type: "range",
           min: 2,
           max: 3,
         },

@@ -6,6 +6,8 @@ export type {
   Question,
   BranchRule,
   Condition,
+  ConditionGroup,
+  SingleCondition,
   Option,
   Operator,
   SelectLimitType,

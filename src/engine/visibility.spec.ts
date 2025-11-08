@@ -21,18 +21,24 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: [
-          {
-            questionId: "q1",
-            operator: "eq",
-            value: "value1",
-          },
-          {
-            questionId: "q1",
-            operator: "eq",
-            value: "value2",
-          },
-        ],
+        showConditions: {
+          kind: "group",
+          aggregator: "OR",
+          children: [
+            {
+              kind: "condition",
+              question_id: "q1",
+              operator: "eq",
+              value: "value1",
+            },
+            {
+              kind: "condition",
+              question_id: "q1",
+              operator: "eq",
+              value: "value2",
+            },
+          ],
+        },
       };
 
       const answers: AnswersMap = new Map([["q1", "value1"]]);
@@ -44,18 +50,24 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: [
-          {
-            questionId: "q1",
-            operator: "eq",
-            value: "value1",
-          },
-          {
-            questionId: "q1",
-            operator: "eq",
-            value: "value2",
-          },
-        ],
+        showConditions: {
+          kind: "group",
+          aggregator: "OR",
+          children: [
+            {
+              kind: "condition",
+              question_id: "q1",
+              operator: "eq",
+              value: "value1",
+            },
+            {
+              kind: "condition",
+              question_id: "q1",
+              operator: "eq",
+              value: "value2",
+            },
+          ],
+        },
       };
 
       const answers: AnswersMap = new Map([["q1", "value3"]]);
@@ -67,13 +79,18 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: [
-          {
-            questionId: "q1",
-            operator: "eq",
-            value: "test",
-          },
-        ],
+        showConditions: {
+          kind: "group",
+          aggregator: "AND",
+          children: [
+            {
+              kind: "condition",
+              question_id: "q1",
+              operator: "eq",
+              value: "test",
+            },
+          ],
+        },
       };
 
       const answers1: AnswersMap = new Map([["q1", "test"]]);
@@ -88,13 +105,18 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: [
-          {
-            questionId: "q1",
-            operator: "neq",
-            value: "test",
-          },
-        ],
+        showConditions: {
+          kind: "group",
+          aggregator: "AND",
+          children: [
+            {
+              kind: "condition",
+              question_id: "q1",
+              operator: "neq",
+              value: "test",
+            },
+          ],
+        },
       };
 
       const answers1: AnswersMap = new Map([["q1", "other"]]);
@@ -109,13 +131,18 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: [
-          {
-            questionId: "q1",
-            operator: "contains",
-            value: "test",
-          },
-        ],
+        showConditions: {
+          kind: "group",
+          aggregator: "AND",
+          children: [
+            {
+              kind: "condition",
+              question_id: "q1",
+              operator: "contains",
+              value: "test",
+            },
+          ],
+        },
       };
 
       const answers1: AnswersMap = new Map([["q1", "this is a test"]]);
@@ -130,13 +157,18 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: [
-          {
-            questionId: "q1",
-            operator: "gt",
-            value: 10,
-          },
-        ],
+        showConditions: {
+          kind: "group",
+          aggregator: "AND",
+          children: [
+            {
+              kind: "condition",
+              question_id: "q1",
+              operator: "gt",
+              value: 10,
+            },
+          ],
+        },
       };
 
       const answers1: AnswersMap = new Map([["q1", 15]]);
@@ -151,14 +183,19 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: [
-          {
-            questionId: "q1",
-            subKey: "email",
-            operator: "neq",
-            value: "",
-          },
-        ],
+        showConditions: {
+          kind: "group",
+          aggregator: "AND",
+          children: [
+            {
+              kind: "condition",
+              question_id: "q1",
+              sub_key: "email",
+              operator: "neq",
+              value: "",
+            },
+          ],
+        },
       };
 
       const answers: AnswersMap = new Map([
@@ -179,13 +216,18 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: [
-          {
-            questionId: "q1",
-            operator: "eq",
-            value: "test",
-          },
-        ],
+        showConditions: {
+          kind: "group",
+          aggregator: "AND",
+          children: [
+            {
+              kind: "condition",
+              question_id: "q1",
+              operator: "eq",
+              value: "test",
+            },
+          ],
+        },
       };
 
       const answers: AnswersMap = new Map();

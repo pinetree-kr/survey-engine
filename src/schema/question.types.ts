@@ -48,7 +48,7 @@ export type SingleCondition = {
   question_id: string;
   sub_key?: string;  // composite 내부 필드 참조 시 사용
   operator: Operator;
-  value?: string | number | boolean | Array<string | number>;
+  value?: string | number | boolean | Array<string | number>
 };
 
 
@@ -57,7 +57,7 @@ export type SingleCondition = {
 export type ConditionGroup = {
   kind: 'group';
   aggregator: 'AND' | 'OR';
-  children: Condition[];
+  children: (SingleCondition | ConditionGroup)[];
 };
 
 // 조건 타입(트리 구조)
@@ -70,25 +70,25 @@ export type CompositeItem = {
   placeholder?: string;
   key: string; // compositeItems 내 유일
   required?: boolean;
-  show_conditions?: Condition; // 항목 단위 표시 조건
+  show_conditions?: SingleCondition; // 항목 단위 표시 조건
   validations?: Validation;
   branchLogic?: BranchRule[]; // default []
 };
 
 // 분기 규칙
 export type BranchRule = {
-  when?: Condition; // 없으면 항상 true
+  when?: SingleCondition; // 없으면 항상 true
   next_question_id: string; // 이동할 다음 질문 ID
 };
 
 // 표시 조건 (단일 트리 구조)
-export type ShowCondition = Condition;
+export type ShowCondition = ConditionGroup;
 
 // 다중 선택 제한 타입
 export type SelectLimitType = 'unlimited' | 'exact' | 'range';
 
 // 다중 선택 제한 설정
-export type SelectLimit = 
+export type SelectLimit =
   | { type: 'unlimited' }
   | { type: 'exact'; value: number }
   | { type: 'range'; min: number; max: number };
@@ -127,13 +127,14 @@ export type Question = {
   required?: boolean;
   isMultiple?: boolean; // choice 타입에서 다중선택 허용 여부
   selectLimit?: SelectLimit; // isMultiple이 true일 때 선택 제한 설정
+  isDropdown?: boolean; // choice 타입에서 드롭다운 렌더링 여부
 
   // composite 문항일 경우
   compositeItems?: CompositeItem[];
 
   // 조건 로직
   branchLogic?: BranchRule[];
-  showConditions?: Condition;
+  showConditions?: ConditionGroup;
   design?: {
     themeColor?: string;
     backgroundStyle?: string;

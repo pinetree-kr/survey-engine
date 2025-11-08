@@ -21,15 +21,20 @@ export function FormBuilder() {
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
 
     const handleAddQuestion = useCallback((type: QuestionType) => {
+        // dropdown 타입을 choice로 통합하고 isDropdown 필드 설정
+        const isDropdown = type === 'dropdown';
+        const questionType = isDropdown ? 'choice' : type;
+        
         const newQuestion: Question = {
             id: `q-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-            type,
+            type: questionType,
             title: '',
             description: type !== 'description' ? '' : undefined,
             required: false,
             options: ['choice', 'dropdown'].includes(type)
                 ? [{ label: '', key: `option-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[]
                 : undefined,
+            isDropdown: isDropdown ? true : undefined,
             design: {
                 themeColor: '#6366f1',
             },

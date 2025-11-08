@@ -32,13 +32,17 @@ export function validateAnswer(
       errors.push(...validateText(q, value));
       break;
     case "choice":
-      if (q.isMultiple) {
+      // dropdown 타입도 choice로 통합 (하위 호환성 유지)
+      if (q.isDropdown) {
+        errors.push(...validateSingleChoice(q, value));
+      } else if (q.isMultiple) {
         errors.push(...validateMultipleChoice(q, value));
       } else {
         errors.push(...validateSingleChoice(q, value));
       }
       break;
     case "dropdown":
+      // 하위 호환성을 위해 유지하지만 choice로 처리
       errors.push(...validateSingleChoice(q, value));
       break;
     case "composite_single":
@@ -156,17 +160,24 @@ function validateMultipleChoice(q: Question, value: unknown): string[] {
     }
   }
 
-  // minSelect
-  const minSelect = q.minSelect ?? 0;
-  if (selectedKeys.length < minSelect) {
-    errors.push(`최소 ${minSelect}개 이상 선택해주세요`);
-  }
-
-  // maxSelect
-  if (q.maxSelect !== undefined) {
-    if (selectedKeys.length > q.maxSelect) {
-      errors.push(`최대 ${q.maxSelect}개까지 선택 가능합니다`);
+  // selectLimit 검증
+  if (q.selectLimit) {
+    const selectedCount = selectedKeys.length;
+    
+    if (q.selectLimit.type === "exact") {
+      if (selectedCount !== q.selectLimit.value) {
+        errors.push(`정확히 ${q.selectLimit.value}개를 선택해주세요`);
+      }
+    } else if (q.selectLimit.type === "range") {
+      const { min, max } = q.selectLimit;
+      if (selectedCount < min) {
+        errors.push(`최소 ${min}개 이상 선택해주세요`);
+      }
+      if (selectedCount > max) {
+        errors.push(`최대 ${max}개까지 선택 가능합니다`);
+      }
     }
+    // "unlimited" 타입은 제한이 없으므로 검증하지 않음
   }
 
   // isOther + freeText 검사

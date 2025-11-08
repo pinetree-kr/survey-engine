@@ -1,4 +1,4 @@
-import type { Question } from "@/schema/question.types";
+import type { Question, ConditionGroup, SingleCondition } from "@/schema/question.types";
 
 export type ValidationError = {
   code: string;
@@ -20,7 +20,7 @@ export function validateSurvey(questions: Question[]): ValidationResult {
   // 1. 유니크 검사: id, options[].key, compositeItems[].key
   errors.push(...validateUniqueness(questions));
 
-  // 2. 참조 무결성: 모든 nextQuestionId/branch 참조 대상 존재
+  // 2. 참조 무결성: 모든 branchLogic 참조 대상 존재
   errors.push(...validateReferences(questions));
 
   // 3. 도달성 검사
@@ -105,70 +105,28 @@ function validateReferences(questions: Question[]): ValidationError[] {
   const questionIds = new Set(questions.map((q) => q.id));
 
   for (const q of questions) {
-    // nextQuestionId 검사
-    if (q.nextQuestionId && !questionIds.has(q.nextQuestionId)) {
-      errors.push({
-        code: "INVALID_NEXT_questionId",
-        message: `질문 ${q.id}의 nextQuestionId가 존재하지 않음: ${q.nextQuestionId}`,
-        meta: { questionId: q.id, nextQuestionId: q.nextQuestionId },
-      });
-    }
-
-    // options의 nextQuestionId 검사
-    if (q.options) {
-      for (const opt of q.options) {
-        if (opt.nextQuestionId && !questionIds.has(opt.nextQuestionId)) {
-          errors.push({
-            code: "INVALID_OPTION_NEXT_questionId",
-            message: `질문 ${q.id}의 옵션 ${opt.key}의 nextQuestionId가 존재하지 않음: ${opt.nextQuestionId}`,
-            meta: {
-              questionId: q.id,
-              optionKey: opt.key,
-              nextQuestionId: opt.nextQuestionId,
-            },
-          });
-        }
-      }
-    }
-
-    // compositeItems의 nextQuestionId 검사
-    if (q.compositeItems) {
-      for (const item of q.compositeItems) {
-        if (item.nextQuestionId && !questionIds.has(item.nextQuestionId)) {
-          errors.push({
-            code: "INVALID_COMPOSITE_NEXT_questionId",
-            message: `질문 ${q.id}의 컴포지트 ${item.key}의 nextQuestionId가 존재하지 않음: ${item.nextQuestionId}`,
-            meta: {
-              questionId: q.id,
-              compositeKey: item.key,
-              nextQuestionId: item.nextQuestionId,
-            },
-          });
-        }
-      }
-    }
-
-    // branchLogic의 nextQuestionId 및 questionId 검사
+    // branchLogic의 next_question_id 및 question_id 검사
     if (q.branchLogic) {
       for (const rule of q.branchLogic) {
-        if (!questionIds.has(rule.nextQuestionId)) {
+        if (!questionIds.has(rule.next_question_id)) {
           errors.push({
             code: "INVALID_BRANCH_NEXT_questionId",
-            message: `질문 ${q.id}의 branchLogic의 nextQuestionId가 존재하지 않음: ${rule.nextQuestionId}`,
+            message: `질문 ${q.id}의 branchLogic의 next_question_id가 존재하지 않음: ${rule.next_question_id}`,
             meta: {
               questionId: q.id,
-              nextQuestionId: rule.nextQuestionId,
+              nextQuestionId: rule.next_question_id,
             },
           });
         }
-        for (const cond of rule.conditions) {
-          if (!questionIds.has(cond.questionId)) {
+        // rule.when이 SingleCondition인 경우 question_id 검사
+        if (rule.when && rule.when.kind === 'condition') {
+          if (!questionIds.has(rule.when.question_id)) {
             errors.push({
               code: "INVALID_BRANCH_CONDITION_questionId",
-              message: `질문 ${q.id}의 branchLogic 조건의 questionId가 존재하지 않음: ${cond.questionId}`,
+              message: `질문 ${q.id}의 branchLogic 조건의 question_id가 존재하지 않음: ${rule.when.question_id}`,
               meta: {
                 questionId: q.id,
-                conditionQuestionId: cond.questionId,
+                conditionQuestionId: rule.when.question_id,
               },
             });
           }
@@ -178,18 +136,26 @@ function validateReferences(questions: Question[]): ValidationError[] {
 
     // showConditions의 questionId 검사
     if (q.showConditions) {
-      for (const cond of q.showConditions) {
-        if (!questionIds.has(cond.questionId)) {
-          errors.push({
-            code: "INVALID_SHOW_CONDITION_questionId",
-            message: `질문 ${q.id}의 showConditions의 questionId가 존재하지 않음: ${cond.questionId}`,
-            meta: {
-              questionId: q.id,
-              conditionQuestionId: cond.questionId,
-            },
-          });
+      const validateCondition = (condition: SingleCondition | ConditionGroup) => {
+        if (condition.kind === 'condition') {
+          if (!questionIds.has(condition.question_id)) {
+            errors.push({
+              code: "INVALID_SHOW_CONDITION_questionId",
+              message: `질문 ${q.id}의 showConditions의 questionId가 존재하지 않음: ${condition.question_id}`,
+              meta: {
+                questionId: q.id,
+                conditionQuestionId: condition.question_id,
+              },
+            });
+          }
+        } else {
+          // ConditionGroup
+          for (const child of condition.children) {
+            validateCondition(child);
+          }
         }
-      }
+      };
+      validateCondition(q.showConditions);
     }
   }
 
@@ -201,7 +167,7 @@ function validateReferences(questions: Question[]): ValidationError[] {
  */
 function validateReachability(questions: Question[]): ValidationError[] {
   const errors: ValidationError[] = [];
-  
+
   if (questions.length === 0) {
     return errors;
   }
@@ -222,33 +188,10 @@ function validateReachability(questions: Question[]): ValidationError[] {
       return;
     }
 
-    // nextQuestionId
-    if (question.nextQuestionId) {
-      dfs(question.nextQuestionId);
-    }
-
-    // options의 nextQuestionId
-    if (question.options) {
-      for (const opt of question.options) {
-        if (opt.nextQuestionId) {
-          dfs(opt.nextQuestionId);
-        }
-      }
-    }
-
-    // compositeItems의 nextQuestionId
-    if (question.compositeItems) {
-      for (const item of question.compositeItems) {
-        if (item.nextQuestionId) {
-          dfs(item.nextQuestionId);
-        }
-      }
-    }
-
-    // branchLogic의 nextQuestionId
+    // branchLogic의 next_question_id
     if (question.branchLogic) {
       for (const rule of question.branchLogic) {
-        dfs(rule.nextQuestionId);
+        dfs(rule.next_question_id);
       }
     }
   }
@@ -295,33 +238,10 @@ function validateCycles(questions: Question[]): ValidationError[] {
 
     const question = questions.find((q) => q.id === questionId);
     if (question) {
-      // nextQuestionId
-      if (question.nextQuestionId && hasCycle(question.nextQuestionId)) {
-        return true;
-      }
-
-      // options의 nextQuestionId
-      if (question.options) {
-        for (const opt of question.options) {
-          if (opt.nextQuestionId && hasCycle(opt.nextQuestionId)) {
-            return true;
-          }
-        }
-      }
-
-      // compositeItems의 nextQuestionId
-      if (question.compositeItems) {
-        for (const item of question.compositeItems) {
-          if (item.nextQuestionId && hasCycle(item.nextQuestionId)) {
-            return true;
-          }
-        }
-      }
-
-      // branchLogic의 nextQuestionId
+      // branchLogic의 next_question_id
       if (question.branchLogic) {
         for (const rule of question.branchLogic) {
-          if (hasCycle(rule.nextQuestionId)) {
+          if (hasCycle(rule.next_question_id)) {
             return true;
           }
         }
@@ -352,7 +272,7 @@ function validateCycles(questions: Question[]): ValidationError[] {
 }
 
 /**
- * multiple_choice minSelect/maxSelect 검사
+ * multiple_choice selectLimit 검사
  */
 function validateMultipleChoiceConstraints(
   questions: Question[]
@@ -360,32 +280,59 @@ function validateMultipleChoiceConstraints(
   const errors: ValidationError[] = [];
 
   for (const q of questions) {
-    if (q.type === "choice" && q.isMultiple) {
-      const minSelect = q.minSelect ?? 0;
-      const maxSelect = q.maxSelect;
+    if (q.type === "choice" && q.isMultiple && q.selectLimit) {
+      const optionsCount = q.options?.length || 0;
 
-      if (minSelect < 0) {
-        errors.push({
-          code: "INVALID_MIN_SELECT",
-          message: `질문 ${q.id}의 minSelect는 0 이상이어야 합니다`,
-          meta: { questionId: q.id, minSelect },
-        });
-      }
+      if (q.selectLimit.type === "range") {
+        const { min, max } = q.selectLimit;
 
-      if (maxSelect !== undefined) {
-        if (maxSelect <= 0) {
+        if (min < 0) {
           errors.push({
-            code: "INVALID_MAX_SELECT",
-            message: `질문 ${q.id}의 maxSelect는 1 이상이어야 합니다`,
-            meta: { questionId: q.id, maxSelect },
+            code: "INVALID_MIN_SELECT",
+            message: `질문 ${q.id}의 selectLimit.min은 0 이상이어야 합니다`,
+            meta: { questionId: q.id, min },
           });
         }
 
-        if (minSelect > maxSelect) {
+        if (max <= 0) {
+          errors.push({
+            code: "INVALID_MAX_SELECT",
+            message: `질문 ${q.id}의 selectLimit.max는 1 이상이어야 합니다`,
+            meta: { questionId: q.id, max },
+          });
+        }
+
+        if (min > max) {
           errors.push({
             code: "INVALID_SELECT_RANGE",
-            message: `질문 ${q.id}의 minSelect(${minSelect})는 maxSelect(${maxSelect}) 이하여야 합니다`,
-            meta: { questionId: q.id, minSelect, maxSelect },
+            message: `질문 ${q.id}의 selectLimit.min(${min})는 selectLimit.max(${max}) 이하여야 합니다`,
+            meta: { questionId: q.id, min, max },
+          });
+        }
+
+        if (max > optionsCount) {
+          errors.push({
+            code: "INVALID_SELECT_RANGE",
+            message: `질문 ${q.id}의 selectLimit.max(${max})는 옵션 수(${optionsCount}) 이하여야 합니다`,
+            meta: { questionId: q.id, max, optionsCount },
+          });
+        }
+      } else if (q.selectLimit.type === "exact") {
+        const { value } = q.selectLimit;
+
+        if (value <= 0) {
+          errors.push({
+            code: "INVALID_EXACT_SELECT",
+            message: `질문 ${q.id}의 selectLimit.value는 1 이상이어야 합니다`,
+            meta: { questionId: q.id, value },
+          });
+        }
+
+        if (value > optionsCount) {
+          errors.push({
+            code: "INVALID_SELECT_RANGE",
+            message: `질문 ${q.id}의 selectLimit.value(${value})는 옵션 수(${optionsCount}) 이하여야 합니다`,
+            meta: { questionId: q.id, value, optionsCount },
           });
         }
       }

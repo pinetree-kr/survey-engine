@@ -30,7 +30,7 @@ describe("integrity", () => {
         {
           id: "q1",
           title: "질문 1",
-          type: "single_choice",
+          type: "choice",
           options: [
             { label: "옵션 1", key: "opt1" },
             { label: "옵션 2", key: "opt1" },
@@ -182,12 +182,13 @@ describe("integrity", () => {
       ).toBe(true);
     });
 
-    it("multiple_choice의 minSelect/maxSelect 제약을 검증해야 함", () => {
+    it("multiple_choice의 selectLimit 제약을 검증해야 함", () => {
       const questions: Question[] = [
         {
           id: "q1",
           title: "질문 1",
-          type: "multiple_choice",
+          type: "choice",
+          isMultiple: true,
           options: [
             { label: "옵션 1", key: "opt1" },
             { label: "옵션 2", key: "opt2" },
@@ -195,6 +196,11 @@ describe("integrity", () => {
             { label: "옵션 4", key: "opt4" },
             { label: "옵션 5", key: "opt5" },
           ],
+          selectLimit: {
+            type: "range",
+            min: 3,
+            max: 10, // 옵션 수(5)보다 큼
+          },
         },
       ];
 
@@ -237,7 +243,7 @@ describe("integrity", () => {
         {
           id: "q2",
           title: "질문 2",
-          type: "single_choice",
+          type: "choice",
           options: [
             { label: "옵션 1", key: "opt1" },
             { label: "옵션 2", key: "opt2" },

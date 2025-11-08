@@ -71,6 +71,63 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
       );
 
     case 'choice':
+    case 'dropdown': {
+      const isDropdown = question.type === 'dropdown' || question.isDropdown;
+      
+      if (isDropdown) {
+        return (
+          <div className="pt-2 space-y-3">
+            <div className="p-3 border-2 border-gray-300 rounded-lg bg-gray-50 text-gray-500">
+              옵션을 선택하세요...
+            </div>
+
+            <div className="space-y-2 pl-4 border-l-2 border-gray-200">
+              {(question.options || [{ label: '' }] as Option[]).map((option, index) => {
+                const optionsCount = question.options?.length || 0;
+                const canDelete = optionsCount > 1;
+                return (
+                  <div key={index} className="flex items-center gap-3 group/option pb-2 border-b border-gray-200 last:border-b-0">
+                    <input
+                      type="text"
+                      value={option.label || ''}
+                      placeholder={option.freeText?.placeholder || `옵션 ${getOptionLabel(index)}`}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        handleUpdateOption(index, e.target.value);
+                      }}
+                      className="flex-1 bg-white border border-gray-200 rounded px-3 py-2 outline-none text-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                    {canDelete && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteOption(index);
+                        }}
+                        className="opacity-0 group-hover/option:opacity-100 p-1 hover:bg-gray-100 rounded transition-all"
+                      >
+                        <X className="w-4 h-4 text-gray-400" />
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddOption();
+                }}
+                className="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                <span>옵션 추가</span>
+              </button>
+            </div>
+          </div>
+        );
+      }
+      
       return (
         <div className="space-y-3 pt-2">
           {(question.options || [{ label: '' }] as Option[]).map((option, index) => {
@@ -121,59 +178,7 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
 
         </div>
       );
-
-    case 'dropdown':
-      return (
-        <div className="pt-2 space-y-3">
-          <div className="p-3 border-2 border-gray-300 rounded-lg bg-gray-50 text-gray-500">
-            옵션을 선택하세요...
-          </div>
-
-          <div className="space-y-2 pl-4 border-l-2 border-gray-200">
-            {(question.options || [{ label: '' }] as Option[]).map((option, index) => {
-              const optionsCount = question.options?.length || 0;
-              const canDelete = optionsCount > 1;
-              return (
-                <div key={index} className="flex items-center gap-3 group/option">
-                  <input
-                    type="text"
-                    value={option.label || ''}
-                    placeholder={option.freeText?.placeholder || ''}
-                    onChange={(e) => {
-                      e.stopPropagation();
-                      handleUpdateOption(index, e.target.value);
-                    }}
-                    className="flex-1 bg-transparent border-none outline-none text-gray-700"
-                    onClick={(e) => e.stopPropagation()}
-                  />
-                  {canDelete && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteOption(index);
-                      }}
-                      className="opacity-0 group-hover/option:opacity-100 p-1 hover:bg-gray-100 rounded transition-all"
-                    >
-                      <X className="w-4 h-4 text-gray-400" />
-                    </button>
-                  )}
-                </div>
-              );
-            })}
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleAddOption();
-              }}
-              className="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Add option</span>
-            </button>
-          </div>
-        </div>
-      );
+    }
 
     case 'composite_single':
     case 'composite_multiple':

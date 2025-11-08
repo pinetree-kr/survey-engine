@@ -1,37 +1,24 @@
-import type { Question, BranchCondition } from "@/schema/question.types";
+import type { Question, Condition, SingleCondition } from "@/schema/question.types";
 import type { AnswersMap } from "./visibility";
 
 /**
  * 다음 질문 ID 결정
  * 우선순위:
- * 1. 현재 질문의 nextQuestionId (최우선)
- * 2. 답변에 따른 분기 (옵션/컴포지트의 nextQuestionId)
- * 3. branchLogic 평가
- * 4. 선형 다음 질문 또는 완료
+ * 1. branchLogic 평가
+ * 2. 선형 다음 질문 또는 완료
  */
 export function getNextQuestionId(
   currentQuestion: Question,
   questions: Question[],
   answers: AnswersMap
 ): string | null {
-  // 1. 현재 질문의 nextQuestionId가 있으면 무조건 그리로 이동
-  if (currentQuestion.nextQuestionId) {
-    return currentQuestion.nextQuestionId;
-  }
-
-  // 2. 답변에 따른 분기
-  const answerBasedNext = getAnswerBasedNext(currentQuestion, answers);
-  if (answerBasedNext) {
-    return answerBasedNext;
-  }
-
-  // 3. branchLogic 평가
+  // 1. branchLogic 평가
   const branchBasedNext = getBranchBasedNext(currentQuestion, answers);
   if (branchBasedNext) {
     return branchBasedNext;
   }
 
-  // 4. 선형 다음 질문
+  // 2. 선형 다음 질문
   return getLinearNext(currentQuestion, questions);
 }
 
@@ -50,12 +37,17 @@ function getAnswerBasedNext(
 
   switch (question.type) {
     case "choice":
+      // dropdown 타입도 choice로 통합 (하위 호환성 유지)
+      if (question.isDropdown) {
+        return getSingleChoiceNext(question, answer as string);
+      }
       if (question.isMultiple) {
         return getMultipleChoiceNext(question, answer as string[]);
       } else {
         return getSingleChoiceNext(question, answer as string);
       }
     case "dropdown":
+      // 하위 호환성을 위해 유지하지만 choice로 처리
       return getSingleChoiceNext(question, answer as string);
 
     case "composite_single":
@@ -69,66 +61,37 @@ function getAnswerBasedNext(
 
 /**
  * 단일 선택의 다음 질문 결정
+ * Note: Option 타입에 nextQuestionId가 없으므로 항상 null 반환
  */
 function getSingleChoiceNext(
   question: Question,
   selectedKey: string
 ): string | null {
-  if (!question.options) {
-    return null;
-  }
-
-  const selectedOption = question.options.find((opt) => opt.key === selectedKey);
-  return selectedOption?.nextQuestionId ?? null;
+  // Option 타입에 nextQuestionId가 없으므로 항상 null 반환
+  return null;
 }
 
 /**
  * 다중 선택의 다음 질문 결정 (첫 매칭 우선)
+ * Note: Option 타입에 nextQuestionId가 없으므로 항상 null 반환
  */
 function getMultipleChoiceNext(
   question: Question,
   selectedKeys: string[]
 ): string | null {
-  if (!question.options) {
-    return null;
-  }
-
-  // 선택된 키 순서대로 확인 (첫 매칭 우선)
-  for (const key of selectedKeys) {
-    const option = question.options.find((opt) => opt.key === key);
-    if (option?.nextQuestionId) {
-      return option.nextQuestionId;
-    }
-  }
-
+  // Option 타입에 nextQuestionId가 없으므로 항상 null 반환
   return null;
 }
 
 /**
  * 컴포지트의 다음 질문 결정 (정의 순서 우선)
+ * Note: CompositeItem 타입에 nextQuestionId가 없으므로 항상 null 반환
  */
 function getCompositeNext(
   question: Question,
   answerObj: Record<string, unknown>
 ): string | null {
-  if (!question.compositeItems) {
-    return null;
-  }
-
-  // 정의 순서대로 확인 (첫 매칭 우선)
-  for (const item of question.compositeItems) {
-    const value = answerObj[item.key];
-    // 값이 있고 nextQuestionId가 있으면 채택
-    if (
-      value !== undefined &&
-      value !== null &&
-      value !== "" &&
-      item.nextQuestionId
-    ) {
-      return item.nextQuestionId;
-    }
-  }
-
+  // CompositeItem 타입에 nextQuestionId가 없으므로 항상 null 반환
   return null;
 }
 
@@ -145,13 +108,16 @@ function getBranchBasedNext(
 
   // 배열 순서대로 평가
   for (const rule of question.branchLogic) {
-    // AND 평가: 모든 조건이 충족되어야 함
-    const allConditionsMet = rule.conditions.every((condition) =>
-      evaluateBranchCondition(condition, answers)
-    );
+    // when 조건이 없으면 항상 true (기본 규칙)
+    if (!rule.when) {
+      return rule.next_question_id;
+    }
 
-    if (allConditionsMet) {
-      return rule.nextQuestionId;
+    // when 조건 평가
+    const conditionMet = evaluateCondition(rule.when, answers);
+    
+    if (conditionMet) {
+      return rule.next_question_id;
     }
   }
 
@@ -159,23 +125,40 @@ function getBranchBasedNext(
 }
 
 /**
- * 분기 조건 평가
+ * Condition 평가 (트리 구조 지원)
  */
-function evaluateBranchCondition(
-  condition: BranchCondition,
+function evaluateCondition(
+  condition: Condition,
   answers: AnswersMap
 ): boolean {
-  const answerValue = getAnswerValue(
-    answers,
-    condition.questionId,
-    condition.subKey
-  );
+  if (condition.kind === 'condition') {
+    // 단일 조건 평가
+    const answerValue = getAnswerValue(
+      answers,
+      condition.question_id,
+      condition.sub_key
+    );
 
-  if (answerValue === undefined) {
-    return false;
+    if (answerValue === undefined) {
+      return false;
+    }
+
+    return compareValues(answerValue, condition.operator, condition.value);
   }
 
-  return compareValues(answerValue, condition.operator, condition.value);
+  if (condition.kind === 'group') {
+    // 그룹 조건 평가
+    const results = condition.children.map(child => evaluateCondition(child, answers));
+    
+    if (condition.aggregator === 'AND') {
+      return results.every(Boolean);
+    } else {
+      // OR
+      return results.some(Boolean);
+    }
+  }
+
+  return false;
 }
 
 /**
@@ -210,8 +193,8 @@ function getAnswerValue(
  */
 function compareValues(
   actual: unknown,
-  operator: BranchCondition["operator"],
-  expected: string | number | boolean
+  operator: SingleCondition["operator"],
+  expected?: string | number | boolean | Array<string | number>
 ): boolean {
   switch (operator) {
     case "eq":
@@ -222,17 +205,41 @@ function compareValues(
       if (typeof actual === "string" && typeof expected === "string") {
         return actual.includes(expected);
       }
-      if (Array.isArray(actual)) {
+      if (Array.isArray(actual) && (typeof expected === "string" || typeof expected === "number")) {
         return actual.includes(expected);
       }
       return false;
+    case "contains_any":
+      if (!Array.isArray(actual) || !Array.isArray(expected)) {
+        return false;
+      }
+      // actual 배열에 expected 배열의 값 중 하나라도 포함되어 있는지 확인
+      return expected.some(val => actual.includes(val));
+    case "contains_all":
+      if (!Array.isArray(actual) || !Array.isArray(expected)) {
+        return false;
+      }
+      // actual 배열에 expected 배열의 모든 값이 포함되어 있는지 확인
+      return expected.every(val => actual.includes(val));
     case "gt":
+      if (typeof expected === "undefined" || Array.isArray(expected)) {
+        return false;
+      }
       return compareNumbers(actual, expected, (a, b) => a > b);
     case "lt":
+      if (typeof expected === "undefined" || Array.isArray(expected)) {
+        return false;
+      }
       return compareNumbers(actual, expected, (a, b) => a < b);
     case "gte":
+      if (typeof expected === "undefined" || Array.isArray(expected)) {
+        return false;
+      }
       return compareNumbers(actual, expected, (a, b) => a >= b);
     case "lte":
+      if (typeof expected === "undefined" || Array.isArray(expected)) {
+        return false;
+      }
       return compareNumbers(actual, expected, (a, b) => a <= b);
     default:
       return false;

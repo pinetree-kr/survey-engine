@@ -258,7 +258,57 @@ function renderQuestionInput(
       );
 
     case "choice":
+    case "dropdown": {
       if (!question.options) return null;
+      
+      // dropdown 타입도 choice로 통합 (하위 호환성 유지)
+      const isDropdown = question.type === "dropdown" || question.isDropdown;
+      
+      if (isDropdown) {
+        // 드롭다운 렌더링 (실제 select 요소로 렌더링해야 하지만, 현재는 라디오 버튼으로 표시)
+        return (
+          <div>
+            <select
+              value={currentAnswer as string || ""}
+              onChange={(e) => updateAnswer(question.id, e.target.value)}
+              style={{
+                width: "100%",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                fontSize: "16px",
+              }}
+            >
+              <option value="">선택하세요...</option>
+              {question.options.map((opt) => (
+                <option key={opt.key} value={opt.key}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+            {question.options.find(opt => opt.isOther && currentAnswer === opt.key)?.freeText && (
+              <input
+                type="text"
+                placeholder={question.options.find(opt => opt.isOther && currentAnswer === opt.key)?.freeText?.placeholder || "기타 입력"}
+                onChange={(e) =>
+                  updateAnswer(question.id, {
+                    key: currentAnswer as string,
+                    freeText: e.target.value,
+                  })
+                }
+                style={{
+                  marginTop: "10px",
+                  width: "100%",
+                  padding: "5px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                }}
+              />
+            )}
+          </div>
+        );
+      }
+      
       if (question.isMultiple) {
         const selectedKeys = (currentAnswer as string[]) || [];
         return (
@@ -353,56 +403,7 @@ function renderQuestionInput(
           </div>
         );
       }
-
-    case "dropdown":
-      if (!question.options) return null;
-      return (
-        <div>
-          {question.options.map((opt) => (
-            <label
-              key={opt.key}
-              style={{
-                display: "block",
-                padding: "10px",
-                marginBottom: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                cursor: "pointer",
-                backgroundColor:
-                  currentAnswer === opt.key ? "#e3f2fd" : "white",
-              }}
-            >
-              <input
-                type="radio"
-                name={question.id}
-                value={opt.key}
-                checked={currentAnswer === opt.key}
-                onChange={() => updateAnswer(question.id, opt.key)}
-                style={{ marginRight: "8px" }}
-              />
-              {opt.label}
-              {opt.isOther && opt.freeText && currentAnswer === opt.key && (
-                <input
-                  type="text"
-                  placeholder={opt.freeText.placeholder || "기타 입력"}
-                  onChange={(e) =>
-                    updateAnswer(question.id, {
-                      key: opt.key,
-                      freeText: e.target.value,
-                    })
-                  }
-                  style={{
-                    marginLeft: "10px",
-                    padding: "5px",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
-                />
-              )}
-            </label>
-          ))}
-        </div>
-      );
+    }
 
     case "composite_single":
     case "composite_multiple":
