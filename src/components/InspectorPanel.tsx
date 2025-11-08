@@ -37,7 +37,7 @@ const OPERATORS: { value: Operator; label: string }[] = [
 
 export function InspectorPanel({ question, allQuestions = [], sections = [], onUpdate }: InspectorPanelProps) {
   const [activeTab, setActiveTab] = useState<'settings' | 'branching' | 'visibility'>('settings');
-  
+
   // 분기 탭 표시 여부 결정
   const showBranchingTab = question && (question.type === 'choice' || question.type === 'complex_choice');
 
@@ -157,8 +157,9 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                       // choice가 아닌 타입으로 변경: choice 관련 필드 제거
                       updates.options = undefined;
                       updates.isDropdown = undefined;
+                      updates.isBoolean = undefined;
                       // complex_choice는 isMultiple을 유지
-                      if (newType !== 'complex_choice' && newType !== 'complex_input') {
+                      if (newType !== 'complex_choice' && newType !== 'complex_input' && newType !== 'range') {
                         updates.isMultiple = undefined;
                       }
                     }
@@ -201,6 +202,16 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                       updates.input_type = undefined;
                     }
 
+                    if (newType === 'range') {
+                      // range 타입으로 변경: rangeConfig 초기화
+                      if (!question.rangeConfig) {
+                        updates.rangeConfig = { min: 0, max: 10, step: 1 };
+                      }
+                    } else {
+                      // range가 아닌 타입으로 변경: rangeConfig 제거
+                      updates.rangeConfig = undefined;
+                    }
+
                     onUpdate(updates);
                   }}
                 >
@@ -211,6 +222,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                       {question.type === 'choice' && '선택형'}
                       {question.type === 'complex_choice' && '복합 선택'}
                       {question.type === 'complex_input' && '복합 입력'}
+                      {question.type === 'range' && 'Range'}
                       {question.type === 'description' && '설명'}
                     </SelectValue>
                   </SelectTrigger>
@@ -220,6 +232,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                     <SelectItem value="choice">선택형</SelectItem>
                     <SelectItem value="complex_choice">복합 선택</SelectItem>
                     <SelectItem value="complex_input">복합 입력</SelectItem>
+                    <SelectItem value="range">Range</SelectItem>
                     <SelectItem value="description">설명</SelectItem>
                   </SelectContent>
                 </Select>
@@ -278,6 +291,38 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
 
               {showChoiceOptions && (
                 <div className="flex items-center justify-between">
+                  <Label htmlFor="isBoolean" className="cursor-pointer">불리언(boolean)</Label>
+                  <Switch
+                    id="isBoolean"
+                    checked={question.isBoolean || false}
+                    onCheckedChange={(checked) => {
+                      if (checked) {
+                        // 불리언 활성화: Y, N 옵션 생성, 드롭다운/다중선택 비활성화
+                        onUpdate({
+                          isBoolean: true,
+                          options: [
+                            { label: '예', key: 'Y' },
+                            { label: '아니오', key: 'N' }
+                          ] as Option[],
+                          isDropdown: false,
+                          isMultiple: false,
+                        });
+                      } else {
+                        // 불리언 비활성화: 일반 choice로 변경
+                        onUpdate({
+                          isBoolean: false,
+                          options: question.options && question.options.length > 0
+                            ? question.options
+                            : [{ label: '', key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[],
+                        });
+                      }
+                    }}
+                  />
+                </div>
+              )}
+
+              {showChoiceOptions && !question.isBoolean && (
+                <div className="flex items-center justify-between">
                   <Label htmlFor="isDropdown" className="cursor-pointer">드롭다운 형식</Label>
                   <Switch
                     id="isDropdown"
@@ -289,7 +334,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              {showChoiceOptions && (
+              {showChoiceOptions && !question.isBoolean && (
                 <div className="flex items-center justify-between">
                   <Label htmlFor="isMultiple" className="cursor-pointer">다중선택 허용</Label>
                   <Switch
@@ -303,7 +348,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
               )}
 
 
-              {showChoiceOptions && (
+              {showChoiceOptions && !question.isBoolean && (
                 <div className="flex items-center justify-between">
                   <Label htmlFor="isOther" className="cursor-pointer">"기타" 옵션 추가</Label>
                   <Switch
@@ -450,7 +495,74 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              {!showChoiceOptions && !showComplexOptions && (
+              {questionType === 'range' && question.rangeConfig && (
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="rangeMin" className="mb-2 block">최소값</Label>
+                    <Input
+                      id="rangeMin"
+                      type="number"
+                      value={question.rangeConfig.min}
+                      onChange={(e) => {
+                        const min = parseInt(e.target.value) || 0;
+                        if (question.rangeConfig) {
+                          onUpdate({
+                            rangeConfig: {
+                              ...question.rangeConfig,
+                              min,
+                            },
+                          });
+                        }
+                      }}
+                      className="bg-white"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="rangeMax" className="mb-2 block">최대값</Label>
+                    <Input
+                      id="rangeMax"
+                      type="number"
+                      value={question.rangeConfig.max}
+                      onChange={(e) => {
+                        const max = parseInt(e.target.value) || 10;
+                        if (question.rangeConfig) {
+                          onUpdate({
+                            rangeConfig: {
+                              ...question.rangeConfig,
+                              max,
+                            },
+                          });
+                        }
+                      }}
+                      className="bg-white"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="rangeStep" className="mb-2 block">단계</Label>
+                    <Input
+                      id="rangeStep"
+                      type="number"
+                      step="0.1"
+                      value={question.rangeConfig.step}
+                      onChange={(e) => {
+                        const step = parseFloat(e.target.value) || 1;
+                        if (question.rangeConfig) {
+                          onUpdate({
+                            rangeConfig: {
+                              ...question.rangeConfig,
+                              step,
+                            },
+                          });
+                        }
+                      }}
+                      className="bg-white"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">슬라이더의 증가/감소 단계 (예: 1, 0.5)</p>
+                  </div>
+                </div>
+              )}
+
+              {!showChoiceOptions && !showComplexOptions && questionType !== 'range' && (
                 <div>
                   <Label htmlFor="validation">유효성 검사</Label>
                   <Input
@@ -536,41 +648,41 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
 
         {showBranchingTab && (
           <TabsContent value="branching" className="space-y-4">
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-gray-900">분기 로직</h3>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={handleAddBranchRule}
-                className="h-8"
-              >
-                <Plus className="w-4 h-4 mr-1" />
-                규칙 추가
-              </Button>
-            </div>
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-gray-900">분기 로직</h3>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={handleAddBranchRule}
+                  className="h-8"
+                >
+                  <Plus className="w-4 h-4 mr-1" />
+                  규칙 추가
+                </Button>
+              </div>
 
-            {(!branchRules || branchRules.length === 0) ? (
-              <div className="text-center py-8 text-gray-500">
-                <p className="mb-2">분기 규칙이 없습니다</p>
-                <p className="text-sm">규칙을 추가하여 조건부 경로를 생성하세요</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {branchRules.map((rule, index) => (
-                  <BranchRuleEditor
-                    key={index}
-                    rule={rule}
-                    ruleIndex={index}
-                    allQuestions={allQuestions}
-                    currentQuestionId={question.id}
-                    onUpdate={(updates) => handleUpdateBranchRule(index, updates)}
-                    onDelete={() => handleDeleteBranchRule(index)}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+              {(!branchRules || branchRules.length === 0) ? (
+                <div className="text-center py-8 text-gray-500">
+                  <p className="mb-2">분기 규칙이 없습니다</p>
+                  <p className="text-sm">규칙을 추가하여 조건부 경로를 생성하세요</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {branchRules.map((rule, index) => (
+                    <BranchRuleEditor
+                      key={index}
+                      rule={rule}
+                      ruleIndex={index}
+                      allQuestions={allQuestions}
+                      currentQuestionId={question.id}
+                      onUpdate={(updates) => handleUpdateBranchRule(index, updates)}
+                      onDelete={() => handleDeleteBranchRule(index)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
           </TabsContent>
         )}
 

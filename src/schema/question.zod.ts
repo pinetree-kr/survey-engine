@@ -103,17 +103,6 @@ export const ShowRuleSchema = z.object({
   refQuestionId: z.string().min(1),
 });
 
-// 다중 선택 제한 스키마
-export const SelectLimitSchema = z.discriminatedUnion("type", [
-  z.object({ type: z.literal("unlimited") }),
-  z.object({ type: z.literal("exact"), value: z.number().int().positive() }),
-  z.object({
-    type: z.literal("range"),
-    min: z.number().int().nonnegative(),
-    max: z.number().int().positive(),
-  }),
-]);
-
 // 질문 스키마
 export const QuestionSchema = z.object({
   id: z.string().min(1),
@@ -130,7 +119,6 @@ export const QuestionSchema = z.object({
   ]),
   required: z.boolean().optional().default(false),
   isMultiple: z.boolean().optional(),
-  selectLimit: SelectLimitSchema.optional(),
   isDropdown: z.boolean().optional(),
   input_type: z.enum(["text", "number", "email", "tel"]).optional(),
   images: z.array(ImageObjSchema).optional(),
@@ -166,8 +154,6 @@ export type {
   Condition,
   BranchRule,
   ShowCondition,
-  SelectLimitType,
-  SelectLimit,
   Question,
 } from "./question.types";
 

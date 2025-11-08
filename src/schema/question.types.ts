@@ -4,7 +4,8 @@ export type QuestionType =
   | "choice"
   | "complex_choice"
   | "complex_input"
-  | "description";
+  | "description"
+  | "range";
 
 
 export type ImageObj = {
@@ -84,15 +85,6 @@ export type ShowRule = {
   refQuestionId: string; // 참조할 질문 ID
 };
 
-// 다중 선택 제한 타입
-export type SelectLimitType = 'unlimited' | 'exact' | 'range';
-
-// 다중 선택 제한 설정
-export type SelectLimit =
-  | { type: 'unlimited' }
-  | { type: 'exact'; value: number }
-  | { type: 'range'; min: number; max: number };
-
 // export type Question = {
 //   id: string;
 //   title: string;
@@ -126,13 +118,21 @@ export type Question = {
   type: QuestionType;
   required?: boolean;
   isMultiple?: boolean; // choice/complex_choice 타입에서 다중선택 허용 여부
-  selectLimit?: SelectLimit; // isMultiple이 true일 때 선택 제한 설정
   isDropdown?: boolean; // choice 타입에서 드롭다운 렌더링 여부
+  isBoolean?: boolean; // choice 타입에서 Yes/No 모드 (Y, N 인덱스 사용, Column 형태)
   input_type?: "text" | "number" | "email" | "tel"; // short_text 타입에서 입력 필드 타입
   placeholder?: string; // short_text/long_text 타입에서 입력 필드 placeholder
 
   // complex_choice/complex_input 문항일 경우
   complexItems?: ComplexItem[];
+
+  // range 타입일 경우
+  rangeConfig?: {
+    min: number; // 최소값
+    max: number; // 최대값
+    step: number; // 단계 (예: 1, 0.5 등)
+    labels?: string[]; // 각 단계의 라벨 (선택적)
+  };
 
   // 분기 로직: 여러 브랜치 규칙 (우선순위는 인덱스 순)
   branchRules?: BranchRule[];

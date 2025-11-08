@@ -13,7 +13,7 @@ import { Question, QuestionType, Survey, Option, Section } from '@/types/survey'
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
 import { Button } from './ui/button';
-import { Plus, Type, AlignLeft, CheckSquare, LayoutGrid, FileText, User, Mail, Phone, MapPin, Globe, ChevronDown, Users, Star } from 'lucide-react';
+import { Plus, Type, AlignLeft, CheckSquare, LayoutGrid, FileText, User, Mail, Phone, MapPin, Globe, ChevronDown, Users, Star, CircleCheck, Sliders } from 'lucide-react';
 
 export function FormBuilder() {
     // 기본 섹션 생성 함수
@@ -145,6 +145,9 @@ export function FormBuilder() {
             isDropdown: undefined,
             input_type: type === 'short_text' ? 'text' : undefined,
             complexItems: (type === 'complex_choice' || type === 'complex_input') ? [] : undefined,
+            rangeConfig: type === 'range'
+                ? { min: 0, max: 10, step: 1 }
+                : undefined,
             isMultiple: false,
             design: {
                 themeColor: '#6366f1',
@@ -522,10 +525,12 @@ export function FormBuilder() {
             case 'long_text':
                 return AlignLeft;
             case 'choice':
-                return question.isDropdown ? ChevronDown : CheckSquare;
+                return question.isBoolean ? CircleCheck : (question.isDropdown ? ChevronDown : CheckSquare);
             case 'complex_choice':
             case 'complex_input':
                 return LayoutGrid;
+            case 'range':
+                return Sliders;
             case 'description':
                 return FileText;
             default:

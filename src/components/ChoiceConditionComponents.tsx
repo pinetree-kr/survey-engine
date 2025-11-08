@@ -62,6 +62,7 @@ function ChoiceSingleConditionBuilder({
 }: ChoiceSingleConditionBuilderProps) {
   const selectedQuestion = allQuestions.find((q) => q.id === currentQuestionId);
   const options = selectedQuestion?.options || [];
+  const isBoolean = selectedQuestion?.isBoolean || false;
 
   // GroupNode에서 첫 번째 predicate를 추출 (단일 선택이므로)
   const predicate = condition?.children?.[0] as PredicateNode | undefined;
@@ -86,6 +87,14 @@ function ChoiceSingleConditionBuilder({
     });
   };
 
+  // 인덱스 레이블 가져오기 (isBoolean일 때는 option.key 사용)
+  const getIndexLabel = (option: { key: string }, idx: number) => {
+    if (isBoolean) {
+      return option.key || (idx === 0 ? 'Y' : 'N');
+    }
+    return getOptionLabel(idx);
+  };
+
   return (
     <div className="mt-2">
       <div className="flex items-center gap-2">
@@ -99,7 +108,7 @@ function ChoiceSingleConditionBuilder({
           <SelectContent className="bg-white border-gray-200">
             {options.map((option, idx) => (
               <SelectItem key={option.key} value={option.key}>
-                {getOptionLabel(idx)}. {option.label || ''} 선택시
+                {getIndexLabel(option, idx)}. {option.label || ''} 선택시
               </SelectItem>
             ))}
           </SelectContent>
@@ -198,6 +207,15 @@ function ChoicePredicateNode({
   onChange,
 }: ChoicePredicateNodeProps) {
   const options = selectedQuestion?.options || [];
+  const isBoolean = selectedQuestion?.isBoolean || false;
+
+  // 인덱스 레이블 가져오기 (isBoolean일 때는 option.key 사용)
+  const getIndexLabel = (option: { key: string }, idx: number) => {
+    if (isBoolean) {
+      return option.key || (idx === 0 ? 'Y' : 'N');
+    }
+    return getOptionLabel(idx);
+  };
 
   return (
     <div className="p-3 border border-gray-200 rounded-lg bg-white">
@@ -232,7 +250,7 @@ function ChoicePredicateNode({
               <SelectContent className="bg-white border-gray-200">
                 {options.map((option, idx) => (
                   <SelectItem key={option.key} value={option.key}>
-                    {getOptionLabel(idx)}. {option.label || ''} 선택시
+                    {getIndexLabel(option, idx)}. {option.label || ''} 선택시
                   </SelectItem>
                 ))}
               </SelectContent>

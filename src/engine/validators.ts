@@ -162,24 +162,24 @@ function validateMultipleChoice(q: Question, value: unknown): string[] {
     }
   }
 
-  // selectLimit 검증
-  if (q.selectLimit) {
-    const selectedCount = selectedKeys.length;
-    
-    if (q.selectLimit.type === "exact") {
-      if (selectedCount !== q.selectLimit.value) {
-        errors.push(`정확히 ${q.selectLimit.value}개를 선택해주세요`);
-      }
-    } else if (q.selectLimit.type === "range") {
-      const { min, max } = q.selectLimit;
-      if (selectedCount < min) {
-        errors.push(`최소 ${min}개 이상 선택해주세요`);
-      }
-      if (selectedCount > max) {
-        errors.push(`최대 ${max}개까지 선택 가능합니다`);
-      }
+  // validations를 통한 선택 개수 제한 검증
+  const validations = q.validations || {};
+  const selectedCount = selectedKeys.length;
+  
+  // min과 max가 같으면 정확히 그 개수를 선택해야 함
+  if (validations.min !== undefined && validations.max !== undefined && validations.min === validations.max) {
+    if (selectedCount !== validations.min) {
+      errors.push(`정확히 ${validations.min}개를 선택해주세요`);
     }
-    // "unlimited" 타입은 제한이 없으므로 검증하지 않음
+  } else {
+    // min과 max가 다르거나 하나만 있는 경우
+    if (validations.min !== undefined && selectedCount < validations.min) {
+      errors.push(`최소 ${validations.min}개 이상 선택해주세요`);
+    }
+    
+    if (validations.max !== undefined && selectedCount > validations.max) {
+      errors.push(`최대 ${validations.max}개까지 선택 가능합니다`);
+    }
   }
 
   // isOther + freeText 검사

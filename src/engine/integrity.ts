@@ -254,7 +254,7 @@ function validateCycles(questions: Question[]): ValidationError[] {
 }
 
 /**
- * multiple_choice selectLimit 검사
+ * multiple_choice validations 검사
  */
 function validateMultipleChoiceConstraints(
   questions: Question[]
@@ -262,59 +262,53 @@ function validateMultipleChoiceConstraints(
   const errors: ValidationError[] = [];
 
   for (const q of questions) {
-    if (q.type === "choice" && q.isMultiple && q.selectLimit) {
+    if (q.type === "choice" && q.isMultiple && q.validations) {
       const optionsCount = q.options?.length || 0;
+      const validations = q.validations;
+      const { min, max } = validations;
 
-      if (q.selectLimit.type === "range") {
-        const { min, max } = q.selectLimit;
-
+      if (min !== undefined) {
         if (min < 0) {
           errors.push({
             code: "INVALID_MIN_SELECT",
-            message: `질문 ${q.id}의 selectLimit.min은 0 이상이어야 합니다`,
+            message: `질문 ${q.id}의 validations.min은 0 이상이어야 합니다`,
             meta: { questionId: q.id, min },
           });
         }
 
+        if (min > optionsCount) {
+          errors.push({
+            code: "INVALID_SELECT_RANGE",
+            message: `질문 ${q.id}의 validations.min(${min})는 옵션 수(${optionsCount}) 이하여야 합니다`,
+            meta: { questionId: q.id, min, optionsCount },
+          });
+        }
+      }
+
+      if (max !== undefined) {
         if (max <= 0) {
           errors.push({
             code: "INVALID_MAX_SELECT",
-            message: `질문 ${q.id}의 selectLimit.max는 1 이상이어야 합니다`,
+            message: `질문 ${q.id}의 validations.max는 1 이상이어야 합니다`,
             meta: { questionId: q.id, max },
-          });
-        }
-
-        if (min > max) {
-          errors.push({
-            code: "INVALID_SELECT_RANGE",
-            message: `질문 ${q.id}의 selectLimit.min(${min})는 selectLimit.max(${max}) 이하여야 합니다`,
-            meta: { questionId: q.id, min, max },
           });
         }
 
         if (max > optionsCount) {
           errors.push({
             code: "INVALID_SELECT_RANGE",
-            message: `질문 ${q.id}의 selectLimit.max(${max})는 옵션 수(${optionsCount}) 이하여야 합니다`,
+            message: `질문 ${q.id}의 validations.max(${max})는 옵션 수(${optionsCount}) 이하여야 합니다`,
             meta: { questionId: q.id, max, optionsCount },
           });
         }
-      } else if (q.selectLimit.type === "exact") {
-        const { value } = q.selectLimit;
+      }
 
-        if (value <= 0) {
-          errors.push({
-            code: "INVALID_EXACT_SELECT",
-            message: `질문 ${q.id}의 selectLimit.value는 1 이상이어야 합니다`,
-            meta: { questionId: q.id, value },
-          });
-        }
-
-        if (value > optionsCount) {
+      if (min !== undefined && max !== undefined) {
+        if (min > max) {
           errors.push({
             code: "INVALID_SELECT_RANGE",
-            message: `질문 ${q.id}의 selectLimit.value(${value})는 옵션 수(${optionsCount}) 이하여야 합니다`,
-            meta: { questionId: q.id, value, optionsCount },
+            message: `질문 ${q.id}의 validations.min(${min})는 validations.max(${max}) 이하여야 합니다`,
+            meta: { questionId: q.id, min, max },
           });
         }
       }

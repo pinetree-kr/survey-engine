@@ -62,22 +62,22 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
         'email': 'email',
         'tel': 'tel',
       };
-      
+
       // question.placeholder가 있으면 우선 사용, 없으면 기본값 사용
       const placeholder = question.placeholder || (
         inputType === 'email' ? '이메일을 입력하세요' :
-        inputType === 'tel' ? '전화번호를 입력하세요' :
-        inputType === 'number' ? '숫자를 입력하세요' :
-        '단답형 텍스트'
+          inputType === 'tel' ? '전화번호를 입력하세요' :
+            inputType === 'number' ? '숫자를 입력하세요' :
+              '단답형 텍스트'
       );
-      
+
       return (
         <div className="pt-2">
-          <Input 
-            type={inputTypeMap[inputType] || 'text'} 
+          <Input
+            type={inputTypeMap[inputType] || 'text'}
             placeholder={placeholder}
-            disabled 
-            className="bg-gray-50" 
+            disabled
+            className="bg-gray-50"
           />
         </div>
       );
@@ -86,15 +86,69 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
     case 'long_text':
       return (
         <div className="pt-2">
-          <Textarea 
-            placeholder={question.placeholder || '장문형 텍스트'} 
-            disabled 
-            className="bg-gray-50 min-h-24" 
+          <Textarea
+            placeholder={question.placeholder || '장문형 텍스트'}
+            disabled
+            className="bg-gray-50 min-h-24"
           />
         </div>
       );
 
+    case 'range': {
+      const rangeConfig = question.rangeConfig || { min: 0, max: 10, step: 1 };
+      const currentValue = rangeConfig.min;
+
+      return (
+        <div className="pt-2 space-y-3">
+          <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+            <span>{rangeConfig.min}</span>
+            <span className="font-medium">{currentValue}</span>
+            <span>{rangeConfig.max}</span>
+          </div>
+          <input
+            type="range"
+            min={rangeConfig.min}
+            max={rangeConfig.max}
+            step={rangeConfig.step}
+            value={currentValue}
+            disabled
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+            style={{
+              background: `linear-gradient(to right, #6366f1 0%, #6366f1 ${((currentValue - rangeConfig.min) / (rangeConfig.max - rangeConfig.min)) * 100}%, #e5e7eb ${((currentValue - rangeConfig.min) / (rangeConfig.max - rangeConfig.min)) * 100}%, #e5e7eb 100%)`
+            }}
+          />
+        </div>
+      );
+    }
+
     case 'choice': {
+      // 불리언(boolean)인 경우 Column 형태로 표시
+      if (question.isBoolean) {
+        return (
+          <div className="space-y-2 pt-2">
+            {(question.options || []).map((option, index) => (
+              <div key={index} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-gray-50">
+                <div className="flex items-center justify-center w-8 h-8 border-2 border-indigo-500 bg-white text-indigo-600 font-semibold text-sm rounded-full">
+                  {option.key || (index === 0 ? 'Y' : 'N')}
+                </div>
+                <input
+                  type="text"
+                  value={option.label || ''}
+                  placeholder={index === 0 ? '예' : '아니오'}
+                  onChange={(e) => {
+                    handleUpdateOption(index, e.target.value);
+                  }}
+                  className="flex-1 bg-transparent border-none outline-none text-gray-700"
+                  onClick={(e) => {
+                    // e.stopPropagation()
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        );
+      }
+
       const isDropdown = question.isDropdown;
 
       if (isDropdown) {
@@ -157,17 +211,17 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
         <div className="space-y-3 pt-2">
           {(question.options || [{ label: '' }] as Option[]).map((option, index) => {
             const optionsCount = question.options?.length || 0;
-            const canDelete = optionsCount > 1;
+            const canDelete = optionsCount > 1 && !question.isBoolean;
             return (
               <div key={index} className="flex items-center gap-3 group/option p-2 border border-gray-200 rounded-lg bg-gray-50">
                 <div className={`flex items-center justify-center w-8 h-8 border-2 border-indigo-500 bg-white text-indigo-600 font-semibold text-sm ${question.isMultiple ? 'rounded' : 'rounded-full'}`}>
-                  {getOptionLabel(index)}
+                  {question.isBoolean ? (option.key || (index === 0 ? 'Y' : 'N')) : getOptionLabel(index)}
                 </div>
                 {/* <div className={`w-4 h-4 border-2 ${question.type === 'single_choice' ? 'rounded-full' : 'rounded'} border-gray-300`} /> */}
                 <input
                   type="text"
                   value={option.label || ''}
-                  placeholder={option.freeText?.placeholder || `옵션 ${getOptionLabel(index)}`}
+                  placeholder={option.freeText?.placeholder || `옵션 ${question.isBoolean ? (option.key || (index === 0 ? 'Y' : 'N')) : getOptionLabel(index)}`}
                   onChange={(e) => {
                     // e.stopPropagation();
                     handleUpdateOption(index, e.target.value);
@@ -192,16 +246,18 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
             );
           })}
 
-          <button
-            onClick={(e) => {
-              // e.stopPropagation();
-              handleAddOption();
-            }}
-            className="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors"
-          >
-            <Plus className="w-4 h-4" />
-            <span>옵션 추가</span>
-          </button>
+          {!question.isBoolean && (
+            <button
+              onClick={(e) => {
+                // e.stopPropagation();
+                handleAddOption();
+              }}
+              className="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              <span>옵션 추가</span>
+            </button>
+          )}
 
         </div>
       );

@@ -182,7 +182,7 @@ describe("integrity", () => {
       ).toBe(true);
     });
 
-    it("multiple_choice의 selectLimit 제약을 검증해야 함", () => {
+    it("multiple_choice의 validations 제약을 검증해야 함", () => {
       const questions: Question[] = [
         {
           id: "q1",
@@ -196,8 +196,7 @@ describe("integrity", () => {
             { label: "옵션 4", key: "opt4" },
             { label: "옵션 5", key: "opt5" },
           ],
-          selectLimit: {
-            type: "range",
+          validations: {
             min: 3,
             max: 10, // 옵션 수(5)보다 큼
           },

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Type, AlignLeft, CheckSquare, LayoutGrid, FileText, Search, User, Mail, Phone, MapPin, Users, Star, Globe } from 'lucide-react';
+import { Type, AlignLeft, CheckSquare, LayoutGrid, FileText, Search, User, Mail, Phone, MapPin, Users, Star, Globe, CircleCheck, Sliders } from 'lucide-react';
 import { QuestionType, Question, Option } from '../types/survey';
 import {
   Dialog,
@@ -52,6 +52,7 @@ const allQuestionTypes: QuestionTypeItem[] = [
   { type: 'choice', icon: CheckSquare, label: '선택형', description: '라디오/체크박스/드롭다운', category: 'Choice', recommended: true },
   { type: 'complex_choice', icon: LayoutGrid, label: '복합 선택', description: '선택지와 여러 필드', category: 'Choice' },
   { type: 'complex_input', icon: LayoutGrid, label: '복합 입력', description: '여러 입력 필드', category: 'Text' },
+  { type: 'range', icon: Sliders, label: 'Range', description: '슬라이더로 점수/평점 선택', category: 'Choice' },
   { type: 'description', icon: FileText, label: '설명', description: '텍스트 블록만', category: 'Text' },
 ];
 
@@ -205,6 +206,23 @@ const questionTemplates: QuestionTemplate[] = [
         { label: '보통', key: 'neutral' },
         { label: '불만족', key: 'dissatisfied' },
         { label: '매우 불만족', key: 'very_dissatisfied' },
+      ] as Option[],
+    },
+  },
+  {
+    id: 'boolean',
+    label: '예/아니오',
+    description: '예 또는 아니오를 선택합니다',
+    icon: CircleCheck,
+    category: 'Choice',
+    template: {
+      type: 'choice',
+      title: '예/아니오',
+      required: true,
+      isBoolean: true,
+      options: [
+        { label: '예', key: 'Y' },
+        { label: '아니오', key: 'N' },
       ] as Option[],
     },
   },

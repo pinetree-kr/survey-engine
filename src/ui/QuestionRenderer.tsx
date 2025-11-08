@@ -248,13 +248,13 @@ function renderQuestionInput(
         'email': 'email',
         'tel': 'tel',
       };
-      
+
       return (
         <input
           type={inputTypeMap[inputType] || 'text'}
           value={(currentAnswer as string) || ""}
           onChange={(e) => {
-            const value = inputType === 'number' 
+            const value = inputType === 'number'
               ? (e.target.value === '' ? '' : parseFloat(e.target.value) || 0)
               : e.target.value;
             updateAnswer(question.id, value);
@@ -287,13 +287,67 @@ function renderQuestionInput(
         />
       );
 
-    case "choice":
-    case "dropdown": {
+    case "choice": {
       if (!question.options) return null;
-      
+
+      // 불리언(boolean)인 경우 Column 형태로 표시
+      if (question.isBoolean) {
+        return (
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            {question.options.map((opt) => (
+              <label
+                key={opt.key}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  padding: "12px",
+                  border: "1px solid #ccc",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  backgroundColor: currentAnswer === opt.key ? "#e3f2fd" : "white",
+                }}
+              >
+                <input
+                  type="radio"
+                  name={`question-${question.id}`}
+                  value={opt.key}
+                  checked={currentAnswer === opt.key}
+                  onChange={(e) => updateAnswer(question.id, e.target.value)}
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    cursor: "pointer",
+                  }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "32px",
+                    height: "32px",
+                    border: "2px solid #6366f1",
+                    backgroundColor: "white",
+                    color: "#6366f1",
+                    fontWeight: "bold",
+                    fontSize: "14px",
+                    borderRadius: "50%",
+                    flexShrink: 0,
+                  }}
+                >
+                  {opt.key}
+                </div>
+                <span style={{ fontSize: "16px", fontWeight: "500" }}>{opt.label}</span>
+              </label>
+            ))}
+          </div>
+        );
+      }
+
       // dropdown 타입도 choice로 통합 (하위 호환성 유지)
-      const isDropdown = question.type === "dropdown" || question.isDropdown;
-      
+      const isDropdown = question.isDropdown;
+
       if (isDropdown) {
         // 드롭다운 렌더링 (실제 select 요소로 렌더링해야 하지만, 현재는 라디오 버튼으로 표시)
         return (
@@ -338,7 +392,7 @@ function renderQuestionInput(
           </div>
         );
       }
-      
+
       if (question.isMultiple) {
         const selectedKeys = (currentAnswer as string[]) || [];
         return (
@@ -372,14 +426,14 @@ function renderQuestionInput(
                 {opt.label}
               </label>
             ))}
-            {question.minSelect !== undefined && (
+            {question.validations?.min !== undefined && (
               <div style={{ fontSize: "12px", color: "#666", marginTop: "8px" }}>
-                최소 {question.minSelect}개 선택 필요
+                최소 {question.validations.min}개 선택 필요
               </div>
             )}
-            {question.maxSelect !== undefined && (
-              <div style={{ fontSize: "12px", color: "#666" }}>
-                최대 {question.maxSelect}개 선택 가능
+            {question.validations?.max !== undefined && (
+              <div style={{ fontSize: "12px", color: "#666", marginTop: "8px" }}>
+                최대 {question.validations.max}개 선택 가능
               </div>
             )}
           </div>
@@ -578,6 +632,36 @@ function renderQuestionInput(
           ))}
         </div>
       );
+
+    case "range": {
+      const rangeConfig = question.rangeConfig || { min: 0, max: 10, step: 1 };
+      const currentValue = (currentAnswer as number) ?? rangeConfig.min;
+
+      return (
+        <div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
+            <span style={{ fontSize: "14px", color: "#666" }}>{rangeConfig.min}</span>
+            <span style={{ fontSize: "18px", fontWeight: "bold", color: "#6366f1" }}>{currentValue}</span>
+            <span style={{ fontSize: "14px", color: "#666" }}>{rangeConfig.max}</span>
+          </div>
+          <input
+            type="range"
+            min={rangeConfig.min}
+            max={rangeConfig.max}
+            step={rangeConfig.step}
+            value={currentValue}
+            onChange={(e) => updateAnswer(question.id, parseFloat(e.target.value))}
+            style={{
+              width: "100%",
+              height: "8px",
+              borderRadius: "4px",
+              outline: "none",
+              cursor: "pointer",
+            }}
+          />
+        </div>
+      );
+    }
 
     case "description":
       return (

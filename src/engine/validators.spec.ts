@@ -87,14 +87,13 @@ describe("validators", () => {
       );
     });
 
-    it("choice (isMultiple)에서 selectLimit 검증이 동작해야 함", () => {
+    it("choice (isMultiple)에서 validations 검증이 동작해야 함", () => {
       const question: Question = {
         id: "q1",
         title: "질문 1",
         type: "choice",
         isMultiple: true,
-        selectLimit: {
-          type: "range",
+        validations: {
           min: 2,
           max: 3,
         },
