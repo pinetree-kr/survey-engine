@@ -26,28 +26,45 @@ vi.mock('./Header', () => ({
   ),
 }));
 
-vi.mock('./QuestionTypePalette', () => ({
-  QuestionTypePalette: ({ onAddQuestion }: any) => (
-    <div data-testid="question-type-palette">
-      <button
-        data-testid="add-short_text"
-        onClick={() => onAddQuestion('short_text')}
-      >
-        단답형
-      </button>
-      <button
-        data-testid="add-single_choice"
-        onClick={() => onAddQuestion('single_choice')}
-      >
-        단일 선택
-      </button>
-      <button
-        data-testid="add-description"
-        onClick={() => onAddQuestion('description')}
-      >
-        설명
-      </button>
-    </div>
+vi.mock('./QuestionTypeModal', () => ({
+  QuestionTypeModal: ({ open, onOpenChange, onSelectType }: any) => (
+    open ? (
+      <div data-testid="question-type-modal">
+        <button
+          data-testid="add-short_text"
+          onClick={() => {
+            onSelectType('short_text');
+            onOpenChange(false);
+          }}
+        >
+          단답형
+        </button>
+        <button
+          data-testid="add-single_choice"
+          onClick={() => {
+            onSelectType('choice');
+            onOpenChange(false);
+          }}
+        >
+          단일 선택
+        </button>
+        <button
+          data-testid="add-description"
+          onClick={() => {
+            onSelectType('description');
+            onOpenChange(false);
+          }}
+        >
+          설명
+        </button>
+        <button
+          data-testid="close-modal"
+          onClick={() => onOpenChange(false)}
+        >
+          닫기
+        </button>
+      </div>
+    ) : null
   ),
 }));
 
@@ -130,23 +147,31 @@ describe('FormBuilder', () => {
     vi.clearAllMocks();
   });
 
+  // 모달을 여는 헬퍼 함수
+  const openQuestionTypeModal = async (user: ReturnType<typeof userEvent.setup>) => {
+    const addQuestionButton = screen.getByText('문항 추가');
+    await user.click(addQuestionButton);
+    await waitFor(() => {
+      expect(screen.getByTestId('question-type-modal')).toBeInTheDocument();
+    });
+  };
+
   describe('초기 렌더링', () => {
     it('초기 상태에서 빈 설문조사가 렌더링되어야 함', () => {
       render(<FormBuilder />);
 
       expect(screen.getByTestId('header')).toBeInTheDocument();
-      expect(screen.getByTestId('question-type-palette')).toBeInTheDocument();
       expect(screen.getByTestId('inspector-panel')).toBeInTheDocument();
-      expect(screen.getByTestId('add-question-bar')).toBeInTheDocument();
     });
 
     it('질문이 없을 때 안내 메시지가 표시되어야 함', () => {
       render(<FormBuilder />);
 
-      expect(screen.getByText('설문조사 만들기 시작')).toBeInTheDocument();
-      expect(
-        screen.getByText('왼쪽 사이드바에서 질문 유형을 선택하여 시작하세요')
-      ).toBeInTheDocument();
+      // FormBuilder는 초기 상태에서 섹션이 하나 생성되므로 안내 메시지가 표시되지 않음
+      // 대신 섹션이 있고 질문이 없는 상태를 확인
+      // 왼쪽 사이드바에 안내 메시지가 표시됨
+      expect(screen.getAllByText(/문항이 없습니다/).length).toBeGreaterThan(0);
+      expect(screen.getByText(/문항을 추가하면 여기에 표시됩니다/)).toBeInTheDocument();
     });
 
     it('초기 설문 제목이 "제목 없는 설문조사"여야 함', () => {
@@ -161,6 +186,15 @@ describe('FormBuilder', () => {
     it('단답형 질문을 추가할 수 있어야 함', async () => {
       const user = userEvent.setup();
       render(<FormBuilder />);
+
+      // 모달을 열기 위해 섹션 헤더의 "문항 추가" 버튼 클릭
+      const addQuestionButton = screen.getByText('문항 추가');
+      await user.click(addQuestionButton);
+
+      // 모달이 열린 후 질문 타입 선택
+      await waitFor(() => {
+        expect(screen.getByTestId('question-type-modal')).toBeInTheDocument();
+      });
 
       const addButton = screen.getByTestId('add-short_text');
       await user.click(addButton);
@@ -177,6 +211,8 @@ describe('FormBuilder', () => {
       const user = userEvent.setup();
       render(<FormBuilder />);
 
+      await openQuestionTypeModal(user);
+
       const addButton = screen.getByTestId('add-single_choice');
       await user.click(addButton);
 
@@ -191,6 +227,8 @@ describe('FormBuilder', () => {
     it('설명 타입 질문을 추가할 수 있어야 함', async () => {
       const user = userEvent.setup();
       render(<FormBuilder />);
+
+      await openQuestionTypeModal(user);
 
       const addButton = screen.getByTestId('add-description');
       await user.click(addButton);
@@ -207,8 +245,11 @@ describe('FormBuilder', () => {
       const user = userEvent.setup();
       render(<FormBuilder />);
 
-      const addBarButton = screen.getByTestId('add-question-bar');
-      await user.click(addBarButton);
+      // 하단 바는 FormBuilder에서 사용하지 않으므로 섹션 헤더의 "문항 추가" 버튼 사용
+      await openQuestionTypeModal(user);
+
+      const addButton = screen.getByTestId('add-short_text');
+      await user.click(addButton);
 
       await waitFor(() => {
         expect(toast.success).toHaveBeenCalledWith('질문이 추가되었습니다');
@@ -221,6 +262,8 @@ describe('FormBuilder', () => {
     it('질문 추가 시 해당 질문이 자동으로 선택되어야 함', async () => {
       const user = userEvent.setup();
       render(<FormBuilder />);
+
+      await openQuestionTypeModal(user);
 
       const addButton = screen.getByTestId('add-short_text');
       await user.click(addButton);
@@ -237,13 +280,15 @@ describe('FormBuilder', () => {
       const user = userEvent.setup();
       render(<FormBuilder />);
 
-      // 질문 추가
+      // 첫 번째 질문 추가
+      await openQuestionTypeModal(user);
       await user.click(screen.getByTestId('add-short_text'));
       await waitFor(() => {
         expect(screen.queryAllByTestId(/^question-block-/)).toHaveLength(1);
       });
 
       // 두 번째 질문 추가
+      await openQuestionTypeModal(user);
       await user.click(screen.getByTestId('add-single_choice'));
       await waitFor(() => {
         expect(screen.queryAllByTestId(/^question-block-/)).toHaveLength(2);
@@ -269,6 +314,7 @@ describe('FormBuilder', () => {
       render(<FormBuilder />);
 
       // 질문 추가
+      await openQuestionTypeModal(user);
       await user.click(screen.getByTestId('add-short_text'));
       await waitFor(() => {
         expect(screen.queryAllByTestId(/^question-block-/)).toHaveLength(1);
@@ -291,6 +337,7 @@ describe('FormBuilder', () => {
       render(<FormBuilder />);
 
       // 질문 추가
+      await openQuestionTypeModal(user);
       await user.click(screen.getByTestId('add-short_text'));
       await waitFor(() => {
         expect(screen.queryAllByTestId(/^question-block-/)).toHaveLength(1);
@@ -314,6 +361,7 @@ describe('FormBuilder', () => {
       render(<FormBuilder />);
 
       // 질문 추가
+      await openQuestionTypeModal(user);
       await user.click(screen.getByTestId('add-short_text'));
       await waitFor(() => {
         expect(screen.queryAllByTestId(/^question-block-/)).toHaveLength(1);
@@ -337,6 +385,7 @@ describe('FormBuilder', () => {
       render(<FormBuilder />);
 
       // 질문 추가
+      await openQuestionTypeModal(user);
       await user.click(screen.getByTestId('add-short_text'));
       await waitFor(() => {
         expect(screen.queryAllByTestId(/^question-block-/)).toHaveLength(1);
@@ -361,6 +410,7 @@ describe('FormBuilder', () => {
       render(<FormBuilder />);
 
       // 질문 추가
+      await openQuestionTypeModal(user);
       await user.click(screen.getByTestId('add-short_text'));
       await waitFor(() => {
         expect(screen.queryAllByTestId(/^question-block-/)).toHaveLength(1);
@@ -413,6 +463,7 @@ describe('FormBuilder', () => {
       render(<FormBuilder />);
 
       // 질문 추가
+      await openQuestionTypeModal(user);
       await user.click(screen.getByTestId('add-short_text'));
       await waitFor(() => {
         expect(screen.queryAllByTestId(/^question-block-/)).toHaveLength(1);
@@ -464,18 +515,21 @@ describe('FormBuilder', () => {
       render(<FormBuilder />);
 
       // 첫 번째 질문 추가
+      await openQuestionTypeModal(user);
       await user.click(screen.getByTestId('add-short_text'));
       await waitFor(() => {
         expect(screen.queryAllByTestId(/^question-block-/)).toHaveLength(1);
       });
 
       // 두 번째 질문 추가
+      await openQuestionTypeModal(user);
       await user.click(screen.getByTestId('add-single_choice'));
       await waitFor(() => {
         expect(screen.queryAllByTestId(/^question-block-/)).toHaveLength(2);
       });
 
       // 세 번째 질문 추가
+      await openQuestionTypeModal(user);
       await user.click(screen.getByTestId('add-description'));
       await waitFor(() => {
         expect(screen.queryAllByTestId(/^question-block-/)).toHaveLength(3);

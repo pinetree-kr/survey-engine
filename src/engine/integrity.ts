@@ -61,9 +61,9 @@ function validateUniqueness(questions: Question[]): ValidationError[] {
     questionIds.add(q.id);
   }
 
-  // 각 질문 내 options[].key 중복 검사
   for (const q of questions) {
-    if (q.options) {
+    // 각 질문 내 options[].key 중복 검사
+    if (isChoiceQuestion(q) && q.options) {
       const optionKeys = new Set<string>();
       for (const opt of q.options) {
         if (optionKeys.has(opt.key)) {
@@ -76,13 +76,10 @@ function validateUniqueness(questions: Question[]): ValidationError[] {
         optionKeys.add(opt.key);
       }
     }
-  }
-
-  // 각 질문 내 compositeItems[].key 중복 검사
-  for (const q of questions) {
-    if (q.compositeItems) {
+    // 각 질문 내 complexItems[].key 중복 검사
+    if (isComplexChoiceQuestion(q) && q.complexItems) {
       const compositeKeys = new Set<string>();
-      for (const item of q.compositeItems) {
+      for (const item of q.complexItems) {
         if (compositeKeys.has(item.key)) {
           errors.push({
             code: "DUPLICATE_COMPOSITE_KEY",
@@ -107,7 +104,7 @@ function validateReferences(questions: Question[]): ValidationError[] {
 
   for (const q of questions) {
     // branchRules의 next_question_id 및 question_id 검사
-    if (q.branchRules) {
+    if ((isChoiceQuestion(q) || isComplexChoiceQuestion(q)) && q.branchRules) {
       for (const rule of q.branchRules) {
         if (!questionIds.has(rule.next_question_id)) {
           errors.push({
@@ -160,7 +157,7 @@ function validateReachability(questions: Question[]): ValidationError[] {
   const startQuestionId = questions[0].id;
 
   // DFS로 도달 가능한 노드 탐색
-  function dfs(questionId: string) {
+  function dfs(questionId: string, fromBranchRule: boolean = false) {
     if (visited.has(questionId)) {
       return;
     }
@@ -171,15 +168,45 @@ function validateReachability(questions: Question[]): ValidationError[] {
       return;
     }
 
+    const hasBranchRules = (isChoiceQuestion(question) || isComplexChoiceQuestion(question)) &&
+      question.branchRules &&
+      question.branchRules.length > 0;
+
     // branchRules의 next_question_id (choice 타입에서만 사용 가능)
     if (isChoiceQuestion(question) && question.branchRules) {
       for (const rule of question.branchRules) {
-        dfs(rule.next_question_id);
+        dfs(rule.next_question_id, true);
       }
     }
     if (isComplexChoiceQuestion(question) && question.branchRules) {
       for (const rule of question.branchRules) {
-        dfs(rule.next_question_id);
+        dfs(rule.next_question_id, true);
+      }
+    }
+
+    // 선형 다음 질문도 확인 (branchRules가 없거나 모든 branchRules가 실패할 경우)
+    // branchRules가 있으면 선형 다음 질문으로 가지 않음 (조건부 분기이므로)
+    // 단, branchRules가 when 조건 없이 항상 실행되는 경우는 제외
+    if (!hasBranchRules) {
+      // branchRules가 없으면 선형 다음 질문으로 갈 수 있음
+      // 단, branchRules로 도달한 경우는 선형 경로를 확인하지 않음
+      if (!fromBranchRule) {
+        const currentIndex = questions.findIndex((q) => q.id === questionId);
+        if (currentIndex !== -1 && currentIndex < questions.length - 1) {
+          dfs(questions[currentIndex + 1].id, false);
+        }
+      }
+    } else {
+      // branchRules가 있지만 when 조건이 없는 규칙이 있으면 선형 다음 질문도 확인하지 않음
+      // (when 조건이 없으면 항상 실행되므로 선형 경로는 차단됨)
+      const hasAlwaysTrueRule = question.branchRules?.some(rule => !rule.when);
+      if (!hasAlwaysTrueRule && !fromBranchRule) {
+        // 모든 branchRules가 when 조건이 있으면, 조건이 실패할 경우 선형 다음 질문으로 갈 수 있음
+        // 단, branchRules로 도달한 경우는 선형 경로를 확인하지 않음
+        const currentIndex = questions.findIndex((q) => q.id === questionId);
+        if (currentIndex !== -1 && currentIndex < questions.length - 1) {
+          dfs(questions[currentIndex + 1].id, false);
+        }
       }
     }
   }
@@ -351,9 +378,9 @@ function validateRegexPatterns(questions: Question[]): ValidationError[] {
       }
     }
 
-    // compositeItems의 정규식
-    if (q.compositeItems) {
-      for (const item of q.compositeItems) {
+    // complexItems의 정규식
+    if ('complexItems' in q && q.complexItems) {
+      for (const item of q.complexItems) {
         if (item.validations?.regex) {
           try {
             new RegExp(item.validations.regex);
