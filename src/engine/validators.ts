@@ -48,6 +48,9 @@ export function validateAnswer(
     case "complex_choice":
       errors.push(...validateComposite(q, value));
       break;
+    case "complex_input":
+      errors.push(...validateComposite(q, value));
+      break;
     case "description":
       // description은 답변이 없어도 됨
       break;

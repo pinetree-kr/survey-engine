@@ -53,6 +53,10 @@ function getAnswerBasedNext(
     case "complex_choice":
       return getCompositeNext(question, answer as Record<string, unknown>);
 
+    case "complex_input":
+      // complex_input은 선택 기능이 없으므로 항상 null 반환
+      return null;
+
     default:
       return null;
   }

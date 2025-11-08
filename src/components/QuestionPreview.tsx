@@ -54,17 +54,43 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
   };
 
   switch (question.type) {
-    case 'short_text':
+    case 'short_text': {
+      const inputType = question.input_type || 'text';
+      const inputTypeMap: Record<string, string> = {
+        'text': 'text',
+        'number': 'number',
+        'email': 'email',
+        'tel': 'tel',
+      };
+      
+      // question.placeholder가 있으면 우선 사용, 없으면 기본값 사용
+      const placeholder = question.placeholder || (
+        inputType === 'email' ? '이메일을 입력하세요' :
+        inputType === 'tel' ? '전화번호를 입력하세요' :
+        inputType === 'number' ? '숫자를 입력하세요' :
+        '단답형 텍스트'
+      );
+      
       return (
         <div className="pt-2">
-          <Input placeholder="단답형 텍스트" disabled className="bg-gray-50" />
+          <Input 
+            type={inputTypeMap[inputType] || 'text'} 
+            placeholder={placeholder}
+            disabled 
+            className="bg-gray-50" 
+          />
         </div>
       );
+    }
 
     case 'long_text':
       return (
         <div className="pt-2">
-          <Textarea placeholder="장문형 텍스트" disabled className="bg-gray-50 min-h-24" />
+          <Textarea 
+            placeholder={question.placeholder || '장문형 텍스트'} 
+            disabled 
+            className="bg-gray-50 min-h-24" 
+          />
         </div>
       );
 
@@ -185,7 +211,7 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
       if (!question.complexItems || question.complexItems.length === 0) {
         return (
           <div className="pt-2 text-gray-500 text-sm">
-            복합 필드를 추가하려면 설정 패널에서 항목을 추가하세요
+            복합 선택 필드를 추가하려면 설정 패널에서 항목을 추가하세요
           </div>
         );
       }
@@ -201,7 +227,41 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
                   {item.label}
                 </label>
                 <Input
-                  type={item.input_type === 'number' ? 'number' : 'text'}
+                  type={item.input_type === 'number' ? 'number' : item.input_type === 'email' ? 'email' : item.input_type === 'tel' ? 'tel' : 'text'}
+                  placeholder={item.placeholder || ''}
+                  disabled
+                  className="bg-white"
+                />
+                {item.unit && (
+                  <span className="text-sm text-gray-500 whitespace-nowrap">
+                    {item.unit}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+
+    case 'complex_input':
+      if (!question.complexItems || question.complexItems.length === 0) {
+        return (
+          <div className="pt-2 text-gray-500 text-sm">
+            복합 입력 필드를 추가하려면 설정 패널에서 항목을 추가하세요
+          </div>
+        );
+      }
+      return (
+        <div className="space-y-4 pt-2">
+          {question.complexItems.map((item) => (
+            <div key={item.key} className="flex flex-col gap-2">
+              <label className="text-sm text-gray-700 font-medium">
+                {item.label}
+                {item.required && <span className="text-red-500"> *</span>}
+              </label>
+              <div className="flex items-center gap-2">
+                <Input
+                  type={item.input_type === 'number' ? 'number' : item.input_type === 'email' ? 'email' : item.input_type === 'tel' ? 'tel' : 'text'}
                   placeholder={item.placeholder || ''}
                   disabled
                   className="bg-white"

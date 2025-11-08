@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { QuestionTypePalette } from '@/components/QuestionTypePalette';
+import { QuestionTypeModal } from '@/components/QuestionTypeModal';
 import { QuestionBlock } from '@/components/QuestionBlock';
 import { InspectorPanel } from '@/components/InspectorPanel';
 import { Header } from '@/components/Header';
@@ -30,6 +30,9 @@ export function FormBuilder() {
     });
 
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
+    const [isQuestionTypeModalOpen, setIsQuestionTypeModalOpen] = useState(false);
+    const [modalSectionId, setModalSectionId] = useState<string | undefined>(undefined);
+    const [modalTargetIndex, setModalTargetIndex] = useState<number | undefined>(undefined);
 
     // 섹션별로 정렬된 섹션 목록
     const sortedSections = useMemo(() => {
@@ -67,6 +70,65 @@ export function FormBuilder() {
         return grouped;
     }, [survey.questions, sortedSections]);
 
+    const handleOpenQuestionTypeModal = useCallback((sectionId?: string, targetIndex?: number) => {
+        setModalSectionId(sectionId);
+        setModalTargetIndex(targetIndex);
+        setIsQuestionTypeModalOpen(true);
+    }, []);
+
+    const handleAddQuestionFromTemplate = useCallback((template: Partial<Question>, sectionId?: string, targetIndex?: number) => {
+        // sectionId가 제공되지 않으면 첫 번째 섹션에 할당
+        const targetSectionId = sectionId || (sortedSections.length > 0 ? sortedSections[0].id : undefined);
+
+        // 템플릿의 options에 key 추가 (없는 경우)
+        const processedOptions = template.options?.map((opt, index) => ({
+            ...opt,
+            key: opt.key || `opt-${Date.now()}-${index}-${Math.random().toString(36).substring(2, 9)}`,
+        }));
+
+        // 템플릿의 모든 필드를 포함하고, 필요한 필드만 덮어쓰기
+        const newQuestion: Question = {
+            ...template,
+            id: `q-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+            type: template.type || 'short_text',
+            title: template.title || '',
+            required: template.required ?? false,
+            options: processedOptions,
+            isMultiple: template.isMultiple ?? false,
+            design: {
+                ...template.design,
+                themeColor: template.design?.themeColor || '#6366f1',
+            },
+            sectionId: targetSectionId,
+        };
+
+        setSurvey((prev) => {
+            const allQuestions = [...prev.questions];
+
+            // targetIndex가 지정된 경우 해당 위치에 삽입
+            if (targetIndex !== undefined && targetIndex >= 0 && targetIndex <= allQuestions.length) {
+                allQuestions.splice(targetIndex, 0, newQuestion);
+            } else {
+                // targetIndex가 없으면 해당 섹션의 마지막에 추가
+                const sectionQuestions = allQuestions.filter(q => q.sectionId === targetSectionId);
+                if (sectionQuestions.length > 0) {
+                    const lastSectionQuestionIndex = allQuestions.findIndex(q => q.id === sectionQuestions[sectionQuestions.length - 1].id);
+                    allQuestions.splice(lastSectionQuestionIndex + 1, 0, newQuestion);
+                } else {
+                    allQuestions.push(newQuestion);
+                }
+            }
+
+            return {
+                ...prev,
+                questions: allQuestions,
+            };
+        });
+
+        setSelectedQuestionId(newQuestion.id);
+        toast.success('템플릿으로 질문이 추가되었습니다');
+    }, [sortedSections]);
+
     const handleAddQuestion = useCallback((type: QuestionType, sectionId?: string, targetIndex?: number) => {
         // sectionId가 제공되지 않으면 첫 번째 섹션에 할당
         const targetSectionId = sectionId || (sortedSections.length > 0 ? sortedSections[0].id : undefined);
@@ -81,7 +143,8 @@ export function FormBuilder() {
                 ? [{ label: '', key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[]
                 : undefined,
             isDropdown: undefined,
-            complexItems: type === 'complex_choice' ? [] : undefined,
+            input_type: type === 'short_text' ? 'text' : undefined,
+            complexItems: (type === 'complex_choice' || type === 'complex_input') ? [] : undefined,
             isMultiple: false,
             design: {
                 themeColor: '#6366f1',
@@ -436,9 +499,6 @@ export function FormBuilder() {
                 />
 
                 <div className="flex flex-1 overflow-hidden">
-                    {/* Left Sidebar - Question Type Palette */}
-                    <QuestionTypePalette onAddQuestion={handleAddQuestion} />
-
                     {/* Center Canvas */}
                     <div className="flex-1 overflow-y-auto">
                         <div className="max-w-3xl mx-auto p-8">
@@ -451,7 +511,7 @@ export function FormBuilder() {
                                     </div>
                                     <h3 className="text-gray-900 mb-2">설문조사 만들기 시작</h3>
                                     <p className="text-gray-500 mb-8">
-                                        왼쪽 사이드바에서 질문 유형을 선택하여 시작하세요
+                                        섹션 헤더의 "문항 추가" 버튼을 클릭하여 질문을 추가하세요
                                     </p>
                                 </div>
                             ) : (
@@ -482,7 +542,7 @@ export function FormBuilder() {
                                                         onUpdate={handleUpdateSection}
                                                         onDelete={handleDeleteSection}
                                                         onMove={handleMoveSection}
-                                                        onAddQuestion={(sectionId) => handleAddQuestion('short_text', sectionId)}
+                                                        onAddQuestion={handleOpenQuestionTypeModal}
                                                     />
                                                 </div>
 
@@ -492,7 +552,7 @@ export function FormBuilder() {
                                                         <SectionDropZone
                                                             sectionId={section.id}
                                                             onDrop={handleMoveQuestionToSection}
-                                                            onAddQuestion={(sectionId) => handleAddQuestion('short_text', sectionId)}
+                                                            onAddQuestion={handleOpenQuestionTypeModal}
                                                             isEmpty={true}
                                                         />
                                                     ) : (
@@ -501,7 +561,7 @@ export function FormBuilder() {
                                                             <SectionDropZone
                                                                 sectionId={section.id}
                                                                 onDrop={handleMoveQuestionToSection}
-                                                                onAddQuestion={(sectionId, targetIndex) => handleAddQuestion('short_text', sectionId, targetIndex)}
+                                                                onAddQuestion={handleOpenQuestionTypeModal}
                                                                 isEmpty={false}
                                                                 targetIndex={globalQuestionIndices[0] || 0}
                                                             />
@@ -528,7 +588,7 @@ export function FormBuilder() {
                                                                         <SectionDropZone
                                                                             sectionId={section.id}
                                                                             onDrop={handleMoveQuestionToSection}
-                                                                            onAddQuestion={(sectionId, targetIndex) => handleAddQuestion('short_text', sectionId, targetIndex)}
+                                                                            onAddQuestion={handleOpenQuestionTypeModal}
                                                                             isEmpty={false}
                                                                             targetIndex={nextGlobalIndex !== undefined ? nextGlobalIndex : globalIndex + 1}
                                                                         />
@@ -572,6 +632,16 @@ export function FormBuilder() {
                 </div>
 
                 <Toaster position="bottom-right" />
+
+                {/* Question Type Selection Modal */}
+                <QuestionTypeModal
+                    open={isQuestionTypeModalOpen}
+                    onOpenChange={setIsQuestionTypeModalOpen}
+                    onSelectType={handleAddQuestion}
+                    onSelectTemplate={handleAddQuestionFromTemplate}
+                    sectionId={modalSectionId}
+                    targetIndex={modalTargetIndex}
+                />
             </div>
         </DndProvider>
     );

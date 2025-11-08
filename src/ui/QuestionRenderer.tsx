@@ -240,7 +240,36 @@ function renderQuestionInput(
   const currentAnswer = answers.get(question.id);
 
   switch (question.type) {
-    case "short_text":
+    case "short_text": {
+      const inputType = question.input_type || 'text';
+      const inputTypeMap: Record<string, string> = {
+        'text': 'text',
+        'number': 'number',
+        'email': 'email',
+        'tel': 'tel',
+      };
+      
+      return (
+        <input
+          type={inputTypeMap[inputType] || 'text'}
+          value={(currentAnswer as string) || ""}
+          onChange={(e) => {
+            const value = inputType === 'number' 
+              ? (e.target.value === '' ? '' : parseFloat(e.target.value) || 0)
+              : e.target.value;
+            updateAnswer(question.id, value);
+          }}
+          style={{
+            width: "100%",
+            padding: "10px",
+            border: "1px solid #ccc",
+            borderRadius: "4px",
+            fontSize: "16px",
+          }}
+          placeholder={question.validations?.regex ? "형식에 맞게 입력하세요" : ""}
+        />
+      );
+    }
     case "long_text":
       return (
         <input
@@ -486,6 +515,67 @@ function renderQuestionInput(
               </label>
             );
           })}
+        </div>
+      );
+
+    case "complex_input":
+      if (!question.complexItems) return null;
+      const complexInputAnswer =
+        (currentAnswer as Record<string, unknown>) || {};
+      return (
+        <div>
+          {question.complexItems.map((item) => (
+            <div
+              key={item.key}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "8px",
+                marginBottom: "16px",
+              }}
+            >
+              <label
+                style={{
+                  fontWeight: "500",
+                  fontSize: "14px",
+                  color: "#333",
+                }}
+              >
+                {item.label}
+                {item.required && <span style={{ color: "red" }}> *</span>}
+              </label>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <input
+                  type={item.input_type === "number" ? "number" : item.input_type === "email" ? "email" : item.input_type === "tel" ? "tel" : "text"}
+                  value={(complexInputAnswer[item.key] as string) || ""}
+                  onChange={(e) => {
+                    const newAnswer = {
+                      ...complexInputAnswer,
+                      [item.key]:
+                        item.input_type === "number"
+                          ? (e.target.value === "" ? "" : Number(e.target.value))
+                          : e.target.value,
+                    };
+                    updateAnswer(question.id, newAnswer);
+                  }}
+                  placeholder={item.placeholder || ""}
+                  required={item.required}
+                  style={{
+                    flex: 1,
+                    padding: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    fontSize: "16px",
+                  }}
+                />
+                {item.unit && (
+                  <span style={{ whiteSpace: "nowrap", fontSize: "14px", color: "#666" }}>
+                    {item.unit}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
         </div>
       );
 

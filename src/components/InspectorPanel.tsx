@@ -56,7 +56,9 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
   const isChoiceType = questionType === 'choice';
   const showChoiceOptions = isChoiceType;
   const isComplexChoiceType = questionType === 'complex_choice';
+  const isComplexInputType = questionType === 'complex_input';
   const showComplexChoiceOptions = isComplexChoiceType;
+  const showComplexInputOptions = isComplexInputType;
 
   // dropdown 타입을 choice로 통합 (하위 호환성 유지)
   const isDropdown = isChoiceType && question.isDropdown;
@@ -150,32 +152,48 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                       // choice가 아닌 타입으로 변경: choice 관련 필드 제거
                       updates.options = undefined;
                       updates.isDropdown = undefined;
-                      // complex_choice는 isMultiple과 selectLimit을 유지
-                      if (newType !== 'complex_choice') {
-                        updates.isMultiple = undefined;
-                        updates.selectLimit = undefined;
-                      }
+                    // complex_choice는 isMultiple을 유지
+                    if (newType !== 'complex_choice' && newType !== 'complex_input') {
+                      updates.isMultiple = undefined;
                     }
+                  }
 
-                    if (newType === 'complex_choice') {
-                      // complex_choice 타입으로 변경: complexItems 초기화
-                      if (!question.complexItems || question.complexItems.length === 0) {
-                        updates.complexItems = [];
-                      }
-                      // isMultiple 기본값 설정 (없으면 false)
-                      if (question.isMultiple === undefined) {
-                        updates.isMultiple = false;
-                      }
-                    } else {
-                      // complex_choice가 아닌 타입으로 변경: complexItems 제거
-                      if (newType !== 'choice') {
-                        updates.complexItems = undefined;
-                      }
+                  if (newType === 'complex_choice') {
+                    // complex_choice 타입으로 변경: complexItems 초기화
+                    if (!question.complexItems || question.complexItems.length === 0) {
+                      updates.complexItems = [];
                     }
+                    // isMultiple 기본값 설정 (없으면 false)
+                    if (question.isMultiple === undefined) {
+                      updates.isMultiple = false;
+                    }
+                  } else if (newType === 'complex_input') {
+                    // complex_input 타입으로 변경: complexItems 초기화
+                    if (!question.complexItems || question.complexItems.length === 0) {
+                      updates.complexItems = [];
+                    }
+                    // complex_input은 선택 기능이 없으므로 isMultiple 제거
+                    updates.isMultiple = undefined;
+                  } else {
+                    // complex_choice/complex_input이 아닌 타입으로 변경: complexItems 제거
+                    if (newType !== 'choice') {
+                      updates.complexItems = undefined;
+                    }
+                  }
 
                     if (newType === 'description') {
                       // description 타입: description 필드 초기화
                       updates.description = '';
+                    }
+
+                    if (newType === 'short_text') {
+                      // short_text 타입으로 변경: input_type 기본값 설정
+                      if (!question.input_type) {
+                        updates.input_type = 'text';
+                      }
+                    } else {
+                      // short_text가 아닌 타입으로 변경: input_type 제거
+                      updates.input_type = undefined;
                     }
 
                     onUpdate(updates);
@@ -186,7 +204,8 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                       {question.type === 'short_text' && '단답형'}
                       {question.type === 'long_text' && '장문형'}
                       {question.type === 'choice' && '선택형'}
-                      {question.type === 'complex_choice' && '복합 입력'}
+                      {question.type === 'complex_choice' && '복합 선택'}
+                      {question.type === 'complex_input' && '복합 입력'}
                       {question.type === 'description' && '설명'}
                     </SelectValue>
                   </SelectTrigger>
@@ -194,11 +213,50 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                     <SelectItem value="short_text">단답형</SelectItem>
                     <SelectItem value="long_text">장문형</SelectItem>
                     <SelectItem value="choice">선택형</SelectItem>
-                    <SelectItem value="complex_choice">복합 입력</SelectItem>
+                    <SelectItem value="complex_choice">복합 선택</SelectItem>
+                    <SelectItem value="complex_input">복합 입력</SelectItem>
                     <SelectItem value="description">설명</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
+
+              {questionType === 'short_text' && (
+                <div>
+                  <Label htmlFor="inputType" className="mb-2 block">입력 필드 타입</Label>
+                  <Select
+                    value={question.input_type || 'text'}
+                    onValueChange={(value) => {
+                      onUpdate({ input_type: value as 'text' | 'number' | 'email' | 'tel' });
+                    }}
+                  >
+                    <SelectTrigger className="bg-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border-gray-200">
+                      <SelectItem value="text">텍스트</SelectItem>
+                      <SelectItem value="number">숫자</SelectItem>
+                      <SelectItem value="email">이메일</SelectItem>
+                      <SelectItem value="tel">전화번호</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {(questionType === 'short_text' || questionType === 'long_text') && (
+                <div>
+                  <Label htmlFor="placeholder" className="mb-2 block">Placeholder</Label>
+                  <Input
+                    id="placeholder"
+                    type="text"
+                    value={question.placeholder || ''}
+                    onChange={(e) => {
+                      onUpdate({ placeholder: e.target.value || undefined });
+                    }}
+                    placeholder="입력 필드에 표시될 힌트 텍스트"
+                    className="bg-white"
+                  />
+                </div>
+              )}
 
               <div className="flex items-center justify-between">
                 <Label htmlFor="required" className="cursor-pointer">필수 항목</Label>
@@ -230,100 +288,11 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                     checked={question.isMultiple || false}
                     onCheckedChange={(checked) => {
                       onUpdate({ isMultiple: checked });
-                      // 다중선택을 끄면 selectLimit 제거
-                      if (!checked) {
-                        onUpdate({ selectLimit: undefined });
-                      } else if (!question.selectLimit) {
-                        // 다중선택을 켤 때 기본값으로 무제한 설정
-                        onUpdate({ selectLimit: { type: 'unlimited' } });
-                      }
                     }}
                   />
                 </div>
               )}
 
-              {showChoiceOptions && question.isMultiple && (
-                <div className="flex items-center gap-3">
-                  <Select
-                    value={question.selectLimit?.type || 'unlimited'}
-                    onValueChange={(value) => {
-                      if (value === 'unlimited') {
-                        onUpdate({ selectLimit: { type: 'unlimited' } });
-                      } else if (value === 'exact') {
-                        const optionsCount = question.options?.length || 1;
-                        onUpdate({ selectLimit: { type: 'exact', value: Math.min(1, optionsCount) } });
-                      } else if (value === 'range') {
-                        const optionsCount = question.options?.length || 1;
-                        onUpdate({ selectLimit: { type: 'range', min: 0, max: Math.min(1, optionsCount) } });
-                      }
-                    }}
-                  >
-                    <SelectTrigger className="bg-white w-[140px]">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border-gray-200">
-                      <SelectItem value="unlimited">무제한</SelectItem>
-                      <SelectItem value="exact">정확한 수</SelectItem>
-                      <SelectItem value="range">범위</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  {question.selectLimit?.type === 'exact' && (() => {
-                    const optionsCount = question.options?.length || 1;
-                    return (
-                      <Input
-                        type="number"
-                        min="1"
-                        max={optionsCount}
-                        value={question.selectLimit.type === 'exact' ? question.selectLimit.value : 1}
-                        onChange={(e) => {
-                          const value = parseInt(e.target.value, 10);
-                          if (!isNaN(value) && value > 0 && value <= optionsCount) {
-                            onUpdate({ selectLimit: { type: 'exact', value } });
-                          }
-                        }}
-                        className="bg-white w-20"
-                      />
-                    );
-                  })()}
-
-                  {question.selectLimit?.type === 'range' && (() => {
-                    const optionsCount = question.options?.length || 1;
-                    return (
-                      <>
-                        <Input
-                          type="number"
-                          min="0"
-                          max={optionsCount}
-                          value={question.selectLimit.type === 'range' ? question.selectLimit.min : 0}
-                          onChange={(e) => {
-                            const min = parseInt(e.target.value, 10);
-                            const max = question.selectLimit?.type === 'range' ? question.selectLimit.max : 1;
-                            if (!isNaN(min) && min >= 0 && min <= max && min <= optionsCount) {
-                              onUpdate({ selectLimit: { type: 'range', min, max } });
-                            }
-                          }}
-                          className="bg-white w-20"
-                        />
-                        <Input
-                          type="number"
-                          min="1"
-                          max={optionsCount}
-                          value={question.selectLimit.type === 'range' ? question.selectLimit.max : 1}
-                          onChange={(e) => {
-                            const max = parseInt(e.target.value, 10);
-                            const min = question.selectLimit?.type === 'range' ? question.selectLimit.min : 0;
-                            if (!isNaN(max) && max > 0 && max >= min && max <= optionsCount) {
-                              onUpdate({ selectLimit: { type: 'range', min, max } });
-                            }
-                          }}
-                          className="bg-white w-20"
-                        />
-                      </>
-                    );
-                  })()}
-                </div>
-              )}
 
               {showChoiceOptions && (
                 <div className="flex items-center justify-between">
@@ -352,22 +321,15 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                     checked={question.isMultiple || false}
                     onCheckedChange={(checked) => {
                       onUpdate({ isMultiple: checked });
-                      // 다중선택을 끄면 selectLimit 제거
-                      if (!checked) {
-                        onUpdate({ selectLimit: undefined });
-                      } else if (!question.selectLimit) {
-                        // 다중선택을 켤 때 기본값으로 무제한 설정
-                        onUpdate({ selectLimit: { type: 'unlimited' } });
-                      }
                     }}
                   />
                 </div>
               )}
 
-              {showComplexChoiceOptions && (
+              {(showComplexChoiceOptions || showComplexInputOptions) && (
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <Label>복합 필드</Label>
+                    <Label>{showComplexChoiceOptions ? '복합 선택 필드' : '복합 입력 필드'}</Label>
                     <Button
                       type="button"
                       variant="outline"
@@ -479,7 +441,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              {!showChoiceOptions && !showComplexChoiceOptions && (
+              {!showChoiceOptions && !showComplexChoiceOptions && !showComplexInputOptions && (
                 <div>
                   <Label htmlFor="validation">유효성 검사</Label>
                   <Input
@@ -960,7 +922,7 @@ function DefaultPredicateNode({
   onChange,
 }: DefaultPredicateNodeProps) {
   const selectedType = selectedQuestion?.type as string;
-  const isComposite = selectedType === 'complex_choice';
+  const isComposite = selectedType === 'complex_choice' || selectedType === 'complex_input';
   const complexItems = (selectedQuestion as any)?.complexItems || [];
 
   return (

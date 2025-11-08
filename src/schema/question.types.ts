@@ -3,6 +3,7 @@ export type QuestionType =
   | "long_text"
   | "choice"
   | "complex_choice"
+  | "complex_input"
   | "description";
 
 
@@ -65,9 +66,7 @@ export type ComplexItem = {
   placeholder?: string;
   key: string; // compositeItems 내 유일
   required?: boolean;
-  show_conditions?: PredicateNode; // 항목 단위 표시 조건
   validations?: Validation;
-  branchRules?: BranchRule[]; // default []
 };
 
 // 분기 규칙: 브랜치 로직과 다음 질문 ID를 정의
@@ -129,8 +128,10 @@ export type Question = {
   isMultiple?: boolean; // choice/complex_choice 타입에서 다중선택 허용 여부
   selectLimit?: SelectLimit; // isMultiple이 true일 때 선택 제한 설정
   isDropdown?: boolean; // choice 타입에서 드롭다운 렌더링 여부
+  input_type?: "text" | "number" | "email" | "tel"; // short_text 타입에서 입력 필드 타입
+  placeholder?: string; // short_text/long_text 타입에서 입력 필드 placeholder
 
-  // complex_choice 문항일 경우
+  // complex_choice/complex_input 문항일 경우
   complexItems?: ComplexItem[];
 
   // 분기 로직: 여러 브랜치 규칙 (우선순위는 인덱스 순)
