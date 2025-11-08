@@ -89,7 +89,7 @@ export function SectionDropZone({ sectionId, onDrop, onAddQuestion, isEmpty = fa
     <div
       ref={ref}
       data-handler-id={handlerId}
-      className={`relative my-3 flex items-center justify-center h-4 min-h-[16px] ${onAddQuestion ? 'cursor-pointer' : ''}`}
+      className={`relative my-3 flex items-center justify-center h-4 min-h-[16px] group transition-all duration-200 ${onAddQuestion ? 'cursor-pointer' : ''}`}
       onClick={handleClick}
     >
       <div className="flex items-center gap-3 w-full px-4">
@@ -101,16 +101,16 @@ export function SectionDropZone({ sectionId, onDrop, onAddQuestion, isEmpty = fa
           </>
         ) : (
           <>
-            <div className="flex-1 h-1 bg-transparent" />
+            <div className={`flex-1 h-1 transition-colors ${onAddQuestion ? 'group-hover:bg-indigo-200' : 'bg-transparent'}`} />
             {onAddQuestion && (
-              <div className="h-6 w-6 rounded-full bg-gray-200 hover:bg-indigo-400 text-gray-500 hover:text-white transition-all flex-shrink-0 opacity-30 hover:opacity-100 group-hover:opacity-100 flex items-center justify-center">
+              <div className="h-6 w-6 rounded-full bg-gray-200 group-hover:bg-indigo-400 text-gray-500 group-hover:text-white transition-all flex-shrink-0 opacity-30 group-hover:opacity-100 flex items-center justify-center">
                 <Plus className="h-4 w-4" />
               </div>
             )}
             {!onAddQuestion && (
               <div className="h-4 w-4 bg-transparent flex-shrink-0" />
             )}
-            <div className="flex-1 h-1 bg-transparent" />
+            <div className={`flex-1 h-1 transition-colors ${onAddQuestion ? 'group-hover:bg-indigo-200' : 'bg-transparent'}`} />
           </>
         )}
       </div>
