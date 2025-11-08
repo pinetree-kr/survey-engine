@@ -13,7 +13,7 @@ import { Question, QuestionType, Survey, Option, Section } from '@/types/survey'
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
 import { Button } from './ui/button';
-import { Plus } from 'lucide-react';
+import { Plus, Type, AlignLeft, CheckSquare, LayoutGrid, FileText, User, Mail, Phone, MapPin, Globe, ChevronDown, Users, Star } from 'lucide-react';
 
 export function FormBuilder() {
     // 기본 섹션 생성 함수
@@ -487,6 +487,62 @@ export function FormBuilder() {
 
     const selectedQuestion = survey.questions.find((q) => q.id === selectedQuestionId) || null;
 
+    // 문항 타입별 아이콘 매핑
+    const getQuestionIcon = (question: Question) => {
+        // 템플릿 기반 문항인지 확인 (title로 추정)
+        if (question.title === '이름' && question.type === 'short_text' && question.input_type === 'text') {
+            return User;
+        }
+        if (question.title === '이메일' && question.type === 'short_text' && question.input_type === 'email') {
+            return Mail;
+        }
+        if (question.title === '전화번호' && question.type === 'short_text' && question.input_type === 'tel') {
+            return Phone;
+        }
+        if (question.title === '주소' && question.type === 'long_text') {
+            return MapPin;
+        }
+        if (question.title === '웹사이트' && question.type === 'short_text') {
+            return Globe;
+        }
+        if (question.title === '연락처 정보' && question.type === 'complex_input') {
+            return User;
+        }
+        if (question.title === '성별' && question.type === 'choice') {
+            return Users;
+        }
+        if (question.title === '만족도' && question.type === 'choice') {
+            return Star;
+        }
+
+        // 타입별 기본 아이콘
+        switch (question.type) {
+            case 'short_text':
+                return Type;
+            case 'long_text':
+                return AlignLeft;
+            case 'choice':
+                return question.isDropdown ? ChevronDown : CheckSquare;
+            case 'complex_choice':
+            case 'complex_input':
+                return LayoutGrid;
+            case 'description':
+                return FileText;
+            default:
+                return Type;
+        }
+    };
+
+    // 문항 목록 생성 (섹션 순서대로)
+    const orderedQuestions = useMemo(() => {
+        const result: Question[] = [];
+        sortedSections.forEach(section => {
+            const sectionQuestions = questionsBySection[section.id] || [];
+            result.push(...sectionQuestions);
+        });
+        return result;
+    }, [sortedSections, questionsBySection]);
+
     return (
         <DndProvider backend={HTML5Backend}>
             <div className="flex flex-col h-screen bg-gray-50">
@@ -499,6 +555,67 @@ export function FormBuilder() {
                 />
 
                 <div className="flex flex-1 overflow-hidden">
+                    {/* Left Sidebar - Question List */}
+                    <div className="w-64 border-r border-gray-200 bg-white overflow-y-auto">
+                        <div className="p-4">
+                            {/* Question List */}
+                            {orderedQuestions.length === 0 ? (
+                                <div className="text-center py-8 text-gray-500 text-sm">
+                                    <p>문항이 없습니다</p>
+                                    <p className="mt-1 text-xs">문항을 추가하면 여기에 표시됩니다</p>
+                                </div>
+                            ) : (
+                                <div className="space-y-1">
+                                    {orderedQuestions.map((question, index) => {
+                                        const Icon = getQuestionIcon(question);
+                                        const isSelected = selectedQuestionId === question.id;
+                                        const questionNumber = index + 1;
+
+                                        return (
+                                            <button
+                                                key={question.id}
+                                                onClick={() => setSelectedQuestionId(question.id)}
+                                                className={`
+                                                    w-full flex items-center gap-3 p-3 rounded-lg transition-all
+                                                    ${isSelected 
+                                                        ? 'bg-gray-100 border border-gray-300' 
+                                                        : 'hover:bg-gray-50 border border-transparent'
+                                                    }
+                                                `}
+                                            >
+                                                <div className={`
+                                                    w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0
+                                                    ${isSelected 
+                                                        ? 'bg-indigo-100 text-indigo-700' 
+                                                        : question.type === 'choice' || question.type === 'complex_choice'
+                                                            ? 'bg-purple-100 text-purple-700'
+                                                            : 'bg-indigo-100 text-indigo-700'
+                                                    }
+                                                `}>
+                                                    <Icon className="w-4 h-4" />
+                                                </div>
+                                                <div className="flex-1 min-w-0 flex items-center gap-2">
+                                                    <span className={`
+                                                        text-sm font-medium text-gray-500 flex-shrink-0
+                                                        ${isSelected ? 'text-gray-600' : 'text-gray-500'}
+                                                    `}>
+                                                        {questionNumber}
+                                                    </span>
+                                                    <span className={`
+                                                        text-sm font-medium flex-1 text-left truncate
+                                                        ${isSelected ? 'text-gray-900' : 'text-gray-700'}
+                                                    `}>
+                                                        {question.title || '제목 없음'}
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
                     {/* Center Canvas */}
                     <div className="flex-1 overflow-y-auto">
                         <div className="max-w-3xl mx-auto p-8">
