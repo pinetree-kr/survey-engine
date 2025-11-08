@@ -8,6 +8,8 @@ export type {
   Condition,
   Option,
   Operator,
+  SelectLimitType,
+  SelectLimit,
 } from '@/schema/question.types';
 
 // UI 빌더용 호환 타입 (기존 코드와의 호환성 유지)

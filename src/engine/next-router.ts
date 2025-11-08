@@ -49,12 +49,14 @@ function getAnswerBasedNext(
   }
 
   switch (question.type) {
-    case "single_choice":
+    case "choice":
+      if (question.isMultiple) {
+        return getMultipleChoiceNext(question, answer as string[]);
+      } else {
+        return getSingleChoiceNext(question, answer as string);
+      }
     case "dropdown":
       return getSingleChoiceNext(question, answer as string);
-
-    case "multiple_choice":
-      return getMultipleChoiceNext(question, answer as string[]);
 
     case "composite_single":
     case "composite_multiple":

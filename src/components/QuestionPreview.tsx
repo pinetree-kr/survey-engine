@@ -46,7 +46,12 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
   };
 
   const handleDeleteOption = (index: number) => {
-    const newOptions = (question.options || []).filter((_, i) => i !== index);
+    const currentOptions = question.options || [];
+    // 마지막 남은 옵션은 삭제하지 못하게 함
+    if (currentOptions.length <= 1) {
+      return;
+    }
+    const newOptions = currentOptions.filter((_, i) => i !== index);
     onUpdate({ options: newOptions });
   };
 
@@ -65,38 +70,43 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
         </div>
       );
 
-    case 'single_choice':
-    case 'multiple_choice':
+    case 'choice':
       return (
         <div className="space-y-3 pt-2">
-          {(question.options || [{ label: '' }] as Option[]).map((option, index) => (
-            <div key={index} className="flex items-center gap-3 group/option p-2 border border-gray-200 rounded-lg bg-gray-50">
-              <div className={`flex items-center justify-center w-8 h-8 border-2 border-indigo-500 bg-white text-indigo-600 font-semibold text-sm ${question.type === 'single_choice' ? 'rounded-full' : 'rounded'}`}>
-                {getOptionLabel(index)}
+          {(question.options || [{ label: '' }] as Option[]).map((option, index) => {
+            const optionsCount = question.options?.length || 0;
+            const canDelete = optionsCount > 1;
+            return (
+              <div key={index} className="flex items-center gap-3 group/option p-2 border border-gray-200 rounded-lg bg-gray-50">
+                <div className={`flex items-center justify-center w-8 h-8 border-2 border-indigo-500 bg-white text-indigo-600 font-semibold text-sm ${question.isMultiple ? 'rounded' : 'rounded-full'}`}>
+                  {getOptionLabel(index)}
+                </div>
+                {/* <div className={`w-4 h-4 border-2 ${question.type === 'single_choice' ? 'rounded-full' : 'rounded'} border-gray-300`} /> */}
+                <input
+                  type="text"
+                  value={option.label || ''}
+                  placeholder={option.freeText?.placeholder || `옵션 ${getOptionLabel(index)}`}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    handleUpdateOption(index, e.target.value);
+                  }}
+                  className="flex-1 bg-transparent border-none outline-none text-gray-700"
+                  onClick={(e) => e.stopPropagation()}
+                />
+                {canDelete && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteOption(index);
+                    }}
+                    className="opacity-0 group-hover/option:opacity-100 p-1 hover:bg-gray-100 rounded transition-all"
+                  >
+                    <X className="w-4 h-4 text-gray-400" />
+                  </button>
+                )}
               </div>
-              {/* <div className={`w-4 h-4 border-2 ${question.type === 'single_choice' ? 'rounded-full' : 'rounded'} border-gray-300`} /> */}
-              <input
-                type="text"
-                value={option.label || ''}
-                placeholder={option.freeText?.placeholder || `옵션 ${getOptionLabel(index)}`}
-                onChange={(e) => {
-                  e.stopPropagation();
-                  handleUpdateOption(index, e.target.value);
-                }}
-                className="flex-1 bg-transparent border-none outline-none text-gray-700"
-                onClick={(e) => e.stopPropagation()}
-              />
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDeleteOption(index);
-                }}
-                className="opacity-0 group-hover/option:opacity-100 p-1 hover:bg-gray-100 rounded transition-all"
-              >
-                <X className="w-4 h-4 text-gray-400" />
-              </button>
-            </div>
-          ))}
+            );
+          })}
 
           <button
             onClick={(e) => {
@@ -120,30 +130,36 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
           </div>
 
           <div className="space-y-2 pl-4 border-l-2 border-gray-200">
-            {(question.options || [{ label: '' }] as Option[]).map((option, index) => (
-              <div key={index} className="flex items-center gap-3 group/option">
-                <input
-                  type="text"
-                  value={option.label || ''}
-                  placeholder={option.freeText?.placeholder || ''}
-                  onChange={(e) => {
-                    e.stopPropagation();
-                    handleUpdateOption(index, e.target.value);
-                  }}
-                  className="flex-1 bg-transparent border-none outline-none text-gray-700"
-                  onClick={(e) => e.stopPropagation()}
-                />
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteOption(index);
-                  }}
-                  className="opacity-0 group-hover/option:opacity-100 p-1 hover:bg-gray-100 rounded transition-all"
-                >
-                  <X className="w-4 h-4 text-gray-400" />
-                </button>
-              </div>
-            ))}
+            {(question.options || [{ label: '' }] as Option[]).map((option, index) => {
+              const optionsCount = question.options?.length || 0;
+              const canDelete = optionsCount > 1;
+              return (
+                <div key={index} className="flex items-center gap-3 group/option">
+                  <input
+                    type="text"
+                    value={option.label || ''}
+                    placeholder={option.freeText?.placeholder || ''}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      handleUpdateOption(index, e.target.value);
+                    }}
+                    className="flex-1 bg-transparent border-none outline-none text-gray-700"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                  {canDelete && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteOption(index);
+                      }}
+                      className="opacity-0 group-hover/option:opacity-100 p-1 hover:bg-gray-100 rounded transition-all"
+                    >
+                      <X className="w-4 h-4 text-gray-400" />
+                    </button>
+                  )}
+                </div>
+              );
+            })}
 
             <button
               onClick={(e) => {

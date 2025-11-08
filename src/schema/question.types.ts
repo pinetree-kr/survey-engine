@@ -1,8 +1,7 @@
 export type QuestionType =
   | "short_text"
   | "long_text"
-  | "single_choice"
-  | "multiple_choice"
+  | "choice"
   | "dropdown"
   | "composite_single"
   | "composite_multiple"
@@ -85,6 +84,15 @@ export type BranchRule = {
 // 표시 조건 (단일 트리 구조)
 export type ShowCondition = Condition;
 
+// 다중 선택 제한 타입
+export type SelectLimitType = 'unlimited' | 'exact' | 'range';
+
+// 다중 선택 제한 설정
+export type SelectLimit = 
+  | { type: 'unlimited' }
+  | { type: 'exact'; value: number }
+  | { type: 'range'; min: number; max: number };
+
 // export type Question = {
 //   id: string;
 //   title: string;
@@ -117,6 +125,8 @@ export type Question = {
 
   type: QuestionType;
   required?: boolean;
+  isMultiple?: boolean; // choice 타입에서 다중선택 허용 여부
+  selectLimit?: SelectLimit; // isMultiple이 true일 때 선택 제한 설정
 
   // composite 문항일 경우
   compositeItems?: CompositeItem[];

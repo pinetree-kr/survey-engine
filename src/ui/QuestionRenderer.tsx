@@ -257,7 +257,103 @@ function renderQuestionInput(
         />
       );
 
-    case "single_choice":
+    case "choice":
+      if (!question.options) return null;
+      if (question.isMultiple) {
+        const selectedKeys = (currentAnswer as string[]) || [];
+        return (
+          <div>
+            {question.options.map((opt) => (
+              <label
+                key={opt.key}
+                style={{
+                  display: "block",
+                  padding: "10px",
+                  marginBottom: "8px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  backgroundColor: selectedKeys.includes(opt.key)
+                    ? "#e3f2fd"
+                    : "white",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={selectedKeys.includes(opt.key)}
+                  onChange={(e) => {
+                    const newKeys = e.target.checked
+                      ? [...selectedKeys, opt.key]
+                      : selectedKeys.filter((k) => k !== opt.key);
+                    updateAnswer(question.id, newKeys);
+                  }}
+                  style={{ marginRight: "8px" }}
+                />
+                {opt.label}
+              </label>
+            ))}
+            {question.minSelect !== undefined && (
+              <div style={{ fontSize: "12px", color: "#666", marginTop: "8px" }}>
+                최소 {question.minSelect}개 선택 필요
+              </div>
+            )}
+            {question.maxSelect !== undefined && (
+              <div style={{ fontSize: "12px", color: "#666" }}>
+                최대 {question.maxSelect}개 선택 가능
+              </div>
+            )}
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            {question.options.map((opt) => (
+              <label
+                key={opt.key}
+                style={{
+                  display: "block",
+                  padding: "10px",
+                  marginBottom: "8px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  backgroundColor:
+                    currentAnswer === opt.key ? "#e3f2fd" : "white",
+                }}
+              >
+                <input
+                  type="radio"
+                  name={question.id}
+                  value={opt.key}
+                  checked={currentAnswer === opt.key}
+                  onChange={() => updateAnswer(question.id, opt.key)}
+                  style={{ marginRight: "8px" }}
+                />
+                {opt.label}
+                {opt.isOther && opt.freeText && currentAnswer === opt.key && (
+                  <input
+                    type="text"
+                    placeholder={opt.freeText.placeholder || "기타 입력"}
+                    onChange={(e) =>
+                      updateAnswer(question.id, {
+                        key: opt.key,
+                        freeText: e.target.value,
+                      })
+                    }
+                    style={{
+                      marginLeft: "10px",
+                      padding: "5px",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                    }}
+                  />
+                )}
+              </label>
+            ))}
+          </div>
+        );
+      }
+
     case "dropdown":
       if (!question.options) return null;
       return (
@@ -305,53 +401,6 @@ function renderQuestionInput(
               )}
             </label>
           ))}
-        </div>
-      );
-
-    case "multiple_choice":
-      if (!question.options) return null;
-      const selectedKeys = (currentAnswer as string[]) || [];
-      return (
-        <div>
-          {question.options.map((opt) => (
-            <label
-              key={opt.key}
-              style={{
-                display: "block",
-                padding: "10px",
-                marginBottom: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                cursor: "pointer",
-                backgroundColor: selectedKeys.includes(opt.key)
-                  ? "#e3f2fd"
-                  : "white",
-              }}
-            >
-              <input
-                type="checkbox"
-                checked={selectedKeys.includes(opt.key)}
-                onChange={(e) => {
-                  const newKeys = e.target.checked
-                    ? [...selectedKeys, opt.key]
-                    : selectedKeys.filter((k) => k !== opt.key);
-                  updateAnswer(question.id, newKeys);
-                }}
-                style={{ marginRight: "8px" }}
-              />
-              {opt.label}
-            </label>
-          ))}
-          {question.minSelect !== undefined && (
-            <div style={{ fontSize: "12px", color: "#666", marginTop: "8px" }}>
-              최소 {question.minSelect}개 선택 필요
-            </div>
-          )}
-          {question.maxSelect !== undefined && (
-            <div style={{ fontSize: "12px", color: "#666" }}>
-              최대 {question.maxSelect}개 선택 가능
-            </div>
-          )}
         </div>
       );
 

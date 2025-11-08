@@ -10,8 +10,7 @@ interface QuestionTypePaletteProps {
 const questionTypes = [
   { type: 'short_text' as QuestionType, icon: Type, label: '단답형', description: '한 줄 텍스트' },
   { type: 'long_text' as QuestionType, icon: AlignLeft, label: '장문형', description: '여러 줄 텍스트' },
-  { type: 'single_choice' as QuestionType, icon: CheckSquare, label: '단일 선택', description: '라디오 버튼' },
-  { type: 'multiple_choice' as QuestionType, icon: ListChecks, label: '다중 선택', description: '체크박스' },
+  { type: 'choice' as QuestionType, icon: CheckSquare, label: '선택형', description: '라디오/체크박스' },
   { type: 'dropdown' as QuestionType, icon: ChevronDown, label: '드롭다운', description: '선택 메뉴' },
   { type: 'composite-input' as QuestionType, icon: LayoutGrid, label: '복합 입력', description: '여러 필드' },
   { type: 'description' as QuestionType, icon: FileText, label: '설명', description: '텍스트 블록만' },

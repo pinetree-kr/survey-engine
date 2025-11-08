@@ -31,12 +31,15 @@ export function validateAnswer(
     case "long_text":
       errors.push(...validateText(q, value));
       break;
-    case "single_choice":
+    case "choice":
+      if (q.isMultiple) {
+        errors.push(...validateMultipleChoice(q, value));
+      } else {
+        errors.push(...validateSingleChoice(q, value));
+      }
+      break;
     case "dropdown":
       errors.push(...validateSingleChoice(q, value));
-      break;
-    case "multiple_choice":
-      errors.push(...validateMultipleChoice(q, value));
       break;
     case "composite_single":
     case "composite_multiple":

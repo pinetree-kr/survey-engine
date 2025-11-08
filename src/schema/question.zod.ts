@@ -96,6 +96,17 @@ export const BranchRuleSchema = z.object({
 // 표시 조건 스키마 (Condition과 동일)
 export const ShowConditionSchema = ConditionSchema;
 
+// 다중 선택 제한 스키마
+export const SelectLimitSchema = z.discriminatedUnion("type", [
+  z.object({ type: z.literal("unlimited") }),
+  z.object({ type: z.literal("exact"), value: z.number().int().positive() }),
+  z.object({
+    type: z.literal("range"),
+    min: z.number().int().nonnegative(),
+    max: z.number().int().positive(),
+  }),
+]);
+
 // 질문 스키마
 export const QuestionSchema = z.object({
   id: z.string().min(1),
@@ -104,14 +115,15 @@ export const QuestionSchema = z.object({
   type: z.enum([
     "short_text",
     "long_text",
-    "single_choice",
-    "multiple_choice",
+    "choice",
     "dropdown",
     "composite_single",
     "composite_multiple",
     "description",
   ]),
   required: z.boolean().optional().default(false),
+  isMultiple: z.boolean().optional(),
+  selectLimit: SelectLimitSchema.optional(),
   images: z.array(ImageObjSchema).optional(),
   options: z.array(OptionSchema).optional(),
   compositeItems: z.array(CompositeItemSchema).optional(),
@@ -145,6 +157,8 @@ export type {
   Condition,
   BranchRule,
   ShowCondition,
+  SelectLimitType,
+  SelectLimit,
   Question,
 } from "./question.types";
 

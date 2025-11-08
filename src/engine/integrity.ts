@@ -360,7 +360,7 @@ function validateMultipleChoiceConstraints(
   const errors: ValidationError[] = [];
 
   for (const q of questions) {
-    if (q.type === "multiple_choice") {
+    if (q.type === "choice" && q.isMultiple) {
       const minSelect = q.minSelect ?? 0;
       const maxSelect = q.maxSelect;
 

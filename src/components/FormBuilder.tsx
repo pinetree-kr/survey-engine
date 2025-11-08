@@ -27,7 +27,7 @@ export function FormBuilder() {
             title: '',
             description: type !== 'description' ? '' : undefined,
             required: false,
-            options: ['single_choice', 'multiple_choice', 'dropdown'].includes(type)
+            options: ['choice', 'dropdown'].includes(type)
                 ? [{ label: '', key: `option-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[]
                 : undefined,
             design: {

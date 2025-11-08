@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Question } from '../types/survey';
-import { Condition, BranchRule, Option, Operator } from '@/types/survey';
+import { Condition, BranchRule, Option, Operator, SelectLimit } from '@/types/survey';
 import { Switch } from './ui/switch';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
@@ -51,7 +51,7 @@ export function InspectorPanel({ question, allQuestions = [], onUpdate }: Inspec
 
   // 타입 매핑: UI 타입 -> 스키마 타입
   const questionType = question.type as string;
-  const showChoiceOptions = ['single_choice', 'multiple_choice', 'dropdown', 'single_choice', 'multiple_choice'].includes(questionType);
+  const showChoiceOptions = ['choice', 'dropdown'].includes(questionType);
   const isComposite = ['composite-input', 'composite_single', 'composite_multiple'].includes(questionType);
 
   // 새로운 스키마로 변환 (임시 호환성)
@@ -103,6 +103,109 @@ export function InspectorPanel({ question, allQuestions = [], onUpdate }: Inspec
                   onCheckedChange={(checked) => onUpdate({ required: checked })}
                 />
               </div>
+
+              {questionType === 'choice' && (
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="isMultiple" className="cursor-pointer">다중선택 허용</Label>
+                  <Switch
+                    id="isMultiple"
+                    checked={question.isMultiple || false}
+                    onCheckedChange={(checked) => {
+                      onUpdate({ isMultiple: checked });
+                      // 다중선택을 끄면 selectLimit 제거
+                      if (!checked) {
+                        onUpdate({ selectLimit: undefined });
+                      } else if (!question.selectLimit) {
+                        // 다중선택을 켤 때 기본값으로 무제한 설정
+                        onUpdate({ selectLimit: { type: 'unlimited' } });
+                      }
+                    }}
+                  />
+                </div>
+              )}
+
+              {questionType === 'choice' && question.isMultiple && (
+                <div className="flex items-center gap-3">
+                  <Select
+                    value={question.selectLimit?.type || 'unlimited'}
+                    onValueChange={(value) => {
+                      if (value === 'unlimited') {
+                        onUpdate({ selectLimit: { type: 'unlimited' } });
+                      } else if (value === 'exact') {
+                        const optionsCount = question.options?.length || 1;
+                        onUpdate({ selectLimit: { type: 'exact', value: Math.min(1, optionsCount) } });
+                      } else if (value === 'range') {
+                        const optionsCount = question.options?.length || 1;
+                        onUpdate({ selectLimit: { type: 'range', min: 0, max: Math.min(1, optionsCount) } });
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="bg-white w-[140px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white z-[100] border-gray-200 shadow-lg min-w-[200px]">
+                      <SelectItem value="unlimited">무제한</SelectItem>
+                      <SelectItem value="exact">정확한 수</SelectItem>
+                      <SelectItem value="range">범위</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  {question.selectLimit?.type === 'exact' && (() => {
+                    const optionsCount = question.options?.length || 1;
+                    return (
+                      <Input
+                        type="number"
+                        min="1"
+                        max={optionsCount}
+                        value={question.selectLimit.type === 'exact' ? question.selectLimit.value : 1}
+                        onChange={(e) => {
+                          const value = parseInt(e.target.value, 10);
+                          if (!isNaN(value) && value > 0 && value <= optionsCount) {
+                            onUpdate({ selectLimit: { type: 'exact', value } });
+                          }
+                        }}
+                        className="bg-white w-20"
+                      />
+                    );
+                  })()}
+
+                  {question.selectLimit?.type === 'range' && (() => {
+                    const optionsCount = question.options?.length || 1;
+                    return (
+                      <>
+                        <Input
+                          type="number"
+                          min="0"
+                          max={optionsCount}
+                          value={question.selectLimit.type === 'range' ? question.selectLimit.min : 0}
+                          onChange={(e) => {
+                            const min = parseInt(e.target.value, 10);
+                            const max = question.selectLimit?.type === 'range' ? question.selectLimit.max : 1;
+                            if (!isNaN(min) && min >= 0 && min <= max && min <= optionsCount) {
+                              onUpdate({ selectLimit: { type: 'range', min, max } });
+                            }
+                          }}
+                          className="bg-white w-20"
+                        />
+                        <Input
+                          type="number"
+                          min="1"
+                          max={optionsCount}
+                          value={question.selectLimit.type === 'range' ? question.selectLimit.max : 1}
+                          onChange={(e) => {
+                            const max = parseInt(e.target.value, 10);
+                            const min = question.selectLimit?.type === 'range' ? question.selectLimit.min : 0;
+                            if (!isNaN(max) && max > 0 && max >= min && max <= optionsCount) {
+                              onUpdate({ selectLimit: { type: 'range', min, max } });
+                            }
+                          }}
+                          className="bg-white w-20"
+                        />
+                      </>
+                    );
+                  })()}
+                </div>
+              )}
 
               {showChoiceOptions && (
                 <div className="flex items-center justify-between">
