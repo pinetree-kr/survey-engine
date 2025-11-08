@@ -85,66 +85,111 @@ export type ShowRule = {
   refQuestionId: string; // 참조할 질문 ID
 };
 
-// export type Question = {
-//   id: string;
-//   title: string;
-//   description?: string;
-//   type: QuestionType;
-//   required?: boolean; // default false
-//   images?: ImageObj[];
-//   options?: Option[];
-//   compositeItems?: CompositeItem[];
-//   minSelect?: number;
-//   maxSelect?: number;
-//   validations?: {
-//     regex?: string;
-//     min?: number;
-//     max?: number;
-//     maxLength?: number;
-//     minLength?: number;
-//   };
-//   branchLogic?: BranchRule[]; // default []
-//   showConditions?: Condition; // 단일 트리 구조
-//   nextQuestionId?: string; // highest priority
-// };
-
-export type Question = {
+// 공통 속성
+export type BaseQuestion = {
   id: string;
   title: string;
   description?: string;
   images?: ImageObj[];
-  options?: Option[];
-
-  type: QuestionType;
   required?: boolean;
-  isMultiple?: boolean; // choice/complex_choice 타입에서 다중선택 허용 여부
-  isDropdown?: boolean; // choice 타입에서 드롭다운 렌더링 여부
-  isBoolean?: boolean; // choice 타입에서 Yes/No 모드 (Y, N 인덱스 사용, Column 형태)
-  input_type?: "text" | "number" | "email" | "tel"; // short_text 타입에서 입력 필드 타입
-  placeholder?: string; // short_text/long_text 타입에서 입력 필드 placeholder
-
-  // complex_choice/complex_input 문항일 경우
-  complexItems?: ComplexItem[];
-
-  // range 타입일 경우
-  rangeConfig?: {
-    min: number; // 최소값
-    max: number; // 최대값
-    step: number; // 단계 (예: 1, 0.5 등)
-    labels?: string[]; // 각 단계의 라벨 (선택적)
-  };
-
-  // 분기 로직: 여러 브랜치 규칙 (우선순위는 인덱스 순)
-  branchRules?: BranchRule[];
-  // 표시 규칙: 이 질문을 표시할 조건들 (우선순위는 인덱스 순)
   showRules?: ShowRule[];
   design?: {
     themeColor?: string;
     backgroundStyle?: string;
-  },
+  };
   validations?: Validation;
-  sectionId?: string; // 섹션 ID (섹션에 속한 문항인 경우)
+  sectionId?: string;
 };
+
+// Range 설정 타입
+export type RangeConfig = {
+  min: number;
+  max: number;
+  step: number;
+  labels?: string[];
+  displayStyle?: 'slider' | 'stars' | 'buttons';
+};
+
+// 타입별 질문 인터페이스
+export type ShortTextQuestion = BaseQuestion & {
+  type: 'short_text';
+  input_type?: "text" | "number" | "email" | "tel";
+  placeholder?: string;
+};
+
+export type LongTextQuestion = BaseQuestion & {
+  type: 'long_text';
+  placeholder?: string;
+};
+
+export type ChoiceQuestion = BaseQuestion & {
+  type: 'choice';
+  options: Option[];
+  isMultiple?: boolean;
+  isDropdown?: boolean;
+  isBoolean?: boolean;
+  branchRules?: BranchRule[];
+};
+
+export type RangeQuestion = BaseQuestion & {
+  type: 'range';
+  rangeConfig: RangeConfig;
+};
+
+export type ComplexChoiceQuestion = BaseQuestion & {
+  type: 'complex_choice';
+  complexItems: ComplexItem[];
+  isMultiple?: boolean;
+  branchRules?: BranchRule[];
+};
+
+export type ComplexInputQuestion = BaseQuestion & {
+  type: 'complex_input';
+  complexItems: ComplexItem[];
+};
+
+export type DescriptionQuestion = BaseQuestion & {
+  type: 'description';
+};
+
+// 통합 질문 타입 (Discriminated Union)
+export type Question =
+  | ShortTextQuestion
+  | LongTextQuestion
+  | ChoiceQuestion
+  | RangeQuestion
+  | ComplexChoiceQuestion
+  | ComplexInputQuestion
+  | DescriptionQuestion;
+
+// 타입 가드 함수들
+export function isShortTextQuestion(q: Question): q is ShortTextQuestion {
+  return q.type === 'short_text';
+}
+
+export function isLongTextQuestion(q: Question): q is LongTextQuestion {
+  return q.type === 'long_text';
+}
+
+export function isChoiceQuestion(q: Question): q is ChoiceQuestion {
+  return q.type === 'choice';
+}
+
+export function isRangeQuestion(q: Question): q is RangeQuestion {
+  return q.type === 'range';
+}
+
+export function isComplexChoiceQuestion(q: Question): q is ComplexChoiceQuestion {
+  return q.type === 'complex_choice';
+}
+
+export function isComplexInputQuestion(q: Question): q is ComplexInputQuestion {
+  return q.type === 'complex_input';
+}
+
+export function isDescriptionQuestion(q: Question): q is DescriptionQuestion {
+  return q.type === 'description';
+}
 
 
 // 섹션 타입

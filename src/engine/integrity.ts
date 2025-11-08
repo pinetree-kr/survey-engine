@@ -1,4 +1,5 @@
 import type { Question, GroupNode, PredicateNode, BranchNode, ShowRule } from "@/schema/question.types";
+import { isChoiceQuestion, isComplexChoiceQuestion } from "@/schema/question.types";
 
 export type ValidationError = {
   code: string;
@@ -170,8 +171,13 @@ function validateReachability(questions: Question[]): ValidationError[] {
       return;
     }
 
-    // branchRules의 next_question_id
-    if (question.branchRules) {
+    // branchRules의 next_question_id (choice 타입에서만 사용 가능)
+    if (isChoiceQuestion(question) && question.branchRules) {
+      for (const rule of question.branchRules) {
+        dfs(rule.next_question_id);
+      }
+    }
+    if (isComplexChoiceQuestion(question) && question.branchRules) {
       for (const rule of question.branchRules) {
         dfs(rule.next_question_id);
       }
@@ -220,8 +226,15 @@ function validateCycles(questions: Question[]): ValidationError[] {
 
     const question = questions.find((q) => q.id === questionId);
     if (question) {
-      // branchRules의 next_question_id
-      if (question.branchRules) {
+      // branchRules의 next_question_id (choice 타입에서만 사용 가능)
+      if (isChoiceQuestion(question) && question.branchRules) {
+        for (const rule of question.branchRules) {
+          if (hasCycle(rule.next_question_id)) {
+            return true;
+          }
+        }
+      }
+      if (isComplexChoiceQuestion(question) && question.branchRules) {
         for (const rule of question.branchRules) {
           if (hasCycle(rule.next_question_id)) {
             return true;

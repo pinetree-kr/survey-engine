@@ -1,9 +1,9 @@
 'use client';
 
-import { Plus, X } from 'lucide-react';
+import { Plus, X, Star } from 'lucide-react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import { Question, Option } from '@/schema/question.types';
+import { Question, Option, isRangeQuestion, isChoiceQuestion, isComplexChoiceQuestion, isComplexInputQuestion } from '@/schema/question.types';
 import { getOptionLabel } from '@/utils/label';
 
 interface QuestionPreviewProps {
@@ -14,7 +14,8 @@ interface QuestionPreviewProps {
 export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
 
   const handleAddOption = () => {
-    const currentOptions = question.options || [];
+    if (!isChoiceQuestion(question)) return;
+    const currentOptions = question.options;
     const otherOptionIndex = currentOptions.findIndex(opt => opt.isOther);
 
     // 새 옵션 생성
@@ -38,13 +39,15 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
   };
 
   const handleUpdateOption = (index: number, value: string) => {
-    const newOptions = [...(question.options || [])] as Option[];
+    if (!isChoiceQuestion(question)) return;
+    const newOptions = [...question.options];
     newOptions[index] = { ...newOptions[index], label: value };
     onUpdate({ options: newOptions });
   };
 
   const handleDeleteOption = (index: number) => {
-    const currentOptions = question.options || [];
+    if (!isChoiceQuestion(question)) return;
+    const currentOptions = question.options;
     // 마지막 남은 옵션은 삭제하지 못하게 함
     if (currentOptions.length <= 1) {
       return;
@@ -95,9 +98,82 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
       );
 
     case 'range': {
-      const rangeConfig = question.rangeConfig || { min: 0, max: 10, step: 1 };
+      if (!isRangeQuestion(question)) return null;
+      const rangeConfig = question.rangeConfig;
+      const displayStyle = rangeConfig.displayStyle || 'slider';
       const currentValue = rangeConfig.min; // 슬라이더 위치 표시용
 
+      // 별표 평점 렌더링
+      if (displayStyle === 'stars') {
+        const maxStars = rangeConfig.max - rangeConfig.min;
+        return (
+          <div className="pt-2 space-y-3">
+            <div className="flex items-center justify-center gap-2">
+              {Array.from({ length: maxStars }, (_, i) => {
+                const starValue = rangeConfig.min + i + 1;
+                const isFilled = starValue <= currentValue;
+                return (
+                  <div
+                    key={i}
+                    className="text-gray-300"
+                  >
+                    <Star 
+                      className="w-8 h-8" 
+                      fill={isFilled ? 'currentColor' : 'none'}
+                      style={{ color: isFilled ? '#fbbf24' : '#d1d5db' }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            <div className="text-sm text-gray-600 text-center">
+              {currentValue} / {rangeConfig.max}
+            </div>
+          </div>
+        );
+      }
+
+      // 버튼 렌더링
+      if (displayStyle === 'buttons') {
+        const generateStepValues = () => {
+          const values: number[] = [];
+          for (let val = rangeConfig.min; val <= rangeConfig.max; val += rangeConfig.step) {
+            values.push(parseFloat(val.toFixed(10)));
+          }
+          return values;
+        };
+
+        const stepValues = generateStepValues();
+
+        return (
+          <div className="pt-2 space-y-3">
+            <div className="flex items-center justify-center gap-2 flex-wrap">
+              {stepValues.map((value, index) => {
+                const isSelected = value === currentValue;
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    disabled
+                    className={`
+                      w-10 h-10 rounded-lg font-semibold text-sm
+                      transition-colors
+                      ${isSelected 
+                        ? 'bg-indigo-500 text-white' 
+                        : 'bg-sky-100 text-indigo-600 hover:bg-sky-200'
+                      }
+                    `}
+                  >
+                    {value}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      }
+
+      // 슬라이더 렌더링
       // step에 따라 모든 값 계산
       const generateStepValues = () => {
         const values: number[] = [];
@@ -148,11 +224,12 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
     }
 
     case 'choice': {
+      if (!isChoiceQuestion(question)) return null;
       // 불리언(boolean)인 경우 Column 형태로 표시
       if (question.isBoolean) {
         return (
           <div className="space-y-2 pt-2">
-            {(question.options || []).map((option, index) => (
+            {question.options.map((option, index) => (
               <div key={index} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-gray-50">
                 <div className="flex items-center justify-center w-8 h-8 border-2 border-indigo-500 bg-white text-indigo-600 font-semibold text-sm rounded-full">
                   {option.key || (index === 0 ? 'Y' : 'N')}
@@ -185,8 +262,8 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
             </div>
 
             <div className="space-y-2 pl-4 border-l-2 border-gray-200">
-              {(question.options || [{ label: '' }] as Option[]).map((option, index) => {
-                const optionsCount = question.options?.length || 0;
+              {question.options.map((option, index) => {
+                const optionsCount = question.options.length;
                 const canDelete = optionsCount > 1;
                 return (
                   <div key={index} className="flex items-center gap-3 group/option pb-2 border-b border-gray-200 last:border-b-0">
@@ -235,8 +312,8 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
 
       return (
         <div className="space-y-3 pt-2">
-          {(question.options || [{ label: '' }] as Option[]).map((option, index) => {
-            const optionsCount = question.options?.length || 0;
+          {question.options.map((option, index) => {
+            const optionsCount = question.options.length;
             const canDelete = optionsCount > 1 && !question.isBoolean;
             return (
               <div key={index} className="flex items-center gap-3 group/option p-2 border border-gray-200 rounded-lg bg-gray-50">
@@ -289,8 +366,9 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
       );
     }
 
-    case 'complex_choice':
-      if (!question.complexItems || question.complexItems.length === 0) {
+    case 'complex_choice': {
+      if (!isComplexChoiceQuestion(question)) return null;
+      if (question.complexItems.length === 0) {
         return (
           <div className="pt-2 text-gray-500 text-sm">
             복합 선택 필드를 추가하려면 설정 패널에서 항목을 추가하세요
@@ -324,9 +402,11 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
           ))}
         </div>
       );
+    }
 
-    case 'complex_input':
-      if (!question.complexItems || question.complexItems.length === 0) {
+    case 'complex_input': {
+      if (!isComplexInputQuestion(question)) return null;
+      if (question.complexItems.length === 0) {
         return (
           <div className="pt-2 text-gray-500 text-sm">
             복합 입력 필드를 추가하려면 설정 패널에서 항목을 추가하세요
@@ -358,6 +438,7 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
           ))}
         </div>
       );
+    }
 
     case 'description':
       return (

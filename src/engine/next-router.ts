@@ -1,4 +1,5 @@
 import type { Question, BranchNode, PredicateNode } from "@/schema/question.types";
+import { isChoiceQuestion, isComplexChoiceQuestion } from "@/schema/question.types";
 import type { AnswersMap } from "./visibility";
 
 /**
@@ -36,6 +37,11 @@ function getAnswerBasedNext(
   }
 
   switch (question.type) {
+    case "short_text":
+    case "long_text":
+      // 텍스트 입력 타입은 답변 기반 분기가 없음
+      return null;
+
     case "choice":
       // dropdown 타입도 choice로 통합 (하위 호환성 유지)
       if (question.isDropdown) {
@@ -46,9 +52,6 @@ function getAnswerBasedNext(
       } else {
         return getSingleChoiceNext(question, answer as string);
       }
-    case "dropdown":
-      // 하위 호환성을 위해 유지하지만 choice로 처리
-      return getSingleChoiceNext(question, answer as string);
 
     case "complex_choice":
       return getCompositeNext(question, answer as Record<string, unknown>);
@@ -57,7 +60,17 @@ function getAnswerBasedNext(
       // complex_input은 선택 기능이 없으므로 항상 null 반환
       return null;
 
+    case "description":
+      // description 타입은 답변이 없으므로 항상 null 반환
+      return null;
+
+    case "range":
+      // range 타입은 답변 기반 분기가 없음
+      return null;
+
     default:
+      // 타입 안전성을 위한 exhaustive check
+      const _exhaustive: never = question;
       return null;
   }
 }
@@ -105,12 +118,18 @@ function getBranchBasedNext(
   question: Question,
   answers: AnswersMap
 ): string | null {
-  if (!question.branchRules || question.branchRules.length === 0) {
+  // branchRules는 choice 타입에서만 사용 가능
+  if (!isChoiceQuestion(question) && !isComplexChoiceQuestion(question)) {
+    return null;
+  }
+
+  const branchRules = (isChoiceQuestion(question) ? question.branchRules : question.branchRules) || [];
+  if (branchRules.length === 0) {
     return null;
   }
 
   // 배열 순서대로 평가 (우선순위는 인덱스 순)
-  for (const rule of question.branchRules) {
+  for (const rule of branchRules) {
     // when 조건이 없으면 항상 true (기본 규칙)
     if (!rule.when) {
       return rule.next_question_id;
@@ -118,7 +137,7 @@ function getBranchBasedNext(
 
     // when 조건 평가 (현재 질문의 답변을 참조)
     const conditionMet = evaluateBranchNode(rule.when, question.id, answers);
-    
+
     if (conditionMet) {
       return rule.next_question_id;
     }
@@ -156,7 +175,7 @@ function evaluateBranchNode(
   if (node.kind === 'group') {
     // GroupNode 평가
     const results = node.children.map(child => evaluateBranchNode(child, currentQuestionId, answers));
-    
+
     if (node.op === 'AND') {
       return results.every(Boolean);
     } else {

@@ -117,12 +117,12 @@ describe("validators", () => {
       expect(result3.ok).toBe(true);
     });
 
-    it("composite에서 required 항목 검증이 동작해야 함", () => {
+    it("complex_choice에서 required 항목 검증이 동작해야 함", () => {
       const question: Question = {
         id: "q1",
         title: "질문 1",
-        type: "composite_single",
-        compositeItems: [
+        type: "complex_choice",
+        complexItems: [
           {
             label: "이름",
             key: "name",
@@ -149,12 +149,12 @@ describe("validators", () => {
       expect(result2.ok).toBe(true);
     });
 
-    it("composite에서 이메일 형식 검증이 동작해야 함", () => {
+    it("complex_choice에서 이메일 형식 검증이 동작해야 함", () => {
       const question: Question = {
         id: "q1",
         title: "질문 1",
-        type: "composite_single",
-        compositeItems: [
+        type: "complex_choice",
+        complexItems: [
           {
             label: "이메일",
             key: "email",
@@ -174,12 +174,12 @@ describe("validators", () => {
       expect(result2.ok).toBe(true);
     });
 
-    it("composite에서 숫자 범위 검증이 동작해야 함", () => {
+    it("complex_choice에서 숫자 범위 검증이 동작해야 함", () => {
       const question: Question = {
         id: "q1",
         title: "질문 1",
-        type: "composite_single",
-        compositeItems: [
+        type: "complex_choice",
+        complexItems: [
           {
             label: "나이",
             key: "age",

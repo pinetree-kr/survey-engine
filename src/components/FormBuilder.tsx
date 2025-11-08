@@ -10,6 +10,7 @@ import { Header } from '@/components/Header';
 import { SectionHeader } from '@/components/SectionHeader';
 import { SectionDropZone } from '@/components/SectionDropZone';
 import { Question, QuestionType, Survey, Option, Section } from '@/types/survey';
+import type { ShortTextQuestion, LongTextQuestion, ChoiceQuestion, RangeQuestion, ComplexChoiceQuestion, ComplexInputQuestion, DescriptionQuestion } from '@/schema/question.types';
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
 import { Button } from './ui/button';
@@ -80,27 +81,145 @@ export function FormBuilder() {
         // sectionId가 제공되지 않으면 첫 번째 섹션에 할당
         const targetSectionId = sectionId || (sortedSections.length > 0 ? sortedSections[0].id : undefined);
 
-        // 템플릿의 options에 key 추가 (없는 경우)
-        const processedOptions = template.options?.map((opt, index) => ({
-            ...opt,
-            key: opt.key || `opt-${Date.now()}-${index}-${Math.random().toString(36).substring(2, 9)}`,
-        }));
-
-        // 템플릿의 모든 필드를 포함하고, 필요한 필드만 덮어쓰기
-        const newQuestion: Question = {
-            ...template,
+        const baseQuestion = {
             id: `q-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-            type: template.type || 'short_text',
             title: template.title || '',
             required: template.required ?? false,
-            options: processedOptions,
-            isMultiple: template.isMultiple ?? false,
             design: {
                 ...template.design,
                 themeColor: template.design?.themeColor || '#6366f1',
             },
             sectionId: targetSectionId,
         };
+
+        const questionType = template.type || 'short_text';
+
+        // 타입별로 적절한 객체 생성
+        let newQuestion: Question;
+
+        switch (questionType) {
+            case 'short_text': {
+                const shortTextTemplate = template as Partial<ShortTextQuestion>;
+                newQuestion = {
+                    ...baseQuestion,
+                    description: shortTextTemplate.description,
+                    images: shortTextTemplate.images,
+                    showRules: shortTextTemplate.showRules,
+                    validations: shortTextTemplate.validations,
+                    type: 'short_text' as const,
+                    input_type: shortTextTemplate.input_type || 'text',
+                    placeholder: shortTextTemplate.placeholder,
+                };
+                break;
+            }
+            case 'long_text': {
+                const longTextTemplate = template as Partial<LongTextQuestion>;
+                newQuestion = {
+                    ...baseQuestion,
+                    description: longTextTemplate.description,
+                    images: longTextTemplate.images,
+                    showRules: longTextTemplate.showRules,
+                    validations: longTextTemplate.validations,
+                    type: 'long_text' as const,
+                    placeholder: longTextTemplate.placeholder,
+                };
+                break;
+            }
+            case 'choice': {
+                const choiceTemplate = template as Partial<ChoiceQuestion>;
+                // 템플릿의 options에 key 추가 (없는 경우)
+                const processedOptions = choiceTemplate.options?.map((opt: Option, index: number) => ({
+                    ...opt,
+                    key: opt.key || `opt-${Date.now()}-${index}-${Math.random().toString(36).substring(2, 9)}`,
+                })) || [{ label: '', key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }];
+                newQuestion = {
+                    ...baseQuestion,
+                    description: choiceTemplate.description,
+                    images: choiceTemplate.images,
+                    showRules: choiceTemplate.showRules,
+                    validations: choiceTemplate.validations,
+                    type: 'choice' as const,
+                    options: processedOptions,
+                    isMultiple: choiceTemplate.isMultiple ?? false,
+                    isDropdown: choiceTemplate.isDropdown ?? false,
+                    isBoolean: choiceTemplate.isBoolean ?? false,
+                    branchRules: choiceTemplate.branchRules,
+                };
+                break;
+            }
+            case 'range': {
+                const rangeTemplate = template as Partial<RangeQuestion>;
+                newQuestion = {
+                    ...baseQuestion,
+                    description: rangeTemplate.description,
+                    images: rangeTemplate.images,
+                    showRules: rangeTemplate.showRules,
+                    validations: rangeTemplate.validations,
+                    type: 'range' as const,
+                    rangeConfig: rangeTemplate.rangeConfig || {
+                        min: 0,
+                        max: 10,
+                        step: 1,
+                    },
+                };
+                break;
+            }
+            case 'complex_choice': {
+                const complexChoiceTemplate = template as Partial<ComplexChoiceQuestion>;
+                newQuestion = {
+                    ...baseQuestion,
+                    description: complexChoiceTemplate.description,
+                    images: complexChoiceTemplate.images,
+                    showRules: complexChoiceTemplate.showRules,
+                    validations: complexChoiceTemplate.validations,
+                    type: 'complex_choice' as const,
+                    complexItems: complexChoiceTemplate.complexItems || [],
+                    isMultiple: complexChoiceTemplate.isMultiple ?? false,
+                    branchRules: complexChoiceTemplate.branchRules,
+                };
+                break;
+            }
+            case 'complex_input': {
+                const complexInputTemplate = template as Partial<ComplexInputQuestion>;
+                newQuestion = {
+                    ...baseQuestion,
+                    description: complexInputTemplate.description,
+                    images: complexInputTemplate.images,
+                    showRules: complexInputTemplate.showRules,
+                    validations: complexInputTemplate.validations,
+                    type: 'complex_input' as const,
+                    complexItems: complexInputTemplate.complexItems || [],
+                };
+                break;
+            }
+            case 'description': {
+                const descriptionTemplate = template as Partial<DescriptionQuestion>;
+                newQuestion = {
+                    ...baseQuestion,
+                    description: descriptionTemplate.description || '',
+                    images: descriptionTemplate.images,
+                    showRules: descriptionTemplate.showRules,
+                    validations: descriptionTemplate.validations,
+                    type: 'description' as const,
+                };
+                break;
+            }
+            default: {
+                // 타입이 명시되지 않은 경우 기본값으로 short_text 생성
+                const shortTextTemplate = template as Partial<ShortTextQuestion>;
+                newQuestion = {
+                    ...baseQuestion,
+                    description: shortTextTemplate.description,
+                    images: shortTextTemplate.images,
+                    showRules: shortTextTemplate.showRules,
+                    validations: shortTextTemplate.validations,
+                    type: 'short_text' as const,
+                    input_type: 'text' as const,
+                    placeholder: shortTextTemplate.placeholder,
+                };
+                break;
+            }
+        }
 
         setSurvey((prev) => {
             const allQuestions = [...prev.questions];
@@ -133,27 +252,96 @@ export function FormBuilder() {
         // sectionId가 제공되지 않으면 첫 번째 섹션에 할당
         const targetSectionId = sectionId || (sortedSections.length > 0 ? sortedSections[0].id : undefined);
 
-        const newQuestion: Question = {
+        const baseQuestion = {
             id: `q-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-            type: type,
             title: '',
-            description: type !== 'description' ? '' : undefined,
             required: false,
-            options: type === 'choice'
-                ? [{ label: '', key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[]
-                : undefined,
-            isDropdown: undefined,
-            input_type: type === 'short_text' ? 'text' : undefined,
-            complexItems: (type === 'complex_choice' || type === 'complex_input') ? [] : undefined,
-            rangeConfig: type === 'range'
-                ? { min: 0, max: 10, step: 1 }
-                : undefined,
-            isMultiple: false,
             design: {
                 themeColor: '#6366f1',
             },
             sectionId: targetSectionId,
         };
+
+        // 타입별로 적절한 객체 생성
+        let newQuestion: Question;
+
+        switch (type) {
+            case 'short_text': {
+                newQuestion = {
+                    ...baseQuestion,
+                    type: 'short_text' as const,
+                    input_type: 'text' as const,
+                    placeholder: '',
+                };
+                break;
+            }
+            case 'long_text': {
+                newQuestion = {
+                    ...baseQuestion,
+                    type: 'long_text' as const,
+                    placeholder: '',
+                };
+                break;
+            }
+            case 'choice': {
+                newQuestion = {
+                    ...baseQuestion,
+                    type: 'choice' as const,
+                    options: [{ label: '', key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }],
+                    isMultiple: false,
+                    isDropdown: false,
+                    isBoolean: false,
+                };
+                break;
+            }
+            case 'range': {
+                newQuestion = {
+                    ...baseQuestion,
+                    type: 'range' as const,
+                    rangeConfig: {
+                        min: 0,
+                        max: 10,
+                        step: 1,
+                    },
+                };
+                break;
+            }
+            case 'complex_choice': {
+                newQuestion = {
+                    ...baseQuestion,
+                    type: 'complex_choice' as const,
+                    complexItems: [],
+                    isMultiple: false,
+                };
+                break;
+            }
+            case 'complex_input': {
+                newQuestion = {
+                    ...baseQuestion,
+                    type: 'complex_input' as const,
+                    complexItems: [],
+                };
+                break;
+            }
+            case 'description': {
+                newQuestion = {
+                    ...baseQuestion,
+                    type: 'description' as const,
+                    description: '',
+                };
+                break;
+            }
+            default: {
+                // 타입이 명시되지 않은 경우 기본값으로 short_text 생성
+                newQuestion = {
+                    ...baseQuestion,
+                    type: 'short_text' as const,
+                    input_type: 'text' as const,
+                    placeholder: '',
+                };
+                break;
+            }
+        }
 
         setSurvey((prev) => {
             const allQuestions = [...prev.questions];
@@ -186,7 +374,7 @@ export function FormBuilder() {
         setSurvey((prev) => ({
             ...prev,
             questions: prev.questions.map((q) =>
-                q.id === id ? { ...q, ...updates } : q
+                q.id === id ? { ...q, ...updates } as Question : q
             ),
         }));
     }, []);
@@ -590,12 +778,12 @@ export function FormBuilder() {
                                                         <div className="flex-1 border-t border-gray-300"></div>
                                                     </div>
                                                 )}
-                                                
+
                                                 {/* 섹션 제목 */}
                                                 <div className="mb-2 px-3 py-1">
                                                     <h3 className="text-xs font-normal text-gray-400">{section.title}</h3>
                                                 </div>
-                                                
+
                                                 {/* 섹션 내 문항들 */}
                                                 {sectionQuestions.map((question, localIndex) => {
                                                     const Icon = getQuestionIcon(question);
@@ -608,16 +796,16 @@ export function FormBuilder() {
                                                             onClick={() => setSelectedQuestionId(question.id)}
                                                             className={`
                                                                 w-full flex items-center gap-3 p-3 rounded-lg transition-all
-                                                                ${isSelected 
-                                                                    ? 'bg-gray-100 border border-gray-300' 
+                                                                ${isSelected
+                                                                    ? 'bg-gray-100 border border-gray-300'
                                                                     : 'hover:bg-gray-50 border border-transparent'
                                                                 }
                                                             `}
                                                         >
                                                             <div className={`
                                                                 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0
-                                                                ${isSelected 
-                                                                    ? 'bg-indigo-100 text-indigo-700' 
+                                                                ${isSelected
+                                                                    ? 'bg-indigo-100 text-indigo-700'
                                                                     : question.type === 'choice' || question.type === 'complex_choice'
                                                                         ? 'bg-purple-100 text-purple-700'
                                                                         : 'bg-indigo-100 text-indigo-700'

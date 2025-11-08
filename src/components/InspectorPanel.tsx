@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Question, Section, QuestionType } from '../types/survey';
-import { BranchNode, PredicateNode, GroupNode, BranchRule, ShowNode, ShowRule, Option, Operator, ComplexItem } from '@/types/survey';
+import { BranchNode, PredicateNode, GroupNode, BranchRule, ShowNode, ShowRule, Option, Operator, ComplexItem, isChoiceQuestion, isRangeQuestion, isComplexChoiceQuestion, isComplexInputQuestion } from '@/types/survey';
 import { Switch } from './ui/switch';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
@@ -64,13 +64,17 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
   const showComplexOptions = isComplexType;
 
   // dropdown 타입을 choice로 통합 (하위 호환성 유지)
-  const isDropdown = isChoiceType && question.isDropdown;
+  const isDropdown = isChoiceType && isChoiceQuestion(question) && question.isDropdown;
 
   // 분기 규칙과 표시 규칙
-  const branchRules = question.branchRules || [];
+  // branchRules는 choice 타입에서만 사용 가능
+  const branchRules = (isChoiceQuestion(question) || isComplexChoiceQuestion(question)) 
+    ? (isChoiceQuestion(question) ? question.branchRules : question.branchRules) || []
+    : [];
   const showRules = question.showRules || [];
 
   const handleAddBranchRule = () => {
+    if (!isChoiceQuestion(question) && !isComplexChoiceQuestion(question)) return;
     const newRule: BranchRule = {
       next_question_id: '',
     };
@@ -79,12 +83,14 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
   };
 
   const handleUpdateBranchRule = (index: number, updates: Partial<BranchRule>) => {
+    if (!isChoiceQuestion(question) && !isComplexChoiceQuestion(question)) return;
     const updated = [...branchRules];
     updated[index] = { ...updated[index], ...updates };
     onUpdate({ branchRules: updated });
   };
 
   const handleDeleteBranchRule = (index: number) => {
+    if (!isChoiceQuestion(question) && !isComplexChoiceQuestion(question)) return;
     const updated = branchRules.filter((_, i) => i !== index);
     onUpdate({ branchRules: updated });
   };
@@ -145,12 +151,12 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                   value={question.type}
                   onValueChange={(value) => {
                     const newType = value as QuestionType;
-                    const updates: Partial<Question> = { type: newType };
+                    const updates: any = { type: newType };
 
                     // 타입별 초기화
                     if (newType === 'choice') {
                       // choice 타입으로 변경: options 초기화
-                      if (!question.options || question.options.length === 0) {
+                      if (!isChoiceQuestion(question) || question.options.length === 0) {
                         updates.options = [{ label: '', key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[];
                       }
                     } else {
@@ -166,16 +172,16 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
 
                     if (newType === 'complex_choice') {
                       // complex_choice 타입으로 변경: complexItems 초기화
-                      if (!question.complexItems || question.complexItems.length === 0) {
+                      if (!isComplexChoiceQuestion(question) || question.complexItems.length === 0) {
                         updates.complexItems = [];
                       }
                       // isMultiple 기본값 설정 (없으면 false)
-                      if (question.isMultiple === undefined) {
+                      if (!isComplexChoiceQuestion(question) || question.isMultiple === undefined) {
                         updates.isMultiple = false;
                       }
                     } else if (newType === 'complex_input') {
                       // complex_input 타입으로 변경: complexItems 초기화
-                      if (!question.complexItems || question.complexItems.length === 0) {
+                      if (!isComplexInputQuestion(question) || question.complexItems.length === 0) {
                         updates.complexItems = [];
                       }
                       // complex_input은 선택 기능이 없으므로 isMultiple 제거
@@ -194,7 +200,9 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
 
                     if (newType === 'short_text') {
                       // short_text 타입으로 변경: input_type 기본값 설정
-                      if (!question.input_type) {
+                      // 타입 단언 사용 (타입 변경 중이므로)
+                      const shortTextQ = question as any;
+                      if (!shortTextQ.input_type) {
                         updates.input_type = 'text';
                       }
                     } else {
@@ -204,7 +212,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
 
                     if (newType === 'range') {
                       // range 타입으로 변경: rangeConfig 초기화
-                      if (!question.rangeConfig) {
+                      if (!isRangeQuestion(question)) {
                         updates.rangeConfig = { min: 0, max: 10, step: 1 };
                       }
                     } else {
@@ -242,7 +250,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 <div>
                   <Label htmlFor="inputType" className="mb-2 block">입력 필드 타입</Label>
                   <Select
-                    value={question.input_type || 'text'}
+                    value={(question as any).input_type || 'text'}
                     onValueChange={(value) => {
                       onUpdate({ input_type: value as 'text' | 'number' | 'email' | 'tel' });
                     }}
@@ -266,7 +274,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                   <Input
                     id="placeholder"
                     type="text"
-                    value={question.placeholder || ''}
+                    value={(question as any).placeholder || ''}
                     onChange={(e) => {
                       onUpdate({ placeholder: e.target.value || undefined });
                     }}
@@ -289,7 +297,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 )
               }
 
-              {showChoiceOptions && (
+              {showChoiceOptions && isChoiceQuestion(question) && (
                 <div className="flex items-center justify-between">
                   <Label htmlFor="isBoolean" className="cursor-pointer">불리언(boolean)</Label>
                   <Switch
@@ -311,7 +319,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                         // 불리언 비활성화: 일반 choice로 변경
                         onUpdate({
                           isBoolean: false,
-                          options: question.options && question.options.length > 0
+                          options: question.options.length > 0
                             ? question.options
                             : [{ label: '', key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[],
                         });
@@ -321,7 +329,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              {showChoiceOptions && !question.isBoolean && (
+              {showChoiceOptions && isChoiceQuestion(question) && !question.isBoolean && (
                 <div className="flex items-center justify-between">
                   <Label htmlFor="isDropdown" className="cursor-pointer">드롭다운 형식</Label>
                   <Switch
@@ -334,12 +342,12 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              {showChoiceOptions && !question.isBoolean && (
+              {showChoiceOptions && isChoiceQuestion(question) && !question.isBoolean && (
                 <div className="flex items-center justify-between">
                   <Label htmlFor="isMultiple" className="cursor-pointer">다중선택 허용</Label>
                   <Switch
                     id="isMultiple"
-                    checked={question.isMultiple || false}
+                    checked={(question as any).isMultiple || false}
                     onCheckedChange={(checked) => {
                       onUpdate({ isMultiple: checked });
                     }}
@@ -348,18 +356,18 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
               )}
 
 
-              {showChoiceOptions && !question.isBoolean && (
+              {showChoiceOptions && isChoiceQuestion(question) && !question.isBoolean && (
                 <div className="flex items-center justify-between">
                   <Label htmlFor="isOther" className="cursor-pointer">"기타" 옵션 추가</Label>
                   <Switch
                     id="isOther"
-                    checked={question.options?.some((option) => option.isOther) || false}
+                    checked={question.options.some((option) => option.isOther) || false}
                     onCheckedChange={
                       (checked) => {
                         if (checked) {
-                          onUpdate({ options: [...(question.options || []), { label: '기타', isOther: true, key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[] });
+                          onUpdate({ options: [...question.options, { label: '기타', isOther: true, key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[] });
                         } else {
-                          onUpdate({ options: question.options?.filter((option) => !option.isOther) || [] });
+                          onUpdate({ options: question.options.filter((option) => !option.isOther) });
                         }
                       }
                     }
@@ -367,7 +375,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              {isComplexChoiceType && (
+              {isComplexChoiceType && isComplexChoiceQuestion(question) && (
                 <div className="flex items-center justify-between">
                   <Label htmlFor="complexIsMultiple" className="cursor-pointer">다중선택 허용</Label>
                   <Switch
@@ -394,9 +402,11 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                           input_type: 'text',
                           key: `item-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
                         };
-                        onUpdate({
-                          complexItems: [...(question.complexItems || []), newItem],
-                        });
+                        if (isComplexChoiceQuestion(question) || isComplexInputQuestion(question)) {
+                          onUpdate({
+                            complexItems: [...question.complexItems, newItem],
+                          });
+                        }
                       }}
                       className="h-8"
                     >
@@ -405,7 +415,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                     </Button>
                   </div>
                   <div className="space-y-3">
-                    {(question.complexItems || []).map((item, index) => (
+                    {((isComplexChoiceQuestion(question) || isComplexInputQuestion(question)) ? question.complexItems : []).map((item, index) => (
                       <div key={item.key} className="p-3 border border-gray-200 rounded-lg bg-white">
                         <div className="flex items-start justify-between mb-2">
                           <span className="text-sm font-medium text-gray-700">필드 {index + 1}</span>
@@ -414,8 +424,10 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                             variant="ghost"
                             size="sm"
                             onClick={() => {
-                              const updated = (question.complexItems || []).filter((_, i) => i !== index);
-                              onUpdate({ complexItems: updated });
+                              if (isComplexChoiceQuestion(question) || isComplexInputQuestion(question)) {
+                                const updated = question.complexItems.filter((_, i) => i !== index);
+                                onUpdate({ complexItems: updated });
+                              }
                             }}
                             className="h-6 w-6 p-0 text-gray-400 hover:text-red-600"
                           >
@@ -428,9 +440,11 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                             <Input
                               value={item.label}
                               onChange={(e) => {
-                                const updated = [...(question.complexItems || [])];
-                                updated[index] = { ...updated[index], label: e.target.value };
-                                onUpdate({ complexItems: updated });
+                                if (isComplexChoiceQuestion(question) || isComplexInputQuestion(question)) {
+                                  const updated = [...question.complexItems];
+                                  updated[index] = { ...updated[index], label: e.target.value };
+                                  onUpdate({ complexItems: updated });
+                                }
                               }}
                               placeholder="필드 라벨"
                               className="mt-1 bg-white text-sm"
@@ -441,9 +455,11 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                             <Select
                               value={item.input_type}
                               onValueChange={(value) => {
-                                const updated = [...(question.complexItems || [])];
-                                updated[index] = { ...updated[index], input_type: value as 'text' | 'number' | 'email' | 'tel' };
-                                onUpdate({ complexItems: updated });
+                                if (isComplexChoiceQuestion(question) || isComplexInputQuestion(question)) {
+                                  const updated = [...question.complexItems];
+                                  updated[index] = { ...updated[index], input_type: value as 'text' | 'number' | 'email' | 'tel' };
+                                  onUpdate({ complexItems: updated });
+                                }
                               }}
                             >
                               <SelectTrigger className="mt-1 bg-white text-sm h-8">
@@ -462,9 +478,11 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                             <Input
                               value={item.placeholder || ''}
                               onChange={(e) => {
-                                const updated = [...(question.complexItems || [])];
-                                updated[index] = { ...updated[index], placeholder: e.target.value || undefined };
-                                onUpdate({ complexItems: updated });
+                                if (isComplexChoiceQuestion(question) || isComplexInputQuestion(question)) {
+                                  const updated = [...question.complexItems];
+                                  updated[index] = { ...updated[index], placeholder: e.target.value || undefined };
+                                  onUpdate({ complexItems: updated });
+                                }
                               }}
                               placeholder="플레이스홀더"
                               className="mt-1 bg-white text-sm"
@@ -475,9 +493,11 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                             <Input
                               value={item.unit || ''}
                               onChange={(e) => {
-                                const updated = [...(question.complexItems || [])];
-                                updated[index] = { ...updated[index], unit: e.target.value || undefined };
-                                onUpdate({ complexItems: updated });
+                                if (isComplexChoiceQuestion(question) || isComplexInputQuestion(question)) {
+                                  const updated = [...question.complexItems];
+                                  updated[index] = { ...updated[index], unit: e.target.value || undefined };
+                                  onUpdate({ complexItems: updated });
+                                }
                               }}
                               placeholder="예: kg, cm"
                               className="mt-1 bg-white text-sm"
@@ -486,7 +506,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                         </div>
                       </div>
                     ))}
-                    {(!question.complexItems || question.complexItems.length === 0) && (
+                    {((isComplexChoiceQuestion(question) || isComplexInputQuestion(question)) && question.complexItems.length === 0) && (
                       <div className="text-center py-4 text-gray-500 text-sm">
                         복합 필드가 없습니다. 필드를 추가하세요.
                       </div>
@@ -495,8 +515,32 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                 </div>
               )}
 
-              {questionType === 'range' && question.rangeConfig && (
+              {questionType === 'range' && isRangeQuestion(question) && (
                 <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="rangeDisplayStyle" className="mb-2 block">표시 방식</Label>
+                    <Select
+                      value={question.rangeConfig.displayStyle || 'slider'}
+                      onValueChange={(value) => {
+                        onUpdate({
+                          rangeConfig: {
+                            ...question.rangeConfig,
+                            displayStyle: value as 'slider' | 'stars' | 'buttons',
+                          },
+                        });
+                      }}
+                    >
+                      <SelectTrigger className="bg-white">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="slider">슬라이더</SelectItem>
+                        <SelectItem value="stars">별표 평점</SelectItem>
+                        <SelectItem value="buttons">버튼</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-gray-500 mt-1">range를 슬라이더, 별표, 또는 버튼으로 표시</p>
+                  </div>
                   <div>
                     <Label htmlFor="rangeMin" className="mb-2 block">최소값</Label>
                     <Input
@@ -505,14 +549,12 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                       value={question.rangeConfig.min}
                       onChange={(e) => {
                         const min = parseInt(e.target.value) || 0;
-                        if (question.rangeConfig) {
-                          onUpdate({
-                            rangeConfig: {
-                              ...question.rangeConfig,
-                              min,
-                            },
-                          });
-                        }
+                        onUpdate({
+                          rangeConfig: {
+                            ...question.rangeConfig,
+                            min,
+                          },
+                        });
                       }}
                       className="bg-white"
                     />
@@ -525,14 +567,12 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                       value={question.rangeConfig.max}
                       onChange={(e) => {
                         const max = parseInt(e.target.value) || 10;
-                        if (question.rangeConfig) {
-                          onUpdate({
-                            rangeConfig: {
-                              ...question.rangeConfig,
-                              max,
-                            },
-                          });
-                        }
+                        onUpdate({
+                          rangeConfig: {
+                            ...question.rangeConfig,
+                            max,
+                          },
+                        });
                       }}
                       className="bg-white"
                     />
@@ -546,14 +586,12 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                       value={question.rangeConfig.step}
                       onChange={(e) => {
                         const step = parseFloat(e.target.value) || 1;
-                        if (question.rangeConfig) {
-                          onUpdate({
-                            rangeConfig: {
-                              ...question.rangeConfig,
-                              step,
-                            },
-                          });
-                        }
+                        onUpdate({
+                          rangeConfig: {
+                            ...question.rangeConfig,
+                            step,
+                          },
+                        });
                       }}
                       className="bg-white"
                     />
@@ -750,8 +788,10 @@ function BranchRuleEditor({
 }: BranchRuleEditorProps) {
   const availableQuestions = allQuestions.filter((q) => q.id !== currentQuestionId);
   const currentQuestion = allQuestions.find((q) => q.id === currentQuestionId);
-  const isChoiceType = currentQuestion && (currentQuestion.type === 'choice' || currentQuestion.isDropdown);
-  const options = currentQuestion?.options || [];
+  const isChoiceType = currentQuestion && currentQuestion.type === 'choice';
+  const options = (currentQuestion && isChoiceQuestion(currentQuestion)) 
+    ? (currentQuestion.isDropdown ? currentQuestion.options : currentQuestion.options)
+    : [];
 
   return (
     <div className="p-4 border border-gray-200 rounded-lg bg-white">
@@ -939,7 +979,7 @@ function ConditionBuilder({
   onChange,
 }: ConditionBuilderProps) {
   const currentQuestion = allQuestions.find((q) => q.id === currentQuestionId);
-  const isChoiceType = currentQuestion && (currentQuestion.type === 'choice' || currentQuestion.isDropdown);
+  const isChoiceType = currentQuestion && currentQuestion.type === 'choice';
 
   if (isChoiceType) {
     return (

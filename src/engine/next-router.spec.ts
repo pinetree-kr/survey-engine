@@ -5,12 +5,15 @@ import type { AnswersMap } from "./visibility";
 
 describe("next-router", () => {
   describe("getNextQuestionId", () => {
-    it("현재 질문의 nextQuestionId가 최우선이어야 함", () => {
+    it("현재 질문의 branchRules가 최우선이어야 함", () => {
       const questions: Question[] = [
         {
           id: "q1",
           title: "질문 1",
-          type: "short_text",
+          type: "choice",
+          options: [
+            { label: "옵션 1", key: "opt1" },
+          ],
           branchRules: [
             {
               next_question_id: "q3",
@@ -145,76 +148,69 @@ describe("next-router", () => {
       expect(nextId).toBe("q2");
     });
 
-    it("composite에서 정의 순서 우선으로 첫 매칭의 nextQuestionId를 반환해야 함", () => {
+    it("complex_choice에서 subKey를 사용한 branchRules가 동작해야 함", () => {
       const questions: Question[] = [
         {
           id: "q1",
           title: "질문 1",
-          type: "composite_single",
-          compositeItems: [
+          type: "complex_choice",
+          complexItems: [
             {
               label: "이름",
               key: "name",
               input_type: "text",
-              branchRules: [
-                {
-                  when: {
-                    kind: "group",
-                    op: "AND",
-                    children: [{
-                      kind: "predicate",
-                      op: "eq" as Operator,
-                      value: "name",
-                    }],
-                  },
-                  next_question_id: "q2",
-                }
-              ]
             },
             {
               label: "이메일",
               key: "email",
               input_type: "email",
-              branchRules: [
-                {
-                  when: {
-                    kind: "group",
-                    op: "AND",
-                    children: [{
-                      kind: "predicate",
-                      op: "eq" as Operator,
-                      value: "email",
-                    }],
-                  },
-                  next_question_id: "q3",
-                },
-              ],
+            },
+          ],
+          branchRules: [
+            {
+              when: {
+                kind: "group",
+                op: "AND",
+                children: [{
+                  kind: "predicate",
+                  op: "eq" as Operator,
+                  subKey: "name",
+                  value: "홍길동",
+                }],
+              },
+              next_question_id: "q2",
             },
             {
-              label: "전화번호",
-              key: "phone",
-              input_type: "tel",
-              branchRules: [
-                {
-                  when: {
-                    kind: "group",
-                    op: "AND",
-                    children: [{
-                      kind: "predicate",
-                      op: "eq" as Operator,
-                      value: "phone",
-                    }],
-                  },
-                  next_question_id: "q4",
-                },
-              ],
+              when: {
+                kind: "group",
+                op: "AND",
+                children: [{
+                  kind: "predicate",
+                  op: "eq" as Operator,
+                  subKey: "email",
+                  value: "test@example.com",
+                }],
+              },
+              next_question_id: "q3",
             },
-          ]
+          ],
+        },
+        {
+          id: "q2",
+          title: "질문 2",
+          type: "short_text",
+        },
+        {
+          id: "q3",
+          title: "질문 3",
+          type: "short_text",
         },
       ];
-      // 이 테스트는 composite의 branchRules가 실제로 동작하는지 확인하는 것이므로
-      // 실제 구현에 따라 테스트를 작성해야 합니다.
-      // 현재는 구조만 확인합니다.
+
+      const answers: AnswersMap = new Map([["q1", { name: "홍길동", email: "test@example.com" }]]);
+      const nextId = getNextQuestionId(questions[0], questions, answers);
+      // 첫 번째 매칭 규칙이 적용됨
+      expect(nextId).toBe("q2");
     });
 
     it("branchRules에서 AND 평가 후 첫 매칭 rule의 nextQuestionId를 반환해야 함", () => {
@@ -240,10 +236,22 @@ describe("next-router", () => {
                 children: [{
                   kind: "predicate",
                   op: "eq" as Operator,
-                  value: "test",
+                  value: "opt1",
                 }],
               },
               next_question_id: "q3",
+            },
+            {
+              when: {
+                kind: "group",
+                op: "AND",
+                children: [{
+                  kind: "predicate",
+                  op: "eq" as Operator,
+                  value: "opt2",
+                }],
+              },
+              next_question_id: "q4",
             },
           ],
         },
@@ -261,7 +269,6 @@ describe("next-router", () => {
 
       // 첫 번째 rule의 모든 조건 충족
       const answers1: AnswersMap = new Map([
-        ["q1", "test"],
         ["q2", "opt1"],
       ]);
       const nextId1 = getNextQuestionId(questions[1], questions, answers1);
@@ -269,7 +276,6 @@ describe("next-router", () => {
 
       // 첫 번째 rule 실패, 두 번째 rule 성공
       const answers2: AnswersMap = new Map([
-        ["q1", "test"],
         ["q2", "opt2"],
       ]);
       const nextId2 = getNextQuestionId(questions[1], questions, answers2);

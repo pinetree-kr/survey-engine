@@ -21,24 +21,27 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: {
-          kind: "group",
-          aggregator: "OR",
-          children: [
-            {
-              kind: "condition",
-              question_id: "q1",
-              operator: "eq",
-              value: "value1",
+        showRules: [
+          {
+            refQuestionId: "q1",
+            when: {
+              kind: "group",
+              op: "OR",
+              children: [
+                {
+                  kind: "predicate",
+                  op: "eq",
+                  value: "value1",
+                },
+                {
+                  kind: "predicate",
+                  op: "eq",
+                  value: "value2",
+                },
+              ],
             },
-            {
-              kind: "condition",
-              question_id: "q1",
-              operator: "eq",
-              value: "value2",
-            },
-          ],
-        },
+          },
+        ],
       };
 
       const answers: AnswersMap = new Map([["q1", "value1"]]);
@@ -50,24 +53,27 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: {
-          kind: "group",
-          aggregator: "OR",
-          children: [
-            {
-              kind: "condition",
-              question_id: "q1",
-              operator: "eq",
-              value: "value1",
+        showRules: [
+          {
+            refQuestionId: "q1",
+            when: {
+              kind: "group",
+              op: "OR",
+              children: [
+                {
+                  kind: "predicate",
+                  op: "eq",
+                  value: "value1",
+                },
+                {
+                  kind: "predicate",
+                  op: "eq",
+                  value: "value2",
+                },
+              ],
             },
-            {
-              kind: "condition",
-              question_id: "q1",
-              operator: "eq",
-              value: "value2",
-            },
-          ],
-        },
+          },
+        ],
       };
 
       const answers: AnswersMap = new Map([["q1", "value3"]]);
@@ -79,18 +85,22 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: {
-          kind: "group",
-          aggregator: "AND",
-          children: [
-            {
-              kind: "condition",
-              question_id: "q1",
-              operator: "eq",
-              value: "test",
+        showRules: [
+          {
+            refQuestionId: "q1",
+            when: {
+              kind: "group",
+              op: "AND",
+              children: [
+                {
+                  kind: "predicate",
+                  op: "eq",
+                  value: "test",
+                },
+              ],
             },
-          ],
-        },
+          },
+        ],
       };
 
       const answers1: AnswersMap = new Map([["q1", "test"]]);
@@ -105,18 +115,22 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: {
-          kind: "group",
-          aggregator: "AND",
-          children: [
-            {
-              kind: "condition",
-              question_id: "q1",
-              operator: "neq",
-              value: "test",
+        showRules: [
+          {
+            refQuestionId: "q1",
+            when: {
+              kind: "group",
+              op: "AND",
+              children: [
+                {
+                  kind: "predicate",
+                  op: "neq",
+                  value: "test",
+                },
+              ],
             },
-          ],
-        },
+          },
+        ],
       };
 
       const answers1: AnswersMap = new Map([["q1", "other"]]);
@@ -131,18 +145,22 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: {
-          kind: "group",
-          aggregator: "AND",
-          children: [
-            {
-              kind: "condition",
-              question_id: "q1",
-              operator: "contains",
-              value: "test",
+        showRules: [
+          {
+            refQuestionId: "q1",
+            when: {
+              kind: "group",
+              op: "AND",
+              children: [
+                {
+                  kind: "predicate",
+                  op: "contains",
+                  value: "test",
+                },
+              ],
             },
-          ],
-        },
+          },
+        ],
       };
 
       const answers1: AnswersMap = new Map([["q1", "this is a test"]]);
@@ -157,18 +175,22 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: {
-          kind: "group",
-          aggregator: "AND",
-          children: [
-            {
-              kind: "condition",
-              question_id: "q1",
-              operator: "gt",
-              value: 10,
+        showRules: [
+          {
+            refQuestionId: "q1",
+            when: {
+              kind: "group",
+              op: "AND",
+              children: [
+                {
+                  kind: "predicate",
+                  op: "gt",
+                  value: 10,
+                },
+              ],
             },
-          ],
-        },
+          },
+        ],
       };
 
       const answers1: AnswersMap = new Map([["q1", 15]]);
@@ -183,19 +205,23 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: {
-          kind: "group",
-          aggregator: "AND",
-          children: [
-            {
-              kind: "condition",
-              question_id: "q1",
-              subKey: "email",
-              operator: "neq",
-              value: "",
+        showRules: [
+          {
+            refQuestionId: "q1",
+            when: {
+              kind: "group",
+              op: "AND",
+              children: [
+                {
+                  kind: "predicate",
+                  subKey: "email",
+                  op: "neq",
+                  value: "",
+                },
+              ],
             },
-          ],
-        },
+          },
+        ],
       };
 
       const answers: AnswersMap = new Map([
@@ -216,18 +242,22 @@ describe("visibility", () => {
         id: "q2",
         title: "질문 2",
         type: "short_text",
-        showConditions: {
-          kind: "group",
-          aggregator: "AND",
-          children: [
-            {
-              kind: "condition",
-              question_id: "q1",
-              operator: "eq",
-              value: "test",
+        showRules: [
+          {
+            refQuestionId: "q1",
+            when: {
+              kind: "group",
+              op: "AND",
+              children: [
+                {
+                  kind: "predicate",
+                  op: "eq",
+                  value: "test",
+                },
+              ],
             },
-          ],
-        },
+          },
+        ],
       };
 
       const answers: AnswersMap = new Map();

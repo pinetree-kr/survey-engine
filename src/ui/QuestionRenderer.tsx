@@ -1,5 +1,7 @@
 import { useState, useMemo, useCallback } from "react";
+import { Star } from "lucide-react";
 import type { Question } from "@/schema/question.types";
+import { isRangeQuestion, isChoiceQuestion, isComplexChoiceQuestion, isComplexInputQuestion } from "@/schema/question.types";
 import type { AnswersMap } from "@/engine/visibility";
 import { evaluateShowConditions } from "@/engine/visibility";
 import { getNextQuestionId } from "@/engine/next-router";
@@ -288,7 +290,7 @@ function renderQuestionInput(
       );
 
     case "choice": {
-      if (!question.options) return null;
+      if (!isChoiceQuestion(question)) return null;
 
       // 불리언(boolean)인 경우 Column 형태로 표시
       if (question.isBoolean) {
@@ -489,8 +491,8 @@ function renderQuestionInput(
       }
     }
 
-    case "complex_choice":
-      if (!question.complexItems) return null;
+    case "complex_choice": {
+      if (!isComplexChoiceQuestion(question)) return null;
       const compositeAnswer =
         (currentAnswer as Record<string, unknown>) || {};
       return (
@@ -571,9 +573,10 @@ function renderQuestionInput(
           })}
         </div>
       );
+    }
 
-    case "complex_input":
-      if (!question.complexItems) return null;
+    case "complex_input": {
+      if (!isComplexInputQuestion(question)) return null;
       const complexInputAnswer =
         (currentAnswer as Record<string, unknown>) || {};
       return (
@@ -632,11 +635,119 @@ function renderQuestionInput(
           ))}
         </div>
       );
+    }
 
     case "range": {
-      const rangeConfig = question.rangeConfig || { min: 0, max: 10, step: 1 };
+      if (!isRangeQuestion(question)) return null;
+      const rangeConfig = question.rangeConfig;
+      const displayStyle = rangeConfig.displayStyle || 'slider';
       const currentValue = (currentAnswer as number) ?? rangeConfig.min;
 
+      // 별표 평점 렌더링
+      if (displayStyle === 'stars') {
+        const maxStars = rangeConfig.max - rangeConfig.min;
+        return (
+          <div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "12px" }}>
+              {Array.from({ length: maxStars }, (_, i) => {
+                const starValue = rangeConfig.min + i + 1;
+                const isFilled = starValue <= currentValue;
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => updateAnswer(question.id, starValue)}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: "4px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Star
+                      size={40}
+                      fill={isFilled ? "#fbbf24" : "none"}
+                      style={{
+                        color: isFilled ? "#fbbf24" : "#d1d5db",
+                        transition: "all 0.2s",
+                      }}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+            <div style={{ textAlign: "center", fontSize: "14px", color: "#666", marginTop: "8px" }}>
+              {currentValue} / {rangeConfig.max}
+            </div>
+          </div>
+        );
+      }
+
+      // 버튼 렌더링
+      if (displayStyle === 'buttons') {
+        const generateStepValues = () => {
+          const values: number[] = [];
+          for (let val = rangeConfig.min; val <= rangeConfig.max; val += rangeConfig.step) {
+            values.push(parseFloat(val.toFixed(10)));
+          }
+          return values;
+        };
+
+        const stepValues = generateStepValues();
+
+        return (
+          <div>
+            <div style={{ 
+              display: "flex", 
+              alignItems: "center", 
+              justifyContent: "center", 
+              gap: "8px", 
+              marginBottom: "12px",
+              flexWrap: "wrap"
+            }}>
+              {stepValues.map((value, index) => {
+                const isSelected = value === currentValue;
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => updateAnswer(question.id, value)}
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      borderRadius: "8px",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                      backgroundColor: isSelected ? "#6366f1" : "#e0f2fe",
+                      color: isSelected ? "#ffffff" : "#1e40af",
+                      border: "none",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.backgroundColor = "#bae6fd";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.backgroundColor = "#e0f2fe";
+                      }
+                    }}
+                  >
+                    {value}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      }
+
+      // 슬라이더 렌더링
       // step에 따라 모든 값 계산
       const generateStepValues = () => {
         const values: number[] = [];

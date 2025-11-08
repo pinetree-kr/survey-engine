@@ -52,12 +52,12 @@ const allQuestionTypes: QuestionTypeItem[] = [
   { type: 'choice', icon: CheckSquare, label: '선택형', description: '라디오/체크박스/드롭다운', category: 'Choice', recommended: true },
   { type: 'complex_choice', icon: LayoutGrid, label: '복합 선택', description: '선택지와 여러 필드', category: 'Choice' },
   { type: 'complex_input', icon: LayoutGrid, label: '복합 입력', description: '여러 입력 필드', category: 'Text' },
-  { type: 'range', icon: Sliders, label: 'Range', description: '슬라이더로 점수/평점 선택', category: 'Choice' },
+  { type: 'range', icon: Sliders, label: 'Range', description: '슬라이더로 점수/평점 선택', category: 'Rating' },
   { type: 'description', icon: FileText, label: '설명', description: '텍스트 블록만', category: 'Text' },
 ];
 
 // 통합된 카테고리 목록
-const unifiedCategories = ['Contact info', 'Choice', 'Text'];
+const unifiedCategories = ['Contact info', 'Choice', 'Text', 'Rating'];
 
 // 템플릿 정의
 const questionTemplates: QuestionTemplate[] = [
@@ -224,6 +224,42 @@ const questionTemplates: QuestionTemplate[] = [
         { label: '예', key: 'Y' },
         { label: '아니오', key: 'N' },
       ] as Option[],
+    },
+  },
+  {
+    id: 'star_rating',
+    label: '별표 평점',
+    description: '별표로 평점을 선택합니다',
+    icon: Star,
+    category: 'Rating',
+    template: {
+      type: 'range',
+      title: '평점',
+      required: true,
+      rangeConfig: {
+        min: 1,
+        max: 5,
+        step: 1,
+        displayStyle: 'stars',
+      },
+    },
+  },
+  {
+    id: 'button_rating',
+    label: '버튼 평점',
+    description: '버튼으로 점수를 선택합니다',
+    icon: Sliders,
+    category: 'Rating',
+    template: {
+      type: 'range',
+      title: '점수',
+      required: true,
+      rangeConfig: {
+        min: 0,
+        max: 10,
+        step: 1,
+        displayStyle: 'buttons',
+      },
     },
   },
 ];

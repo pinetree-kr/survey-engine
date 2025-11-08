@@ -16,13 +16,14 @@
 ```typescript
 export type BranchRule = {
   when?: BranchNode; // true가 될 로직 (트리 구조), 없으면 항상 true
-  nextQuestionId: string; // 이동할 다음 질문 ID
+  next_question_id: string; // 이동할 다음 질문 ID
 };
 ```
 
 - `when`: 조건이 없으면 항상 true (기본 규칙)
-- `when`이 있으면 해당 조건이 true일 때만 `nextQuestionId`로 이동
+- `when`이 있으면 해당 조건이 true일 때만 `next_question_id`로 이동
 - 여러 `BranchRule`이 있을 경우, 배열 순서대로 평가하며 첫 번째 매칭되는 규칙이 적용됨
+- **중요**: `branchRules`는 **choice 타입(`ChoiceQuestion`, `ComplexChoiceQuestion`)에서만 사용 가능**합니다.
 
 ### BranchNode
 
@@ -110,18 +111,59 @@ export type Operator =
 
 ## Question 타입의 branchRules 및 showRules 필드
 
+### 타입별 인터페이스 분리 (Discriminated Union)
+
+질문 타입은 Discriminated Union 패턴으로 타입별로 분리되어 있습니다:
+
 ```typescript
-export type Question = {
+// 공통 속성
+export type BaseQuestion = {
   id: string;
   title: string;
-  // ... 기타 필드
-  branchRules?: BranchRule[];  // 분기 로직: 여러 브랜치 규칙 (우선순위는 인덱스 순)
-  showRules?: ShowRule[];  // 표시 규칙: 이 질문을 표시할 조건들 (모든 규칙이 true일 때 표시)
+  description?: string;
+  images?: ImageObj[];
+  required?: boolean;
+  showRules?: ShowRule[];  // 모든 질문 타입에서 사용 가능
+  design?: {
+    themeColor?: string;
+    backgroundStyle?: string;
+  };
+  validations?: Validation;
+  sectionId?: string;
 };
+
+// Choice 타입: branchRules 사용 가능
+export type ChoiceQuestion = BaseQuestion & {
+  type: 'choice';
+  options: Option[];
+  isMultiple?: boolean;
+  isDropdown?: boolean;
+  isBoolean?: boolean;
+  branchRules?: BranchRule[];  // choice 타입에서만 사용 가능
+};
+
+// ComplexChoice 타입: branchRules 사용 가능
+export type ComplexChoiceQuestion = BaseQuestion & {
+  type: 'complex_choice';
+  complexItems: ComplexItem[];
+  isMultiple?: boolean;
+  branchRules?: BranchRule[];  // complex_choice 타입에서만 사용 가능
+};
+
+// 다른 타입들 (ShortTextQuestion, LongTextQuestion, RangeQuestion, ComplexInputQuestion, DescriptionQuestion)
+// branchRules를 사용할 수 없음
 ```
 
-- `branchRules`: 배열 형태로 여러 분기 규칙을 정의 (우선순위는 인덱스 순, 첫 번째 매칭되는 규칙 적용)
-- `showRules`: 배열 형태로 여러 표시 규칙을 정의 (모든 규칙이 true일 때 표시됨)
+### 필드 사용 규칙
+
+- **`branchRules`**: 
+  - **`ChoiceQuestion`**과 **`ComplexChoiceQuestion`**에서만 사용 가능
+  - 배열 형태로 여러 분기 규칙을 정의 (우선순위는 인덱스 순, 첫 번째 매칭되는 규칙 적용)
+  - 다른 질문 타입에서는 타입 안전성으로 인해 접근 불가
+
+- **`showRules`**: 
+  - **모든 질문 타입**에서 사용 가능 (`BaseQuestion`에 정의됨)
+  - 배열 형태로 여러 표시 규칙을 정의 (모든 규칙이 true일 때 표시됨)
 
 ## 평가 로직
 
@@ -129,8 +171,10 @@ export type Question = {
 
 1. `branchRules` 배열을 인덱스 순서대로 순회
 2. 각 `BranchRule`의 `when` 조건을 평가
-3. `when`이 없거나 `true`로 평가되면 해당 `nextQuestionId` 반환
+3. `when`이 없거나 `true`로 평가되면 해당 `next_question_id` 반환
 4. 첫 번째 매칭되는 규칙이 적용됨 (나머지는 평가하지 않음)
+
+**참고**: `branchRules`는 choice 타입에서만 평가됩니다. 다른 타입의 질문에서는 `branchRules`가 없으므로 평가되지 않습니다.
 
 ### 2. showRules 평가 순서
 
@@ -239,20 +283,31 @@ if (node.kind === 'group') {
 
 ### 2. 참조 무결성 검증
 
-#### nextQuestionId 검증
+#### next_question_id 검증
 
 ```typescript
-// 모든 branchRules의 nextQuestionId가 존재하는 질문 ID인지 확인
-for (const rule of question.branchRules) {
-  if (!questionIds.has(rule.nextQuestionId)) {
-    // 에러: 존재하지 않는 질문 ID 참조
+// choice 타입의 질문에서만 branchRules 검증
+if (isChoiceQuestion(question) && question.branchRules) {
+  for (const rule of question.branchRules) {
+    if (!questionIds.has(rule.next_question_id)) {
+      // 에러: 존재하지 않는 질문 ID 참조
+    }
+  }
+}
+
+if (isComplexChoiceQuestion(question) && question.branchRules) {
+  for (const rule of question.branchRules) {
+    if (!questionIds.has(rule.next_question_id)) {
+      // 에러: 존재하지 않는 질문 ID 참조
+    }
   }
 }
 ```
 
 **검증 규칙:**
-- `nextQuestionId`는 설문조사 내에 존재하는 질문 ID여야 함
+- `next_question_id`는 설문조사 내에 존재하는 질문 ID여야 함
 - 자기 자신을 참조할 수 있음 (순환 참조 가능)
+- **중요**: `branchRules`는 `ChoiceQuestion`과 `ComplexChoiceQuestion`에서만 검증됩니다.
 
 #### refQuestionId 검증
 
@@ -312,7 +367,7 @@ for (const rule of question.showRules) {
           value: "male"
         }]
       },
-      nextQuestionId: "q2"  // 남성 선택 시 q2로 이동
+      next_question_id: "q2"  // 남성 선택 시 q2로 이동
     },
     {
       when: {
@@ -324,11 +379,11 @@ for (const rule of question.showRules) {
           value: "female"
         }]
       },
-      nextQuestionId: "q3"  // 여성 선택 시 q3로 이동
+      next_question_id: "q3"  // 여성 선택 시 q3로 이동
     },
     {
       // when이 없으면 항상 true (기본 규칙)
-      nextQuestionId: "q4"  // 그 외의 경우 q4로 이동
+      next_question_id: "q4"  // 그 외의 경우 q4로 이동
     }
   ]
 }
@@ -361,7 +416,7 @@ for (const rule of question.showRules) {
           }
         ]
       },
-      nextQuestionId: "q2"  // 18세 이상 남성
+      next_question_id: "q2"  // 18세 이상 남성
     }
   ]
 }
@@ -393,7 +448,7 @@ for (const rule of question.showRules) {
           }
         ]
       },
-      nextQuestionId: "q2"  // 피자 또는 버거 선택 시
+      next_question_id: "q2"  // 피자 또는 버거 선택 시
     }
   ]
 }
@@ -435,7 +490,7 @@ for (const rule of question.showRules) {
           }
         ]
       },
-      nextQuestionId: "q2"
+      next_question_id: "q2"
     }
   ]
 }
@@ -514,7 +569,7 @@ for (const rule of question.showRules) {
 - `showConditions` → `showRules`
 - `aggregator` → `op` (GroupNode)
 - `operator` → `op` (PredicateNode)
-- `next_question_id` → `nextQuestionId` (camelCase)
+- `next_question_id`: snake_case 유지 (실제 구현과 일치)
 - `ref_question_id` → `refQuestionId` (camelCase)
 - `sub_key` → `subKey` (camelCase)
 
@@ -534,6 +589,8 @@ for (const rule of question.showRules) {
 - **`showRules` 배열로 변경**: 여러 표시 규칙을 배열로 정의 (모든 규칙이 true일 때 표시)
 - **`ShowRule` 타입 추가**: `refQuestionId`를 명시하여 참조할 질문을 지정
 - **`subKey` 위치 변경**: `ShowRule`에서 제거되고 `PredicateNode`에만 속함
+- **타입별 인터페이스 분리 (Discriminated Union)**: 질문 타입이 타입별로 분리되어 타입 안전성 향상
+- **`branchRules` 타입 제한**: `ChoiceQuestion`과 `ComplexChoiceQuestion`에서만 사용 가능하도록 제한
 
 ### 4. 평가 로직 변경
 
@@ -557,4 +614,14 @@ for (const rule of question.showRules) {
 6. **composite 필드 참조**: composite 문항의 특정 필드를 참조할 때는 `subKey`를 사용합니다.
 
 7. **중첩 깊이**: 이론적으로는 무한 중첩이 가능하지만, 실제 사용 시 깊이를 제한하는 것을 권장합니다.
+
+8. **`branchRules` 타입 제한**: 
+   - `branchRules`는 **`ChoiceQuestion`**과 **`ComplexChoiceQuestion`**에서만 사용 가능합니다.
+   - 다른 질문 타입(`ShortTextQuestion`, `LongTextQuestion`, `RangeQuestion`, `ComplexInputQuestion`, `DescriptionQuestion`)에서는 타입 안전성으로 인해 `branchRules`에 접근할 수 없습니다.
+   - 타입 가드 함수(`isChoiceQuestion`, `isComplexChoiceQuestion`)를 사용하여 타입을 확인한 후 접근해야 합니다.
+
+9. **타입 안전성**: 
+   - Discriminated Union 패턴을 사용하여 타입별로 인터페이스가 분리되어 있습니다.
+   - 각 질문 타입은 해당 타입에만 존재하는 속성에만 접근할 수 있습니다.
+   - 타입 가드 함수를 사용하여 런타임에서 타입을 확인할 수 있습니다.
 

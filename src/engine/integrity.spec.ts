@@ -50,8 +50,8 @@ describe("integrity", () => {
         {
           id: "q1",
           title: "질문 1",
-          type: "composite_single",
-          compositeItems: [
+          type: "complex_choice",
+          complexItems: [
             { label: "항목 1", key: "item1", input_type: "text" },
             { label: "항목 2", key: "item1", input_type: "text" },
           ],
@@ -70,8 +70,11 @@ describe("integrity", () => {
         {
           id: "q1",
           title: "질문 1",
-          type: "short_text",
-          branchLogic: [
+          type: "choice",
+          options: [
+            { label: "옵션 1", key: "opt1" },
+          ],
+          branchRules: [
             {
               next_question_id: "q999",
             },
@@ -83,12 +86,12 @@ describe("integrity", () => {
       expect(result.ok).toBe(false);
       expect(
         result.errors.some(
-          (e) => e.code === "INVALID_NEXT_questionId"
+          (e) => e.code === "INVALID_BRANCH_NEXT_questionId"
         )
       ).toBe(true);
     });
 
-    it("존재하지 않는 branchLogic 참조를 검출해야 함", () => {
+    it("branchRules는 현재 질문의 답변을 참조하므로 별도 참조 검증이 불필요함", () => {
       const questions: Question[] = [
         {
           id: "q1",
@@ -98,14 +101,16 @@ describe("integrity", () => {
         {
           id: "q2",
           title: "질문 2",
-          type: "short_text",
-          branchLogic: [
+          type: "choice",
+          options: [
+            { label: "옵션 1", key: "opt1" },
+          ],
+          branchRules: [
             {
               when: {
-                kind: "condition",
-                question_id: "q999",
-                operator: "eq" as Operator,
-                value: "test" as string | number | boolean | Array<string | number>,
+                kind: "predicate",
+                op: "eq" as Operator,
+                value: "opt1",
               },
               next_question_id: "q1",
             },
@@ -114,10 +119,8 @@ describe("integrity", () => {
       ];
 
       const result = validateSurvey(questions);
-      expect(result.ok).toBe(false);
-      expect(
-        result.errors.some((e) => e.code === "INVALID_BRANCH_CONDITION_questionId")
-      ).toBe(true);
+      // branchRules의 PredicateNode는 현재 질문을 자동으로 참조하므로 별도 검증 불필요
+      expect(result.ok).toBe(true);
     });
 
     it("사이클을 검출해야 함", () => {
@@ -125,8 +128,11 @@ describe("integrity", () => {
         {
           id: "q1",
           title: "질문 1",
-          type: "short_text",
-          branchLogic: [
+          type: "choice",
+          options: [
+            { label: "옵션 1", key: "opt1" },
+          ],
+          branchRules: [
             {
               next_question_id: "q2",
             },
@@ -135,8 +141,11 @@ describe("integrity", () => {
         {
           id: "q2",
           title: "질문 2",
-          type: "short_text",
-          branchLogic: [
+          type: "choice",
+          options: [
+            { label: "옵션 1", key: "opt1" },
+          ],
+          branchRules: [
             {
               next_question_id: "q1",
             },
@@ -156,8 +165,11 @@ describe("integrity", () => {
         {
           id: "q1",
           title: "질문 1",
-          type: "short_text",
-          branchLogic: [
+          type: "choice",
+          options: [
+            { label: "옵션 1", key: "opt1" },
+          ],
+          branchRules: [
             {
               next_question_id: "q2",
             },
@@ -232,8 +244,11 @@ describe("integrity", () => {
         {
           id: "q1",
           title: "질문 1",
-          type: "short_text",
-          branchLogic: [
+          type: "choice",
+          options: [
+            { label: "옵션 1", key: "opt1" },
+          ],
+          branchRules: [
             {
               next_question_id: "q2",
             },

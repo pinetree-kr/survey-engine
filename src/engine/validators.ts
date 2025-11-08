@@ -1,4 +1,5 @@
 import type { Question, CompositeItem } from "@/schema/question.types";
+import { isChoiceQuestion, isComplexChoiceQuestion, isComplexInputQuestion } from "@/schema/question.types";
 
 export type ValidationResult = {
   ok: boolean;
@@ -31,7 +32,8 @@ export function validateAnswer(
     case "long_text":
       errors.push(...validateText(q, value));
       break;
-    case "choice":
+    case "choice": {
+      if (!isChoiceQuestion(q)) break;
       // dropdown 타입도 choice로 통합 (하위 호환성 유지)
       if (q.isDropdown) {
         errors.push(...validateSingleChoice(q, value));
@@ -41,16 +43,23 @@ export function validateAnswer(
         errors.push(...validateSingleChoice(q, value));
       }
       break;
+    }
     case "dropdown":
       // 하위 호환성을 위해 유지하지만 choice로 처리
-      errors.push(...validateSingleChoice(q, value));
+      if (isChoiceQuestion(q)) {
+        errors.push(...validateSingleChoice(q, value));
+      }
       break;
-    case "complex_choice":
+    case "complex_choice": {
+      if (!isComplexChoiceQuestion(q)) break;
       errors.push(...validateComposite(q, value));
       break;
-    case "complex_input":
+    }
+    case "complex_input": {
+      if (!isComplexInputQuestion(q)) break;
       errors.push(...validateComposite(q, value));
       break;
+    }
     case "description":
       // description은 답변이 없어도 됨
       break;
@@ -117,7 +126,7 @@ function validateSingleChoice(q: Question, value: unknown): string[] {
     return errors;
   }
 
-  if (!q.options) {
+  if (!isChoiceQuestion(q)) {
     return errors;
   }
 
@@ -148,7 +157,7 @@ function validateMultipleChoice(q: Question, value: unknown): string[] {
     return errors;
   }
 
-  if (!q.options) {
+  if (!isChoiceQuestion(q)) {
     return errors;
   }
 
@@ -204,14 +213,15 @@ function validateComposite(q: Question, value: unknown): string[] {
     return errors;
   }
 
-  if (!q.compositeItems) {
+  if (!isComplexChoiceQuestion(q) && !isComplexInputQuestion(q)) {
     return errors;
   }
 
   const valueObj = value as Record<string, unknown>;
+  const complexItems = isComplexChoiceQuestion(q) ? q.complexItems : (isComplexInputQuestion(q) ? q.complexItems : []);
 
   // 각 compositeItem 검증
-  for (const item of q.compositeItems) {
+  for (const item of complexItems) {
     const itemValue = valueObj[item.key];
 
     // required 검사
