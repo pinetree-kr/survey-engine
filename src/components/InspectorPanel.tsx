@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Question } from '../types/survey';
+import { Question, Section } from '../types/survey';
 import { Condition, ConditionGroup, SingleCondition, BranchRule, Option, Operator, SelectLimit } from '@/types/survey';
 import { Switch } from './ui/switch';
 import { Label } from './ui/label';
@@ -15,6 +15,7 @@ import { ImagePlus, Plus, Trash2, X } from 'lucide-react';
 interface InspectorPanelProps {
   question: Question | null;
   allQuestions?: Question[];
+  sections?: Section[];
   onUpdate: (updates: Partial<Question>) => void;
 }
 
@@ -33,7 +34,7 @@ const OPERATORS: { value: Operator; label: string }[] = [
   { value: 'not_empty', label: '비어있지 않음' },
 ];
 
-export function InspectorPanel({ question, allQuestions = [], onUpdate }: InspectorPanelProps) {
+export function InspectorPanel({ question, allQuestions = [], sections = [], onUpdate }: InspectorPanelProps) {
   const [activeTab, setActiveTab] = useState<'settings' | 'branching' | 'visibility'>('settings');
 
   if (!question) {
@@ -114,6 +115,32 @@ export function InspectorPanel({ question, allQuestions = [], onUpdate }: Inspec
             <h3 className="mb-4 text-gray-900">질문 설정</h3>
 
             <div className="space-y-4">
+              {sections.length > 0 && (
+                <div>
+                  <Label htmlFor="section" className="mb-2 block">섹션</Label>
+                  <Select
+                    value={question.sectionId || 'no-section'}
+                    onValueChange={(value) => onUpdate({ sectionId: value === 'no-section' ? undefined : value })}
+                  >
+                    <SelectTrigger className="bg-white">
+                      <SelectValue placeholder="섹션 선택">
+                        {question.sectionId
+                          ? sections.find(s => s.id === question.sectionId)?.title || '섹션 없음'
+                          : '섹션 없음'}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent className="bg-white z-[100] border-gray-200 shadow-lg">
+                      <SelectItem value="no-section">섹션 없음</SelectItem>
+                      {sections.map((section) => (
+                        <SelectItem key={section.id} value={section.id}>
+                          {section.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
               <div className="flex items-center justify-between">
                 <Label htmlFor="required" className="cursor-pointer">필수 항목</Label>
                 <Switch

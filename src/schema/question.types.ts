@@ -140,4 +140,5 @@ export type Question = {
     backgroundStyle?: string;
   },
   validations?: Validation;
+  sectionId?: string; // 섹션 ID (섹션에 속한 문항인 경우)
 };

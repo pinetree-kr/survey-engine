@@ -1,4 +1,4 @@
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag } from 'react-dnd';
 import { GripVertical, Trash2, Copy } from 'lucide-react';
 import { Question } from '@/schema/question.types';
 import { QuestionPreview } from './QuestionPreview';
@@ -33,78 +33,6 @@ export function QuestionBlock({
 }: QuestionBlockProps) {
   const ref = useRef<HTMLDivElement>(null);
 
-  // const [{ handlerId }, drop] = useDrop({
-  //   accept: 'question',
-  //   collect(monitor) {
-  //     return {
-  //       handlerId: monitor.getHandlerId(),
-  //     };
-  //   },
-  //   hover(item: DragItem, monitor) {
-  //     if (!ref.current) {
-  //       return;
-  //     }
-  //     const dragIndex = item.index;
-  //     const hoverIndex = index;
-
-  //     if (dragIndex === hoverIndex) {
-  //       return;
-  //     }
-
-  //     const hoverBoundingRect = ref.current?.getBoundingClientRect();
-  //     const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-  //     const clientOffset = monitor.getClientOffset();
-  //     const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
-
-  //     if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-  //       return;
-  //     }
-
-  //     if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-  //       return;
-  //     }
-
-  //     onMove(dragIndex, hoverIndex);
-  //     item.index = hoverIndex;
-  //   },
-  // });
-  const [collectedProps, drop] = useDrop({
-    accept: 'question',
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
-    },
-    hover(item, monitor) {
-      const dragItem = item as DragItem;
-      if (!ref.current) {
-        return;
-      }
-      const dragIndex = dragItem.index;
-      const hoverIndex = index;
-
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
-
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
-
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
-      }
-
-      onMove(dragIndex, hoverIndex);
-      dragItem.index = hoverIndex;
-    },
-  });
-
   const [{ isDragging }, drag, preview] = useDrag({
     type: 'question',
     item: () => {
@@ -115,16 +43,15 @@ export function QuestionBlock({
     }),
   });
 
-  preview(drop(ref));
+  preview(ref);
 
   return (
     <div
       ref={ref}
-      data-handler-id={collectedProps.handlerId}
       className={`
         relative group bg-white rounded-2xl border-2 p-6 transition-all duration-200
         ${isSelected ? 'border-indigo-500 shadow-lg' : 'border-gray-200 hover:border-gray-300'}
-        ${isDragging ? 'opacity-50' : 'opacity-100'}
+        ${isDragging ? 'opacity-30 pointer-events-none' : 'opacity-100'}
       `}
       onClick={onSelect}
     >
