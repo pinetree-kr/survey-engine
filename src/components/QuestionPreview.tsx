@@ -191,18 +191,20 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
       }
       return (
         <div className="space-y-3 pt-2">
-          {question.complexItems.map((item) => (
-            <div key={item.key} className="space-y-1">
-              <label className="text-sm text-gray-700 font-medium">
-                {item.label}
-                {item.required && <span className="text-red-500 ml-1">*</span>}
-              </label>
-              <div className="flex items-center gap-2">
+          {question.complexItems.map((item, index) => (
+            <div key={item.key} className="flex items-center gap-3 group/option p-2 border border-gray-200 rounded-lg bg-gray-50">
+              <div className={`flex items-center justify-center w-8 h-8 border-2 border-indigo-500 bg-white text-indigo-600 font-semibold text-sm ${question.isMultiple ? 'rounded' : 'rounded-full'}`}>
+                {getOptionLabel(index)}
+              </div>
+              <div className="flex-1 flex items-center gap-2">
+                <label className="text-sm text-gray-700 font-medium whitespace-nowrap">
+                  {item.label}
+                </label>
                 <Input
                   type={item.input_type === 'number' ? 'number' : 'text'}
                   placeholder={item.placeholder || ''}
                   disabled
-                  className="bg-gray-50"
+                  className="bg-white"
                 />
                 {item.unit && (
                   <span className="text-sm text-gray-500 whitespace-nowrap">

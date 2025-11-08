@@ -4,6 +4,7 @@ import type { AnswersMap } from "@/engine/visibility";
 import { evaluateShowConditions } from "@/engine/visibility";
 import { getNextQuestionId } from "@/engine/next-router";
 import { validateAnswer } from "@/engine/validators";
+import { getOptionLabel } from "@/utils/label";
 
 type QuestionRendererProps = {
   questions: Question[];
@@ -406,52 +407,85 @@ function renderQuestionInput(
     }
 
     case "complex_choice":
-      if (!question.compositeItems) return null;
+      if (!question.complexItems) return null;
       const compositeAnswer =
         (currentAnswer as Record<string, unknown>) || {};
       return (
         <div>
-          {question.compositeItems.map((item) => (
-            <div key={item.key} style={{ marginBottom: "15px" }}>
+          {question.complexItems.map((item, index) => {
+            const hasValue = compositeAnswer[item.key] !== undefined && compositeAnswer[item.key] !== null && compositeAnswer[item.key] !== "";
+            return (
               <label
+                key={item.key}
                 style={{
-                  display: "block",
-                  marginBottom: "5px",
-                  fontWeight: "bold",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  padding: "12px",
+                  marginBottom: "12px",
+                  border: "1px solid #ccc",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  backgroundColor: hasValue ? "#e3f2fd" : "white",
                 }}
               >
-                {item.label}
-                {item.required && <span style={{ color: "red" }}> *</span>}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "32px",
+                    height: "32px",
+                    border: "2px solid #6366f1",
+                    backgroundColor: "white",
+                    color: "#6366f1",
+                    fontWeight: "bold",
+                    fontSize: "14px",
+                    borderRadius: question.isMultiple ? "4px" : "50%",
+                    flexShrink: 0,
+                  }}
+                >
+                  {getOptionLabel(index)}
+                </div>
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "14px",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {item.label}
+                </div>
+                <input
+                  type={item.input_type === "number" ? "number" : "text"}
+                  value={(compositeAnswer[item.key] as string) || ""}
+                  onChange={(e) => {
+                    const newAnswer = {
+                      ...compositeAnswer,
+                      [item.key]:
+                        item.input_type === "number"
+                          ? Number(e.target.value)
+                          : e.target.value,
+                    };
+                    updateAnswer(question.id, newAnswer);
+                  }}
+                  placeholder={item.placeholder || ""}
+                  style={{
+                    flex: 1,
+                    padding: "8px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    fontSize: "14px",
+                  }}
+                />
+                {item.unit && (
+                  <span style={{ color: "#666", fontSize: "14px", whiteSpace: "nowrap" }}>
+                    {item.unit}
+                  </span>
+                )}
               </label>
-              <input
-                type={item.input_type === "number" ? "number" : "text"}
-                value={(compositeAnswer[item.key] as string) || ""}
-                onChange={(e) => {
-                  const newAnswer = {
-                    ...compositeAnswer,
-                    [item.key]:
-                      item.input_type === "number"
-                        ? Number(e.target.value)
-                        : e.target.value,
-                  };
-                  updateAnswer(question.id, newAnswer);
-                }}
-                placeholder={item.placeholder || ""}
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  border: "1px solid #ccc",
-                  borderRadius: "4px",
-                  fontSize: "16px",
-                }}
-              />
-              {item.unit && (
-                <span style={{ marginLeft: "8px", color: "#666" }}>
-                  {item.unit}
-                </span>
-              )}
-            </div>
-          ))}
+            );
+          })}
         </div>
       );
 

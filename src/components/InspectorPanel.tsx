@@ -377,7 +377,6 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                           label: '',
                           input_type: 'text',
                           key: `item-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-                          required: false,
                         };
                         onUpdate({
                           complexItems: [...(question.complexItems || []), newItem],
@@ -466,17 +465,6 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                               }}
                               placeholder="예: kg, cm"
                               className="mt-1 bg-white text-sm"
-                            />
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <Label className="text-xs text-gray-500 cursor-pointer">필수 항목</Label>
-                            <Switch
-                              checked={item.required || false}
-                              onCheckedChange={(checked) => {
-                                const updated = [...(question.complexItems || [])];
-                                updated[index] = { ...updated[index], required: checked };
-                                onUpdate({ complexItems: updated });
-                              }}
                             />
                           </div>
                         </div>
