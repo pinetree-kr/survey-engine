@@ -113,7 +113,7 @@ export function InspectorPanel({ question, allQuestions = [], onUpdate }: Inspec
                     onCheckedChange={
                       (checked) => {
                         if (checked) {
-                          onUpdate({ options: [...(question.options || []), { label: '기타', isOther: true }] as Option[] });
+                          onUpdate({ options: [...(question.options || []), { label: '기타', isOther: true, key: `option-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[] });
                         } else {
                           onUpdate({ options: question.options?.filter((option) => !option.isOther) || [] });
                         }

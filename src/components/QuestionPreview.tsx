@@ -11,14 +11,37 @@ interface QuestionPreviewProps {
 }
 
 export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
+  const getOptionLabel = (index: number) => {
+    return String.fromCharCode(65 + index); // 65는 'A'의 ASCII 코드
+  };
+
   const handleAddOption = () => {
-    const newOptions = [...(question.options || []), { label: `옵션 ${(question.options?.length || 0) + 1}` }] as Option[];
+    const currentOptions = question.options || [];
+    const otherOptionIndex = currentOptions.findIndex(opt => opt.isOther);
+
+    // 새 옵션 생성
+    const newOption: Option = {
+      label: "",
+      key: `option-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+    };
+
+    let newOptions: Option[];
+    if (otherOptionIndex !== -1) {
+      // 기타 옵션이 있는 경우: 기타 옵션을 제외한 나머지 + 새 옵션 + 기타 옵션
+      const optionsWithoutOther = currentOptions.filter(opt => !opt.isOther);
+      const otherOption = currentOptions[otherOptionIndex];
+      newOptions = [...optionsWithoutOther, newOption, otherOption];
+    } else {
+      // 기타 옵션이 없는 경우: 기존처럼 맨 끝에 추가
+      newOptions = [...currentOptions, newOption];
+    }
+
     onUpdate({ options: newOptions });
   };
 
   const handleUpdateOption = (index: number, value: string) => {
     const newOptions = [...(question.options || [])] as Option[];
-    newOptions[index] = { label: value } as Option;
+    newOptions[index] = { ...newOptions[index], label: value };
     onUpdate({ options: newOptions });
   };
 
@@ -46,13 +69,16 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
     case 'multiple_choice':
       return (
         <div className="space-y-3 pt-2">
-          {(question.options || [{ label: '응답 1' }] as Option[]).map((option, index) => (
-            <div key={index} className="flex items-center gap-3 group/option">
-              <div className={`w-4 h-4 border-2 ${question.type === 'single_choice' ? 'rounded-full' : 'rounded'} border-gray-300`} />
+          {(question.options || [{ label: '' }] as Option[]).map((option, index) => (
+            <div key={index} className="flex items-center gap-3 group/option p-2 border border-gray-200 rounded-lg bg-gray-50">
+              <div className={`flex items-center justify-center w-8 h-8 border-2 border-indigo-500 bg-white text-indigo-600 font-semibold text-sm ${question.type === 'single_choice' ? 'rounded-full' : 'rounded'}`}>
+                {getOptionLabel(index)}
+              </div>
+              {/* <div className={`w-4 h-4 border-2 ${question.type === 'single_choice' ? 'rounded-full' : 'rounded'} border-gray-300`} /> */}
               <input
                 type="text"
                 value={option.label || ''}
-                placeholder={option.freeText?.placeholder || '응답 1'}
+                placeholder={option.freeText?.placeholder || `옵션 ${getOptionLabel(index)}`}
                 onChange={(e) => {
                   e.stopPropagation();
                   handleUpdateOption(index, e.target.value);
@@ -94,7 +120,7 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
           </div>
 
           <div className="space-y-2 pl-4 border-l-2 border-gray-200">
-            {(question.options || [{ label: '응답 1' }] as Option[]).map((option, index) => (
+            {(question.options || [{ label: '' }] as Option[]).map((option, index) => (
               <div key={index} className="flex items-center gap-3 group/option">
                 <input
                   type="text"

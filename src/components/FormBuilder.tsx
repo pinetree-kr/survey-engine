@@ -22,13 +22,13 @@ export function FormBuilder() {
 
     const handleAddQuestion = useCallback((type: QuestionType) => {
         const newQuestion: Question = {
-            id: `q-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            id: `q-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
             type,
             title: '',
             description: type !== 'description' ? '' : undefined,
             required: false,
             options: ['single_choice', 'multiple_choice', 'dropdown'].includes(type)
-                ? [{ label: '옵션 1' }] as Option[]
+                ? [{ label: '', key: `option-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[]
                 : undefined,
             design: {
                 themeColor: '#6366f1',
@@ -74,7 +74,7 @@ export function FormBuilder() {
             const originalQuestion = prev.questions[questionIndex];
             const duplicatedQuestion: Question = {
                 ...originalQuestion,
-                id: `q-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                id: `q-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
                 title: `${originalQuestion.title} (사본)`,
             };
 

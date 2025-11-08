@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { validateSurvey } from "./integrity";
-import type { Question } from "@/schema/question.types";
+import type { Operator, Question } from "@/schema/question.types";
 
 describe("integrity", () => {
   describe("validateSurvey", () => {
@@ -71,7 +71,11 @@ describe("integrity", () => {
           id: "q1",
           title: "질문 1",
           type: "short_text",
-          nextQuestionId: "q999",
+          branchLogic: [
+            {
+              next_question_id: "q999",
+            },
+          ],
         },
       ];
 
@@ -97,14 +101,13 @@ describe("integrity", () => {
           type: "short_text",
           branchLogic: [
             {
-              conditions: [
-                {
-                  questionId: "q999",
-                  operator: "eq",
-                  value: "test",
-                },
-              ],
-              nextQuestionId: "q1",
+              when: {
+                kind: "condition",
+                question_id: "q999",
+                operator: "eq" as Operator,
+                value: "test" as string | number | boolean | Array<string | number>,
+              },
+              next_question_id: "q1",
             },
           ],
         },
@@ -113,9 +116,7 @@ describe("integrity", () => {
       const result = validateSurvey(questions);
       expect(result.ok).toBe(false);
       expect(
-        result.errors.some(
-          (e) => e.code === "INVALID_BRANCH_CONDITION_questionId"
-        )
+        result.errors.some((e) => e.code === "INVALID_BRANCH_CONDITION_questionId")
       ).toBe(true);
     });
 
@@ -125,13 +126,21 @@ describe("integrity", () => {
           id: "q1",
           title: "질문 1",
           type: "short_text",
-          nextQuestionId: "q2",
+          branchLogic: [
+            {
+              next_question_id: "q2",
+            },
+          ],
         },
         {
           id: "q2",
           title: "질문 2",
           type: "short_text",
-          nextQuestionId: "q1",
+          branchLogic: [
+            {
+              next_question_id: "q1",
+            },
+          ],
         },
       ];
 
@@ -148,7 +157,11 @@ describe("integrity", () => {
           id: "q1",
           title: "질문 1",
           type: "short_text",
-          nextQuestionId: "q2",
+          branchLogic: [
+            {
+              next_question_id: "q2",
+            },
+          ],
         },
         {
           id: "q2",
@@ -175,11 +188,12 @@ describe("integrity", () => {
           id: "q1",
           title: "질문 1",
           type: "multiple_choice",
-          minSelect: 5,
-          maxSelect: 3,
           options: [
             { label: "옵션 1", key: "opt1" },
             { label: "옵션 2", key: "opt2" },
+            { label: "옵션 3", key: "opt3" },
+            { label: "옵션 4", key: "opt4" },
+            { label: "옵션 5", key: "opt5" },
           ],
         },
       ];
@@ -214,7 +228,11 @@ describe("integrity", () => {
           id: "q1",
           title: "질문 1",
           type: "short_text",
-          nextQuestionId: "q2",
+          branchLogic: [
+            {
+              next_question_id: "q2",
+            },
+          ],
         },
         {
           id: "q2",

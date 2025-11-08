@@ -92,8 +92,10 @@ describe("validators", () => {
         id: "q1",
         title: "질문 1",
         type: "multiple_choice",
-        minSelect: 2,
-        maxSelect: 3,
+        validations: {
+          min: 2,
+          max: 3,
+        },
         options: [
           { label: "옵션 1", key: "opt1" },
           { label: "옵션 2", key: "opt2" },

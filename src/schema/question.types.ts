@@ -27,7 +27,6 @@ export type Validation = {
 export type Option = {
   label: string;
   key: string; // question 내 유일
-  nextQuestionId?: string;
   images?: ImageObj[];
   isOther?: boolean;
   freeText?: {
@@ -72,9 +71,9 @@ export type CompositeItem = {
   placeholder?: string;
   key: string; // compositeItems 내 유일
   required?: boolean;
-  nextQuestionId?: string;
   show_conditions?: Condition; // 항목 단위 표시 조건
   validations?: Validation;
+  branchLogic?: BranchRule[]; // default []
 };
 
 // 분기 규칙
@@ -125,7 +124,7 @@ export type Question = {
   // 조건 로직
   branchLogic?: BranchRule[];
   showConditions?: Condition;
-  design: {
+  design?: {
     themeColor?: string;
     backgroundStyle?: string;
   },
