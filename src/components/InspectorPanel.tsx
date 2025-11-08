@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Question, Section } from '../types/survey';
-import { Condition, ConditionGroup, SingleCondition, BranchRule, Option, Operator, SelectLimit } from '@/types/survey';
+import { BranchNode, PredicateNode, GroupNode, BranchRule, ShowNode, ShowRule, Option, Operator, SelectLimit } from '@/types/survey';
 import { Switch } from './ui/switch';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
@@ -11,6 +11,7 @@ import { Button } from './ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { ImagePlus, Plus, Trash2, X } from 'lucide-react';
+import { ChoiceConditionBuilder } from './ChoiceConditionComponents';
 
 interface InspectorPanelProps {
   question: Question | null;
@@ -52,38 +53,53 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
 
   // 타입 매핑: UI 타입 -> 스키마 타입
   const questionType = question.type as string;
-  const isChoiceType = questionType === 'choice' || questionType === 'dropdown';
+  const isChoiceType = questionType === 'choice';
   const showChoiceOptions = isChoiceType;
   const isComposite = ['composite-input', 'composite_single', 'composite_multiple'].includes(questionType);
-  
+
   // dropdown 타입을 choice로 통합 (하위 호환성 유지)
   const isDropdown = questionType === 'dropdown' || question.isDropdown;
 
-  // 새로운 스키마로 변환 (임시 호환성)
-  const branchLogic = (question as any).branchLogic as BranchRule[] | undefined;
-  const showConditions = (question as any).showConditions as ConditionGroup | undefined;
+  // 분기 규칙과 표시 규칙
+  const branchRules = question.branchRules || [];
+  const showRules = question.showRules || [];
 
   const handleAddBranchRule = () => {
     const newRule: BranchRule = {
       next_question_id: '',
     };
-    const updated = [...(branchLogic || []), newRule];
-    onUpdate({ branchLogic: updated as any });
+    const updated = [...branchRules, newRule];
+    onUpdate({ branchRules: updated });
   };
 
   const handleUpdateBranchRule = (index: number, updates: Partial<BranchRule>) => {
-    const updated = [...(branchLogic || [])];
+    const updated = [...branchRules];
     updated[index] = { ...updated[index], ...updates };
-    onUpdate({ branchLogic: updated as any });
+    onUpdate({ branchRules: updated });
   };
 
   const handleDeleteBranchRule = (index: number) => {
-    const updated = (branchLogic || []).filter((_, i) => i !== index);
-    onUpdate({ branchLogic: updated as any });
+    const updated = branchRules.filter((_, i) => i !== index);
+    onUpdate({ branchRules: updated });
   };
 
-  const handleUpdateShowCondition = (condition: ConditionGroup | undefined) => {
-    onUpdate({ showConditions: condition as any });
+  const handleAddShowRule = () => {
+    const newRule: ShowRule = {
+      refQuestionId: allQuestions.filter(q => q.id !== question.id)[0]?.id || '',
+    };
+    const updated = [...showRules, newRule];
+    onUpdate({ showRules: updated });
+  };
+
+  const handleUpdateShowRule = (index: number, updates: Partial<ShowRule>) => {
+    const updated = [...showRules];
+    updated[index] = { ...updated[index], ...updates };
+    onUpdate({ showRules: updated });
+  };
+
+  const handleDeleteShowRule = (index: number) => {
+    const updated = showRules.filter((_, i) => i !== index);
+    onUpdate({ showRules: updated });
   };
 
   return (
@@ -129,7 +145,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                           : '섹션 없음'}
                       </SelectValue>
                     </SelectTrigger>
-                    <SelectContent className="bg-white z-[100] border-gray-200 shadow-lg">
+                    <SelectContent className="bg-white border-gray-200">
                       <SelectItem value="no-section">섹션 없음</SelectItem>
                       {sections.map((section) => (
                         <SelectItem key={section.id} value={section.id}>
@@ -157,12 +173,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                     id="isDropdown"
                     checked={isDropdown || false}
                     onCheckedChange={(checked) => {
-                      // dropdown 타입을 choice로 변환하고 isDropdown 필드 설정
-                      if (questionType === 'dropdown') {
-                        onUpdate({ type: 'choice', isDropdown: checked });
-                      } else {
-                        onUpdate({ isDropdown: checked });
-                      }
+                      onUpdate({ isDropdown: checked });
                     }}
                   />
                 </div>
@@ -207,7 +218,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                     <SelectTrigger className="bg-white w-[140px]">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white z-[100] border-gray-200 shadow-lg min-w-[200px]">
+                    <SelectContent className="bg-white border-gray-200">
                       <SelectItem value="unlimited">무제한</SelectItem>
                       <SelectItem value="exact">정확한 수</SelectItem>
                       <SelectItem value="range">범위</SelectItem>
@@ -280,7 +291,7 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
                     onCheckedChange={
                       (checked) => {
                         if (checked) {
-                          onUpdate({ options: [...(question.options || []), { label: '기타', isOther: true, key: `option-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[] });
+                          onUpdate({ options: [...(question.options || []), { label: '기타', isOther: true, key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[] });
                         } else {
                           onUpdate({ options: question.options?.filter((option) => !option.isOther) || [] });
                         }
@@ -389,14 +400,14 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
               </Button>
             </div>
 
-            {(!branchLogic || branchLogic.length === 0) ? (
+            {(!branchRules || branchRules.length === 0) ? (
               <div className="text-center py-8 text-gray-500">
                 <p className="mb-2">분기 규칙이 없습니다</p>
                 <p className="text-sm">규칙을 추가하여 조건부 경로를 생성하세요</p>
               </div>
             ) : (
               <div className="space-y-3">
-                {branchLogic.map((rule, index) => (
+                {branchRules.map((rule, index) => (
                   <BranchRuleEditor
                     key={index}
                     rule={rule}
@@ -414,16 +425,42 @@ export function InspectorPanel({ question, allQuestions = [], sections = [], onU
 
         <TabsContent value="visibility" className="space-y-4">
           <div>
-            <h3 className="mb-4 text-gray-900">표시 조건</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-gray-900">표시 규칙</h3>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleAddShowRule}
+                className="h-8"
+              >
+                <Plus className="w-4 h-4 mr-1" />
+                규칙 추가
+              </Button>
+            </div>
             <p className="text-sm text-gray-500 mb-4">
-              이 질문을 표시할 조건을 설정합니다
+              이 질문을 표시할 조건을 설정합니다. 모든 규칙이 true일 때 표시됩니다.
             </p>
-            <ConditionBuilder
-              condition={showConditions}
-              allQuestions={allQuestions}
-              currentQuestionId={question.id}
-              onChange={handleUpdateShowCondition}
-            />
+
+            {(!showRules || showRules.length === 0) ? (
+              <div className="text-center py-8 text-gray-500">
+                <p className="mb-2">표시 규칙이 없습니다</p>
+                <p className="text-sm">규칙을 추가하여 조건부 표시를 설정하세요</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {showRules.map((rule, index) => (
+                  <ShowRuleEditor
+                    key={index}
+                    rule={rule}
+                    ruleIndex={index}
+                    allQuestions={allQuestions}
+                    currentQuestionId={question.id}
+                    onUpdate={(updates) => handleUpdateShowRule(index, updates)}
+                    onDelete={() => handleDeleteShowRule(index)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </TabsContent>
       </Tabs>
@@ -450,7 +487,7 @@ function BranchRuleEditor({
 }: BranchRuleEditorProps) {
   const availableQuestions = allQuestions.filter((q) => q.id !== currentQuestionId);
   const currentQuestion = allQuestions.find((q) => q.id === currentQuestionId);
-  const isChoiceType = currentQuestion && (currentQuestion.type === 'choice' || currentQuestion.type === 'dropdown' || currentQuestion.isDropdown);
+  const isChoiceType = currentQuestion && (currentQuestion.type === 'choice' || currentQuestion.isDropdown);
   const options = currentQuestion?.options || [];
 
   return (
@@ -473,88 +510,39 @@ function BranchRuleEditor({
       </div>
 
       <div className="space-y-3">
-        {isChoiceType && options.length > 0 ? (
-          <div>
-            <Label className="text-sm">선택된 항목 (미선택시 항상 적용)</Label>
-            <Select
-              value={(() => {
-                if (rule.when?.kind === 'condition' && rule.when.question_id === currentQuestionId) {
-                  return typeof rule.when.value === 'string' ? rule.when.value : '';
-                }
-                return 'none';
-              })()}
-              onValueChange={(value) => {
-                if (value === 'none') {
-                  onUpdate({ when: undefined });
-                } else if (value) {
-                  onUpdate({
-                    when: {
-                      kind: 'condition',
-                      question_id: currentQuestionId,
-                      operator: currentQuestion?.isMultiple ? 'contains' : 'eq',
-                      value: value,
-                    }
-                  });
-                } else {
-                  onUpdate({ when: undefined });
-                }
-              }}
-            >
-              <SelectTrigger className="mt-2 bg-white">
-                <SelectValue placeholder="항목 선택">
-                  {(() => {
-                    if (rule.when && rule.when.kind === 'condition' && rule.when.question_id === currentQuestionId) {
-                      const conditionValue = rule.when.value;
-                      if (typeof conditionValue === 'string') {
-                        return options.find(opt => opt.key === conditionValue)?.label || conditionValue;
-                      }
-                    }
-                    return "항목 선택";
-                  })()}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent className="bg-white">
-                <SelectItem value="none">미선택</SelectItem>
-                {options.map((opt) => (
-                  <SelectItem key={opt.key} value={opt.key}>
-                    {opt.label || ''}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {currentQuestion?.isMultiple && (
-              <p className="text-xs text-gray-500 mt-1">
-                다중 선택: 선택된 옵션이 포함되면 적용됩니다
-              </p>
-            )}
-          </div>
-        ) : (
-          <div>
-            <Label className="text-sm">조건 (선택사항)</Label>
-            <ConditionBuilder
-              condition={rule.when ? {
+        <div>
+          <ConditionBuilder
+            condition={(() => {
+              // rule.when이 없으면 undefined
+              if (!rule.when) {
+                return undefined;
+              }
+              // rule.when이 GroupNode이면 그대로 반환
+              if (rule.when.kind === 'group') {
+                return rule.when;
+              }
+              // rule.when이 PredicateNode이면 GroupNode로 감싸서 반환
+              return {
                 kind: 'group',
-                aggregator: 'AND',
+                op: 'AND',
                 children: [rule.when],
-              } : undefined}
-              allQuestions={allQuestions}
-              currentQuestionId={currentQuestionId}
-              onChange={(condition) => {
-                if (!condition) {
-                  onUpdate({ when: undefined });
-                } else if (condition.children.length === 1 && condition.children[0].kind === 'condition') {
-                  onUpdate({ when: condition.children[0] });
-                } else {
-                  // 복잡한 그룹은 지원하지 않음 (SingleCondition만 지원)
-                  onUpdate({ when: undefined });
-                }
-              }}
-            />
-          </div>
-        )}
+              };
+            })()}
+            allQuestions={allQuestions}
+            currentQuestionId={currentQuestionId}
+            onChange={(condition) => {
+              if (!condition) {
+                onUpdate({ when: undefined });
+              } else {
+                // GroupNode를 그대로 저장 (nested group 지원)
+                onUpdate({ when: condition });
+              }
+            }}
+          />
+        </div>
 
         <div>
-          <Label className="text-sm">다음 질문</Label>
+          <Label className="text-sm">다음 질문으로 이동</Label>
           <Select
             value={rule.next_question_id}
             onValueChange={(value) => onUpdate({ next_question_id: value })}
@@ -566,7 +554,7 @@ function BranchRuleEditor({
                   : "질문 선택"}
               </SelectValue>
             </SelectTrigger>
-            <SelectContent className="bg-white">
+            <SelectContent className="bg-white border-gray-200">
               {availableQuestions.map((q) => (
                 <SelectItem key={q.id} value={q.id || ''}>
                   {q.title || `질문 ${q.id}`}
@@ -580,11 +568,105 @@ function BranchRuleEditor({
   );
 }
 
-interface ConditionBuilderProps {
-  condition: ConditionGroup | undefined;
+interface ShowRuleEditorProps {
+  rule: ShowRule;
+  ruleIndex: number;
   allQuestions: Question[];
   currentQuestionId: string;
-  onChange: (condition: ConditionGroup | undefined) => void;
+  onUpdate: (updates: Partial<ShowRule>) => void;
+  onDelete: () => void;
+}
+
+function ShowRuleEditor({
+  rule,
+  ruleIndex,
+  allQuestions,
+  currentQuestionId,
+  onUpdate,
+  onDelete,
+}: ShowRuleEditorProps) {
+  const availableQuestions = allQuestions.filter((q) => q.id !== currentQuestionId);
+
+  return (
+    <div className="p-4 border border-gray-200 rounded-lg bg-white">
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium text-gray-700">규칙 #{ruleIndex + 1}</span>
+          {!rule.when && (
+            <span className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded">기본</span>
+          )}
+        </div>
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={onDelete}
+          className="h-6 w-6 p-0 text-gray-400 hover:text-red-600"
+        >
+          <X className="w-4 h-4" />
+        </Button>
+      </div>
+
+      <div className="space-y-3">
+        <div>
+          <Label className="text-sm">참조 질문</Label>
+          <Select
+            value={rule.refQuestionId}
+            onValueChange={(value) => onUpdate({ refQuestionId: value })}
+          >
+            <SelectTrigger className="mt-2 bg-white">
+              <SelectValue placeholder="질문 선택">
+                {rule.refQuestionId
+                  ? allQuestions.find(q => q.id === rule.refQuestionId)?.title || rule.refQuestionId
+                  : "질문 선택"}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent className="bg-white">
+              {availableQuestions.map((q) => (
+                <SelectItem key={q.id} value={q.id || ''}>
+                  {q.title || `질문 ${q.id}`}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div>
+          <Label className="text-sm">조건 (선택사항, 미설정시 항상 true)</Label>
+          <ConditionBuilder
+            condition={(() => {
+              if (!rule.when) {
+                return undefined;
+              }
+              if (rule.when.kind === 'group') {
+                return rule.when;
+              }
+              return {
+                kind: 'group',
+                op: 'AND',
+                children: [rule.when],
+              };
+            })()}
+            allQuestions={allQuestions}
+            currentQuestionId={rule.refQuestionId}
+            onChange={(condition) => {
+              if (!condition) {
+                onUpdate({ when: undefined });
+              } else {
+                onUpdate({ when: condition });
+              }
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface ConditionBuilderProps {
+  condition: GroupNode | undefined;
+  allQuestions: Question[];
+  currentQuestionId: string;
+  onChange: (condition: GroupNode | undefined) => void;
 }
 
 function ConditionBuilder({
@@ -593,9 +675,51 @@ function ConditionBuilder({
   currentQuestionId,
   onChange,
 }: ConditionBuilderProps) {
-  const availableQuestions = allQuestions.filter((q) => q.id !== currentQuestionId);
+  const currentQuestion = allQuestions.find((q) => q.id === currentQuestionId);
+  const isChoiceType = currentQuestion && (currentQuestion.type === 'choice' || currentQuestion.isDropdown);
 
+  if (isChoiceType) {
+    return (
+      <>
+        <ChoiceConditionBuilder
+          condition={condition}
+          allQuestions={allQuestions}
+          currentQuestionId={currentQuestionId}
+          onChange={onChange}
+        />
+      </>
+    );
+  }
+
+  return (
+    <>
+      {/* <Label className="text-sm">조건 (선택사항, 미설정시 항상 적용)</Label> */}
+      <DefaultConditionBuilder
+        condition={condition}
+        allQuestions={allQuestions}
+        currentQuestionId={currentQuestionId}
+        onChange={onChange}
+      />
+    </>
+  );
+}
+
+
+interface DefaultConditionBuilderProps {
+  condition: GroupNode | undefined;
+  allQuestions: Question[];
+  currentQuestionId: string;
+  onChange: (condition: GroupNode | undefined) => void;
+}
+
+function DefaultConditionBuilder({
+  condition,
+  allQuestions,
+  currentQuestionId,
+  onChange,
+}: DefaultConditionBuilderProps) {
   if (!condition) {
+    // 일반적인 경우 조건 추가 버튼 표시
     return (
       <Button
         type="button"
@@ -604,11 +728,10 @@ function ConditionBuilder({
         onClick={() => {
           onChange({
             kind: 'group',
-            aggregator: 'AND',
+            op: 'AND',
             children: [{
-              kind: 'condition',
-              question_id: availableQuestions[0]?.id || '',
-              operator: 'eq',
+              kind: 'predicate',
+              op: 'eq',
             }],
           });
         }}
@@ -622,7 +745,7 @@ function ConditionBuilder({
 
   return (
     <div className="space-y-2 mt-2">
-      <ConditionNode
+      <DefaultConditionNode
         condition={condition}
         allQuestions={allQuestions}
         currentQuestionId={currentQuestionId}
@@ -632,10 +755,10 @@ function ConditionBuilder({
           } else if (updated.kind === 'group') {
             onChange(updated);
           } else {
-            // SingleCondition을 ConditionGroup으로 변환
+            // PredicateNode를 GroupNode로 변환
             onChange({
               kind: 'group',
-              aggregator: 'AND',
+              op: 'AND',
               children: [updated],
             });
           }
@@ -646,174 +769,190 @@ function ConditionBuilder({
   );
 }
 
-interface ConditionNodeProps {
-  condition: Condition;
+
+interface DefaultPredicateNodeProps {
+  condition: PredicateNode;
+  selectedQuestion: Question | undefined;
+  onChange: (condition: PredicateNode | undefined) => void;
+}
+
+function DefaultPredicateNode({
+  condition,
+  selectedQuestion,
+  onChange,
+}: DefaultPredicateNodeProps) {
+  const selectedType = selectedQuestion?.type as string;
+  const isComposite = ['composite-input', 'composite_single', 'composite_multiple'].includes(selectedType || '');
+  const compositeItems = (selectedQuestion as any)?.compositeItems || [];
+
+  return (
+    <div className="p-3 border border-gray-200 rounded-lg bg-white">
+      <div className="flex">
+        <div className="flex-1 space-y-2">
+          {isComposite && (
+            <div>
+              <Label className="text-xs text-gray-500">항목 (subKey)</Label>
+              <Select
+                value={condition.subKey || ''}
+                onValueChange={(value) => {
+                  onChange({
+                    ...condition,
+                    subKey: value || undefined,
+                  });
+                }}
+              >
+                <SelectTrigger className="h-8 bg-white text-sm">
+                  <SelectValue placeholder="전체" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-gray-200">
+                  {compositeItems.map((item: any) => (
+                    <SelectItem key={item.key} value={item.key || ''} className="text-sm bg-white">
+                      {item.label || item.key}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          <div>
+            <Label className="text-xs text-gray-500">연산자</Label>
+            <Select
+              value={condition.op || ''}
+              onValueChange={(value) => {
+                onChange({
+                  ...condition,
+                  op: value as Operator,
+                });
+              }}
+            >
+              <SelectTrigger className="h-8 bg-white text-sm">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-white border-gray-200">
+                {OPERATORS.map((op) => (
+                  <SelectItem key={op.value} value={op.value || ''}>
+                    {op.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {!['is_empty', 'not_empty'].includes(condition.op) && (
+            <div>
+              <Label className="text-xs text-gray-500">값</Label>
+              <Input
+                value={typeof condition.value === 'object' ? JSON.stringify(condition.value) : String(condition.value || '')}
+                onChange={(e) => {
+                  let value: string | number | boolean | Array<string | number> = e.target.value;
+                  // 간단한 파싱 시도
+                  if (value.startsWith('[') && value.endsWith(']')) {
+                    try {
+                      value = JSON.parse(value);
+                    } catch {
+                      // 파싱 실패 시 문자열로 유지
+                    }
+                  } else if (!isNaN(Number(value)) && value !== '') {
+                    value = Number(value);
+                  }
+                  onChange({
+                    ...condition,
+                    value: value as string | number | boolean,
+                  });
+                }}
+                placeholder="값 입력"
+                className="h-8 bg-white text-sm"
+              />
+            </div>
+          )}
+        </div>
+
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={() => onChange(undefined)}
+          className="h-6 w-6 p-0 text-gray-400 hover:text-red-600"
+        >
+          <X className="w-4 h-4" />
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+interface DefaultConditionNodeProps {
+  condition: BranchNode;
   allQuestions: Question[];
   currentQuestionId: string;
-  onChange: (condition: Condition | undefined) => void;
+  onChange: (condition: BranchNode | undefined) => void;
   depth: number;
 }
 
-function ConditionNode({
+function DefaultConditionNode({
   condition,
   allQuestions,
   currentQuestionId,
   onChange,
   depth,
-}: ConditionNodeProps) {
-  const availableQuestions = allQuestions.filter((q) => q.id !== currentQuestionId);
+}: DefaultConditionNodeProps) {
+  const selectedQuestion = allQuestions.find((q) => q.id === currentQuestionId);
 
-  if (condition.kind === 'condition') {
-    const selectedQuestion = allQuestions.find((q) => q.id === condition.question_id);
-    const selectedType = selectedQuestion?.type as string;
-    const isComposite = ['composite-input', 'composite_single', 'composite_multiple'].includes(selectedType || '');
-    const compositeItems = (selectedQuestion as any)?.compositeItems || [];
-
+  if (condition.kind === 'predicate') {
     return (
-      <div className="p-3 border border-gray-200 rounded-lg bg-white">
-        <div className="flex items-start gap-2">
-          <div className="flex-1 space-y-2">
-            <div>
-              <Label className="text-xs text-gray-500">질문</Label>
-              <Select
-                value={condition.question_id || ''}
-                onValueChange={(value) => {
-                  onChange({
-                    ...condition,
-                    question_id: value,
-                    sub_key: undefined,
-                  });
-                }}
-              >
-                <SelectTrigger className="h-8 bg-white text-sm">
-                  <SelectValue>
-                    {condition.question_id
-                      ? allQuestions.find(q => q.id === condition.question_id)?.title || condition.question_id
-                      : "질문 선택"}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  {availableQuestions.map((q) => (
-                    <SelectItem key={q.id} value={q.id || ''}>
-                      {q.title || `질문 ${q.id}`}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {isComposite && (
-              <div>
-                <Label className="text-xs text-gray-500">항목 (subKey)</Label>
-                <Select
-                  value={condition.sub_key || ''}
-                  onValueChange={(value) => {
-                    onChange({
-                      ...condition,
-                      sub_key: value || undefined,
-                    });
-                  }}
-                >
-                  <SelectTrigger className="h-8 bg-white text-sm">
-                    <SelectValue placeholder="전체" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">전체</SelectItem>
-                    {compositeItems.map((item: any) => (
-                      <SelectItem key={item.key} value={item.key || ''} className="text-sm bg-white">
-                        {item.label || item.key}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
-
-            <div>
-              <Label className="text-xs text-gray-500">연산자</Label>
-              <Select
-                value={condition.operator || ''}
-                onValueChange={(value) => {
-                  onChange({
-                    ...condition,
-                    operator: value as Operator,
-                  });
-                }}
-              >
-                <SelectTrigger className="h-8 bg-white text-sm">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {OPERATORS.map((op) => (
-                    <SelectItem key={op.value} value={op.value || ''}>
-                      {op.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {!['is_empty', 'not_empty'].includes(condition.operator) && (
-              <div>
-                <Label className="text-xs text-gray-500">값</Label>
-                <Input
-                  value={typeof condition.value === 'object' ? JSON.stringify(condition.value) : String(condition.value || '')}
-                  onChange={(e) => {
-                    let value: string | number | boolean | Array<string | number> = e.target.value;
-                    // 간단한 파싱 시도
-                    if (value.startsWith('[') && value.endsWith(']')) {
-                      try {
-                        value = JSON.parse(value);
-                      } catch {
-                        // 파싱 실패 시 문자열로 유지
-                      }
-                    } else if (!isNaN(Number(value)) && value !== '') {
-                      value = Number(value);
-                    }
-                    onChange({
-                      ...condition,
-                      value: value as string | number | boolean,
-                    });
-                  }}
-                  placeholder="값 입력"
-                  className="h-8 bg-white text-sm"
-                />
-              </div>
-            )}
-          </div>
-
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={() => onChange(undefined)}
-            className="h-6 w-6 p-0 text-gray-400 hover:text-red-600"
-          >
-            <X className="w-4 h-4" />
-          </Button>
-        </div>
-      </div>
+      <DefaultPredicateNode
+        condition={condition}
+        selectedQuestion={selectedQuestion}
+        onChange={onChange}
+      />
     );
   }
 
-  // ConditionGroup
+  // GroupNode
+  return (
+    <DefaultGroupNode
+      condition={condition}
+      allQuestions={allQuestions}
+      currentQuestionId={currentQuestionId}
+      onChange={onChange}
+      depth={depth}
+    />
+  );
+}
+
+interface DefaultGroupNodeProps {
+  condition: GroupNode;
+  allQuestions: Question[];
+  currentQuestionId: string;
+  onChange: (condition: GroupNode | undefined) => void;
+  depth: number;
+}
+
+function DefaultGroupNode({
+  condition,
+  allQuestions,
+  currentQuestionId,
+  onChange,
+  depth,
+}: DefaultGroupNodeProps) {
   return (
     <div className="space-y-2">
       <div className="p-3 border border-gray-200 rounded-lg bg-gray-50">
-        <div className="flex items-center gap-2 mb-2">
+        <div className="flex items-center gap-2 mb-2 bg-white">
           <Select
-            value={condition.aggregator}
+            value={condition.op}
             onValueChange={(value) => {
               onChange({
                 ...condition,
-                aggregator: value as 'AND' | 'OR',
+                op: value as 'AND' | 'OR',
               });
             }}
           >
             <SelectTrigger className="h-7 w-20 bg-white text-xs">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white border-gray-200">
               <SelectItem value="AND">AND</SelectItem>
               <SelectItem value="OR">OR</SelectItem>
             </SelectContent>
@@ -829,9 +968,8 @@ function ConditionNode({
                 children: [
                   ...condition.children,
                   {
-                    kind: 'condition',
-                    question_id: availableQuestions[0]?.id || '',
-                    operator: 'eq',
+                    kind: 'predicate',
+                    op: 'eq',
                   },
                 ],
               });
@@ -855,7 +993,7 @@ function ConditionNode({
 
         <div className="space-y-2 pl-4 border-l-2 border-gray-300">
           {condition.children.map((child, index) => (
-            <ConditionNode
+            <DefaultConditionNode
               key={index}
               condition={child}
               allQuestions={allQuestions}

@@ -4,6 +4,7 @@ import { Plus, X } from 'lucide-react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Question, Option } from '@/schema/question.types';
+import { getOptionLabel } from '@/utils/label';
 
 interface QuestionPreviewProps {
   question: Question;
@@ -11,9 +12,6 @@ interface QuestionPreviewProps {
 }
 
 export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
-  const getOptionLabel = (index: number) => {
-    return String.fromCharCode(65 + index); // 65는 'A'의 ASCII 코드
-  };
 
   const handleAddOption = () => {
     const currentOptions = question.options || [];
@@ -22,7 +20,7 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
     // 새 옵션 생성
     const newOption: Option = {
       label: "",
-      key: `option-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+      key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
     };
 
     let newOptions: Option[];
@@ -70,10 +68,9 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
         </div>
       );
 
-    case 'choice':
-    case 'dropdown': {
-      const isDropdown = question.type === 'dropdown' || question.isDropdown;
-      
+    case 'choice': {
+      const isDropdown = question.isDropdown;
+
       if (isDropdown) {
         return (
           <div className="pt-2 space-y-3">
@@ -92,16 +89,18 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
                       value={option.label || ''}
                       placeholder={option.freeText?.placeholder || `옵션 ${getOptionLabel(index)}`}
                       onChange={(e) => {
-                        e.stopPropagation();
+                        // e.stopPropagation();
                         handleUpdateOption(index, e.target.value);
                       }}
                       className="flex-1 bg-white border border-gray-200 rounded px-3 py-2 outline-none text-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={(e) => {
+                        // e.stopPropagation()
+                      }}
                     />
                     {canDelete && (
                       <button
                         onClick={(e) => {
-                          e.stopPropagation();
+                          // e.stopPropagation();
                           handleDeleteOption(index);
                         }}
                         className="opacity-0 group-hover/option:opacity-100 p-1 hover:bg-gray-100 rounded transition-all"
@@ -115,7 +114,7 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
 
               <button
                 onClick={(e) => {
-                  e.stopPropagation();
+                  // e.stopPropagation();
                   handleAddOption();
                 }}
                 className="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors"
@@ -127,7 +126,7 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
           </div>
         );
       }
-      
+
       return (
         <div className="space-y-3 pt-2">
           {(question.options || [{ label: '' }] as Option[]).map((option, index) => {
@@ -144,16 +143,18 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
                   value={option.label || ''}
                   placeholder={option.freeText?.placeholder || `옵션 ${getOptionLabel(index)}`}
                   onChange={(e) => {
-                    e.stopPropagation();
+                    // e.stopPropagation();
                     handleUpdateOption(index, e.target.value);
                   }}
                   className="flex-1 bg-transparent border-none outline-none text-gray-700"
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    // e.stopPropagation()
+                  }}
                 />
                 {canDelete && (
                   <button
                     onClick={(e) => {
-                      e.stopPropagation();
+                      // e.stopPropagation();
                       handleDeleteOption(index);
                     }}
                     className="opacity-0 group-hover/option:opacity-100 p-1 hover:bg-gray-100 rounded transition-all"
@@ -167,7 +168,7 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
 
           <button
             onClick={(e) => {
-              e.stopPropagation();
+              // e.stopPropagation();
               handleAddOption();
             }}
             className="flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors"
@@ -221,12 +222,14 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
           <Textarea
             value={question.description || ''}
             onChange={(e) => {
-              e.stopPropagation();
+              // e.stopPropagation();
               onUpdate({ description: e.target.value });
             }}
             placeholder="설명 텍스트나 안내사항을 추가하세요..."
             className="bg-transparent border-none resize-none min-h-20"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              // e.stopPropagation()
+            }}
           />
         </div>
       );

@@ -69,23 +69,19 @@ export function FormBuilder() {
     }, [survey.questions, sortedSections]);
 
     const handleAddQuestion = useCallback((type: QuestionType, sectionId?: string, targetIndex?: number) => {
-        // dropdown 타입을 choice로 통합하고 isDropdown 필드 설정
-        const isDropdown = type === 'dropdown';
-        const questionType = isDropdown ? 'choice' : type;
-        
         // sectionId가 제공되지 않으면 첫 번째 섹션에 할당
         const targetSectionId = sectionId || (sortedSections.length > 0 ? sortedSections[0].id : undefined);
-        
+
         const newQuestion: Question = {
             id: `q-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
-            type: questionType,
+            type: type,
             title: '',
             description: type !== 'description' ? '' : undefined,
             required: false,
-            options: ['choice', 'dropdown'].includes(type)
-                ? [{ label: '', key: `option-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[]
+            options: type === 'choice'
+                ? [{ label: '', key: `opt-${Date.now()}-${Math.random().toString(36).substring(2, 9)}` }] as Option[]
                 : undefined,
-            isDropdown: isDropdown ? true : undefined,
+            isDropdown: undefined,
             design: {
                 themeColor: '#6366f1',
             },
@@ -94,7 +90,7 @@ export function FormBuilder() {
 
         setSurvey((prev) => {
             const allQuestions = [...prev.questions];
-            
+
             // targetIndex가 지정된 경우 해당 위치에 삽입
             if (targetIndex !== undefined && targetIndex >= 0 && targetIndex <= allQuestions.length) {
                 allQuestions.splice(targetIndex, 0, newQuestion);
@@ -143,7 +139,7 @@ export function FormBuilder() {
 
     const handleDuplicateQuestion = useCallback((id: string) => {
         let duplicatedQuestionId: string | null = null;
-        
+
         setSurvey((prev) => {
             const questionIndex = prev.questions.findIndex((q) => q.id === id);
             if (questionIndex === -1) return prev;
@@ -168,7 +164,7 @@ export function FormBuilder() {
         if (duplicatedQuestionId) {
             setSelectedQuestionId(duplicatedQuestionId);
         }
-        
+
         toast.success('질문이 복제되었습니다');
     }, []);
 
@@ -176,7 +172,7 @@ export function FormBuilder() {
         setSurvey((prev) => {
             const allQuestions = [...prev.questions];
             const dragQuestion = allQuestions[dragIndex];
-            
+
             if (!dragQuestion) return prev;
 
             // 같은 섹션 내에서 이동하는 경우
@@ -186,34 +182,34 @@ export function FormBuilder() {
                     .filter(q => q.sectionId === sectionId)
                     .map((q, idx) => ({ question: q, originalIndex: allQuestions.findIndex(sq => sq.id === q.id) }))
                     .sort((a, b) => a.originalIndex - b.originalIndex);
-                
+
                 const dragQuestionInSection = sectionQuestions.find(item => item.question.id === dragQuestion.id);
                 if (!dragQuestionInSection) return prev;
-                
+
                 const sectionDragIndex = sectionQuestions.findIndex(item => item.question.id === dragQuestion.id);
-                
+
                 // 섹션 내에서의 순서 변경 (스왑이 아닌 삽입 방식)
                 const newSectionQuestions = [...sectionQuestions];
                 const [removed] = newSectionQuestions.splice(sectionDragIndex, 1);
-                
+
                 // 드래그한 문항을 제거한 후 타겟 인덱스 조정
                 let targetSectionIndex = hoverIndex;
                 if (sectionDragIndex < hoverIndex) {
                     targetSectionIndex = hoverIndex - 1;
                 }
-                
+
                 // 타겟 위치에 삽입 (스왑이 아닌 삽입)
                 newSectionQuestions.splice(targetSectionIndex, 0, removed);
-                
+
                 // 다른 섹션의 문항들
                 const otherQuestions = allQuestions
                     .map((q, idx) => ({ question: q, index: idx }))
                     .filter(item => item.question.sectionId !== sectionId);
-                
+
                 // 섹션별로 그룹화하여 순서 유지
                 const sectionOrder = (prev.sections || []).sort((a, b) => a.order - b.order).map(s => s.id);
                 const questionsBySection: Record<string, typeof newSectionQuestions> = {};
-                
+
                 otherQuestions.forEach(item => {
                     const sid = item.question.sectionId || 'unassigned';
                     if (!questionsBySection[sid]) {
@@ -221,7 +217,7 @@ export function FormBuilder() {
                     }
                     questionsBySection[sid].push({ question: item.question, originalIndex: item.index });
                 });
-                
+
                 // 섹션 순서대로 문항 재배열
                 const reorderedQuestions: Question[] = [];
                 sectionOrder.forEach(sid => {
@@ -234,32 +230,32 @@ export function FormBuilder() {
                             .forEach(item => reorderedQuestions.push(item.question));
                     }
                 });
-                
+
                 // 할당되지 않은 문항들 추가
                 if (questionsBySection['unassigned']) {
                     questionsBySection['unassigned']
                         .sort((a, b) => a.originalIndex - b.originalIndex)
                         .forEach(item => reorderedQuestions.push(item.question));
                 }
-                
+
                 return {
                     ...prev,
                     questions: reorderedQuestions,
                 };
             }
-            
+
             // 섹션 간 이동 또는 일반 이동
             // 스왑이 아닌 삽입 방식으로 변경
             const newQuestions = [...allQuestions];
             const [removed] = newQuestions.splice(dragIndex, 1);
-            
+
             // 드래그한 문항을 제거한 후 타겟 인덱스 조정
             // 드래그 인덱스가 타겟 인덱스보다 작으면, 제거 후 타겟 인덱스가 1 감소
             let targetIndex = hoverIndex;
             if (dragIndex < hoverIndex) {
                 targetIndex = hoverIndex - 1;
             }
-            
+
             // 타겟 위치에 삽입 (스왑이 아닌 삽입)
             newQuestions.splice(targetIndex, 0, removed);
 
@@ -273,14 +269,14 @@ export function FormBuilder() {
     // 섹션 관리 함수들
     const handleAddSection = useCallback(() => {
         setSurvey((prev) => {
-            const maxOrder = prev.sections 
+            const maxOrder = prev.sections
                 ? Math.max(...prev.sections.map(s => s.order), -1)
                 : -1;
-            
+
             // 섹션 개수를 세어서 다음 번호 결정
             const sectionCount = prev.sections ? prev.sections.length : 0;
             const nextSectionNumber = sectionCount + 1;
-            
+
             const newSection: Section = {
                 id: `section-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
                 title: `섹션 ${nextSectionNumber}`,
@@ -308,13 +304,13 @@ export function FormBuilder() {
         setSurvey((prev) => {
             const sections = prev.sections || [];
             const sectionToDelete = sections.find(s => s.id === id);
-            
+
             if (!sectionToDelete) return prev;
 
             // 섹션에 속한 문항들을 첫 번째 섹션으로 이동
             const firstSection = sections.find(s => s.id !== id);
             const questionsToMove = prev.questions.filter(q => q.sectionId === id);
-            
+
             const updatedQuestions = prev.questions.map(q => {
                 if (q.sectionId === id) {
                     return { ...q, sectionId: firstSection?.id };
@@ -331,7 +327,7 @@ export function FormBuilder() {
                 return {
                     ...prev,
                     sections: [defaultSection],
-                    questions: updatedQuestions.map(q => 
+                    questions: updatedQuestions.map(q =>
                         q.sectionId === id ? { ...q, sectionId: defaultSection.id } : q
                     ),
                 };
@@ -351,7 +347,7 @@ export function FormBuilder() {
             const sections = [...(prev.sections || [])];
             const [removed] = sections.splice(dragIndex, 1);
             sections.splice(hoverIndex, 0, removed);
-            
+
             // order 업데이트
             const updatedSections = sections.map((s, index) => ({
                 ...s,
@@ -372,7 +368,7 @@ export function FormBuilder() {
 
             const allQuestions = [...prev.questions];
             const dragIndex = allQuestions.findIndex(q => q.id === questionId);
-            
+
             if (dragIndex === -1) return prev;
 
             // 문항을 해당 섹션으로 이동하고 위치 조정
@@ -383,15 +379,15 @@ export function FormBuilder() {
             // 타겟 인덱스가 지정된 경우 위치 조정
             if (targetIndex !== undefined) {
                 const [removed] = updatedQuestions.splice(dragIndex, 1);
-                
+
                 // 드래그 인덱스가 타겟 인덱스보다 작으면, 제거 후 타겟 인덱스가 1 감소
                 let finalTargetIndex = targetIndex;
                 if (dragIndex < targetIndex) {
                     finalTargetIndex = targetIndex - 1;
                 }
-                
+
                 updatedQuestions.splice(finalTargetIndex, 0, removed);
-                
+
                 return {
                     ...prev,
                     questions: updatedQuestions,
@@ -461,7 +457,7 @@ export function FormBuilder() {
                                 <div className="space-y-8 pb-24">
                                     {sortedSections.map((section, sectionIndex) => {
                                         const sectionQuestions = questionsBySection[section.id] || [];
-                                        const globalQuestionIndices = sectionQuestions.map(q => 
+                                        const globalQuestionIndices = sectionQuestions.map(q =>
                                             survey.questions.findIndex(sq => sq.id === q.id)
                                         ).filter(idx => idx !== -1);
 
@@ -472,8 +468,8 @@ export function FormBuilder() {
                                             .reduce((sum, s) => sum + (questionsBySection[s.id]?.length || 0), 0);
 
                                         return (
-                                            <div 
-                                                key={section.id} 
+                                            <div
+                                                key={section.id}
                                                 className="bg-white rounded-2xl border-2 border-indigo-200 shadow-sm overflow-hidden"
                                             >
                                                 {/* 섹션 헤더 */}
@@ -488,7 +484,7 @@ export function FormBuilder() {
                                                         onAddQuestion={(sectionId) => handleAddQuestion('short_text', sectionId)}
                                                     />
                                                 </div>
-                                                
+
                                                 {/* 섹션 내 문항들 */}
                                                 <div className="px-6">
                                                     {sectionQuestions.length === 0 ? (
@@ -513,7 +509,7 @@ export function FormBuilder() {
                                                                 const nextGlobalIndex = globalQuestionIndices[localIndex + 1];
                                                                 // 섹션 순서를 고려한 전역 넘버링 (1부터 시작)
                                                                 const globalQuestionNumber = previousSectionsQuestionCount + localIndex;
-                                                                
+
                                                                 return (
                                                                     <div key={question.id} className="mb-0">
                                                                         <QuestionBlock
@@ -544,7 +540,7 @@ export function FormBuilder() {
                                             </div>
                                         );
                                     })}
-                                    
+
                                     {/* 섹션 추가 버튼 */}
                                     <div className="flex justify-center pt-4">
                                         <Button

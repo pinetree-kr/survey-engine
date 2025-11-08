@@ -27,7 +27,7 @@ export function SectionDropZone({ sectionId, onDrop, onAddQuestion, isEmpty = fa
     }
   };
 
-  const [{ handlerId, isOver }, drop] = useDrop({
+  const [collectedProps, drop] = useDrop({
     accept: 'question',
     collect(monitor) {
       return {
@@ -35,7 +35,7 @@ export function SectionDropZone({ sectionId, onDrop, onAddQuestion, isEmpty = fa
         isOver: monitor.isOver(),
       };
     },
-    drop(item: DragItem) {
+    drop(item: any) {
       if (item && item.id) {
         onDrop(item.id, sectionId, targetIndex);
       }
@@ -48,18 +48,18 @@ export function SectionDropZone({ sectionId, onDrop, onAddQuestion, isEmpty = fa
     return (
       <div
         ref={ref}
-        data-handler-id={handlerId}
+        data-handler-id={collectedProps.handlerId}
         className={`
           relative my-6 min-h-[60px] rounded-xl border-2 border-dashed transition-all duration-200
           ${onAddQuestion ? 'cursor-pointer' : ''}
-          ${isOver 
-            ? 'border-indigo-500 bg-indigo-50' 
+          ${collectedProps.isOver
+            ? 'border-indigo-500 bg-indigo-50'
             : 'border-gray-200 bg-gray-50 hover:border-gray-300'
           }
         `}
         onClick={handleClick}
       >
-        {isOver && (
+        {collectedProps.isOver && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="flex items-center gap-3">
               <div className="flex-1 h-1 bg-indigo-400" />
@@ -68,7 +68,7 @@ export function SectionDropZone({ sectionId, onDrop, onAddQuestion, isEmpty = fa
             </div>
           </div>
         )}
-        {!isOver && (
+        {!collectedProps.isOver && (
           <div className="text-center py-8 text-gray-400">
             {onAddQuestion && (
               <div className="flex items-center justify-center mb-4">
@@ -88,12 +88,12 @@ export function SectionDropZone({ sectionId, onDrop, onAddQuestion, isEmpty = fa
   return (
     <div
       ref={ref}
-      data-handler-id={handlerId}
+      data-handler-id={collectedProps.handlerId}
       className={`relative my-3 flex items-center justify-center h-4 min-h-[16px] group transition-all duration-200 ${onAddQuestion ? 'cursor-pointer' : ''}`}
       onClick={handleClick}
     >
       <div className="flex items-center gap-3 w-full px-4">
-        {isOver ? (
+        {collectedProps.isOver ? (
           <>
             <div className="flex-1 h-1 bg-indigo-400" />
             <div className="h-4 w-4 rounded-full bg-indigo-500 border-2 border-white shadow-lg flex-shrink-0" />

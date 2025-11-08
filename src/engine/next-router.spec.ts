@@ -11,7 +11,7 @@ describe("next-router", () => {
           id: "q1",
           title: "질문 1",
           type: "short_text",
-          branchLogic: [
+          branchRules: [
             {
               next_question_id: "q3",
             },
@@ -44,22 +44,28 @@ describe("next-router", () => {
             { label: "옵션 1", key: "opt1" },
             { label: "옵션 2", key: "opt2" },
           ],
-          branchLogic: [
+          branchRules: [
             {
               when: {
-                kind: "condition",
-                question_id: "q1",
-                operator: "eq" as Operator,
-                value: "opt1",
+                kind: "group",
+                op: "AND",
+                children: [{
+                  kind: "predicate",
+                  op: "eq" as Operator,
+                  value: "opt1",
+                }],
               },
               next_question_id: "q2",
             },
             {
               when: {
-                kind: "condition",
-                question_id: "q1",
-                operator: "eq" as Operator,
-                value: "opt2",
+                kind: "group",
+                op: "AND",
+                children: [{
+                  kind: "predicate",
+                  op: "eq" as Operator,
+                  value: "opt2",
+                }],
               },
               next_question_id: "q3",
             }
@@ -94,22 +100,28 @@ describe("next-router", () => {
             { label: "옵션 2", key: "opt2" },
             { label: "옵션 3", key: "opt3" },
           ],
-          branchLogic: [
+          branchRules: [
             {
               when: {
-                kind: "condition",
-                question_id: "q1",
-                operator: "contains" as Operator,
-                value: "opt1",
+                kind: "group",
+                op: "AND",
+                children: [{
+                  kind: "predicate",
+                  op: "contains" as Operator,
+                  value: "opt1",
+                }],
               },
               next_question_id: "q2",
             },
             {
               when: {
-                kind: "condition",
-                question_id: "q1",
-                operator: "contains" as Operator,
-                value: "opt2",
+                kind: "group",
+                op: "AND",
+                children: [{
+                  kind: "predicate",
+                  op: "contains" as Operator,
+                  value: "opt2",
+                }],
               },
               next_question_id: "q3",
             },
@@ -129,7 +141,7 @@ describe("next-router", () => {
 
       const answers: AnswersMap = new Map([["q1", ["opt3", "opt1"]]]);
       const nextId = getNextQuestionId(questions[0], questions, answers);
-      // opt3가 먼저지만 branchLogic에서 opt1의 nextQuestionId 반환
+      // opt3가 먼저지만 branchRules에서 opt1의 nextQuestionId 반환
       expect(nextId).toBe("q2");
     });
 
@@ -144,13 +156,16 @@ describe("next-router", () => {
               label: "이름",
               key: "name",
               input_type: "text",
-              branchLogic: [
+              branchRules: [
                 {
                   when: {
-                    kind: "condition",
-                    question_id: "q1",
-                    operator: "eq" as Operator,
-                    value: "name",
+                    kind: "group",
+                    op: "AND",
+                    children: [{
+                      kind: "predicate",
+                      op: "eq" as Operator,
+                      value: "name",
+                    }],
                   },
                   next_question_id: "q2",
                 }
@@ -160,13 +175,16 @@ describe("next-router", () => {
               label: "이메일",
               key: "email",
               input_type: "email",
-              branchLogic: [
+              branchRules: [
                 {
                   when: {
-                    kind: "condition",
-                    question_id: "q1",
-                    operator: "eq" as Operator,
-                    value: "email",
+                    kind: "group",
+                    op: "AND",
+                    children: [{
+                      kind: "predicate",
+                      op: "eq" as Operator,
+                      value: "email",
+                    }],
                   },
                   next_question_id: "q3",
                 },
@@ -176,13 +194,16 @@ describe("next-router", () => {
               label: "전화번호",
               key: "phone",
               input_type: "tel",
-              branchLogic: [
+              branchRules: [
                 {
                   when: {
-                    kind: "condition",
-                    question_id: "q1",
-                    operator: "eq" as Operator,
-                    value: "phone",
+                    kind: "group",
+                    op: "AND",
+                    children: [{
+                      kind: "predicate",
+                      op: "eq" as Operator,
+                      value: "phone",
+                    }],
                   },
                   next_question_id: "q4",
                 },
@@ -191,12 +212,12 @@ describe("next-router", () => {
           ]
         },
       ];
-      // 이 테스트는 composite의 branchLogic이 실제로 동작하는지 확인하는 것이므로
+      // 이 테스트는 composite의 branchRules가 실제로 동작하는지 확인하는 것이므로
       // 실제 구현에 따라 테스트를 작성해야 합니다.
       // 현재는 구조만 확인합니다.
     });
 
-    it("branchLogic에서 AND 평가 후 첫 매칭 rule의 nextQuestionId를 반환해야 함", () => {
+    it("branchRules에서 AND 평가 후 첫 매칭 rule의 nextQuestionId를 반환해야 함", () => {
       const questions: Question[] = [
         {
           id: "q1",
@@ -211,13 +232,16 @@ describe("next-router", () => {
             { label: "옵션 1", key: "opt1" },
             { label: "옵션 2", key: "opt2" },
           ],
-          branchLogic: [
+          branchRules: [
             {
               when: {
-                kind: "condition",
-                question_id: "q1",
-                operator: "eq" as Operator,
-                value: "test",
+                kind: "group",
+                op: "AND",
+                children: [{
+                  kind: "predicate",
+                  op: "eq" as Operator,
+                  value: "test",
+                }],
               },
               next_question_id: "q3",
             },
@@ -305,13 +329,16 @@ describe("next-router", () => {
             { label: "옵션 1", key: "opt1" },
             { label: "옵션 2", key: "opt2" },
           ],
-          branchLogic: [
+          branchRules: [
             {
               when: {
-                kind: "condition",
-                question_id: "q1",
-                operator: "eq" as Operator,
-                value: "opt1",
+                kind: "group",
+                op: "AND",
+                children: [{
+                  kind: "predicate",
+                  op: "eq" as Operator,
+                  value: "opt1",
+                }],
               },
               next_question_id: "q2",
             },

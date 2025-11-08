@@ -2,7 +2,6 @@ export type QuestionType =
   | "short_text"
   | "long_text"
   | "choice"
-  | "dropdown"
   | "composite_single"
   | "composite_multiple"
   | "description";
@@ -41,27 +40,24 @@ export type Operator =
   | 'gt' | 'lt' | 'gte' | 'lte'
   | 'regex' | 'is_empty' | 'not_empty';
 
-
-// 단일 조건
-export type SingleCondition = {
-  kind: 'condition';
-  question_id: string;
-  sub_key?: string;  // composite 내부 필드 참조 시 사용
-  operator: Operator;
-  value?: string | number | boolean | Array<string | number>
+// PredicateNode: 비교 연산을 수행하는 노드
+// 현재 선택된 문항의 답변을 참조하므로 question_id가 필요 없음
+export type PredicateNode = {
+  kind: 'predicate';
+  subKey?: string;  // composite 내부 필드 참조 시 사용
+  op: Operator;  // 비교 연산자
+  value?: string | number | boolean | Array<string | number>;  // 비교할 값
 };
 
-
-
-// 조건 그룹
-export type ConditionGroup = {
+// GroupNode: 논리 연산을 수행하는 노드 (AND/OR)
+export type GroupNode = {
   kind: 'group';
-  aggregator: 'AND' | 'OR';
-  children: (SingleCondition | ConditionGroup)[];
+  op: 'AND' | 'OR';  // 논리 연산자
+  children: BranchNode[];  // 중첩 가능한 자식 노드들
 };
 
-// 조건 타입(트리 구조)
-export type Condition = SingleCondition | ConditionGroup;
+// BranchNode: 분기 로직의 트리 구조 노드
+export type BranchNode = PredicateNode | GroupNode;
 
 export type CompositeItem = {
   label: string;
@@ -70,19 +66,25 @@ export type CompositeItem = {
   placeholder?: string;
   key: string; // compositeItems 내 유일
   required?: boolean;
-  show_conditions?: SingleCondition; // 항목 단위 표시 조건
+  show_conditions?: PredicateNode; // 항목 단위 표시 조건
   validations?: Validation;
-  branchLogic?: BranchRule[]; // default []
+  branchRules?: BranchRule[]; // default []
 };
 
-// 분기 규칙
+// 분기 규칙: 브랜치 로직과 다음 질문 ID를 정의
 export type BranchRule = {
-  when?: SingleCondition; // 없으면 항상 true
+  when?: BranchNode; // true가 될 로직 (트리 구조), 없으면 항상 true
   next_question_id: string; // 이동할 다음 질문 ID
 };
 
-// 표시 조건 (단일 트리 구조)
-export type ShowCondition = ConditionGroup;
+// ShowNode: 표시 조건의 트리 구조 노드 (BranchNode와 유사하지만 참조 질문이 다름)
+export type ShowNode = PredicateNode | GroupNode;
+
+// ShowRule: 표시 규칙 (BranchRule과 유사하지만 참조 질문을 명시)
+export type ShowRule = {
+  when?: ShowNode; // true가 될 로직 (트리 구조), 없으면 항상 true
+  refQuestionId: string; // 참조할 질문 ID
+};
 
 // 다중 선택 제한 타입
 export type SelectLimitType = 'unlimited' | 'exact' | 'range';
@@ -132,9 +134,10 @@ export type Question = {
   // composite 문항일 경우
   compositeItems?: CompositeItem[];
 
-  // 조건 로직
-  branchLogic?: BranchRule[];
-  showConditions?: ConditionGroup;
+  // 분기 로직: 여러 브랜치 규칙 (우선순위는 인덱스 순)
+  branchRules?: BranchRule[];
+  // 표시 규칙: 이 질문을 표시할 조건들 (우선순위는 인덱스 순)
+  showRules?: ShowRule[];
   design?: {
     themeColor?: string;
     backgroundStyle?: string;

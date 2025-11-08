@@ -1,10 +1,10 @@
-import type { Question, Condition, SingleCondition } from "@/schema/question.types";
+import type { Question, BranchNode, PredicateNode } from "@/schema/question.types";
 import type { AnswersMap } from "./visibility";
 
 /**
  * 다음 질문 ID 결정
  * 우선순위:
- * 1. branchLogic 평가
+ * 1. branchRules 평가
  * 2. 선형 다음 질문 또는 완료
  */
 export function getNextQuestionId(
@@ -12,7 +12,7 @@ export function getNextQuestionId(
   questions: Question[],
   answers: AnswersMap
 ): string | null {
-  // 1. branchLogic 평가
+  // 1. branchRules 평가
   const branchBasedNext = getBranchBasedNext(currentQuestion, answers);
   if (branchBasedNext) {
     return branchBasedNext;
@@ -96,25 +96,25 @@ function getCompositeNext(
 }
 
 /**
- * branchLogic 기반 다음 질문 결정 (AND 평가, 첫 매칭)
+ * branchRules 기반 다음 질문 결정 (우선순위는 인덱스 순, 첫 매칭)
  */
 function getBranchBasedNext(
   question: Question,
   answers: AnswersMap
 ): string | null {
-  if (!question.branchLogic || question.branchLogic.length === 0) {
+  if (!question.branchRules || question.branchRules.length === 0) {
     return null;
   }
 
-  // 배열 순서대로 평가
-  for (const rule of question.branchLogic) {
+  // 배열 순서대로 평가 (우선순위는 인덱스 순)
+  for (const rule of question.branchRules) {
     // when 조건이 없으면 항상 true (기본 규칙)
     if (!rule.when) {
       return rule.next_question_id;
     }
 
-    // when 조건 평가
-    const conditionMet = evaluateCondition(rule.when, answers);
+    // when 조건 평가 (현재 질문의 답변을 참조)
+    const conditionMet = evaluateBranchNode(rule.when, question.id, answers);
     
     if (conditionMet) {
       return rule.next_question_id;
@@ -125,32 +125,36 @@ function getBranchBasedNext(
 }
 
 /**
- * Condition 평가 (트리 구조 지원)
+ * BranchNode 평가 (트리 구조 지원)
+ * @param node 평가할 BranchNode
+ * @param currentQuestionId 현재 질문 ID (PredicateNode가 참조할 질문)
+ * @param answers 답변 맵
  */
-function evaluateCondition(
-  condition: Condition,
+function evaluateBranchNode(
+  node: BranchNode,
+  currentQuestionId: string,
   answers: AnswersMap
 ): boolean {
-  if (condition.kind === 'condition') {
-    // 단일 조건 평가
+  if (node.kind === 'predicate') {
+    // PredicateNode 평가 (현재 질문의 답변을 참조)
     const answerValue = getAnswerValue(
       answers,
-      condition.question_id,
-      condition.sub_key
+      currentQuestionId,
+      node.subKey
     );
 
     if (answerValue === undefined) {
       return false;
     }
 
-    return compareValues(answerValue, condition.operator, condition.value);
+    return compareValues(answerValue, node.op, node.value);
   }
 
-  if (condition.kind === 'group') {
-    // 그룹 조건 평가
-    const results = condition.children.map(child => evaluateCondition(child, answers));
+  if (node.kind === 'group') {
+    // GroupNode 평가
+    const results = node.children.map(child => evaluateBranchNode(child, currentQuestionId, answers));
     
-    if (condition.aggregator === 'AND') {
+    if (node.op === 'AND') {
       return results.every(Boolean);
     } else {
       // OR
@@ -193,7 +197,7 @@ function getAnswerValue(
  */
 function compareValues(
   actual: unknown,
-  operator: SingleCondition["operator"],
+  operator: PredicateNode["op"],
   expected?: string | number | boolean | Array<string | number>
 ): boolean {
   switch (operator) {

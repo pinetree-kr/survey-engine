@@ -190,7 +190,7 @@ describe("visibility", () => {
             {
               kind: "condition",
               question_id: "q1",
-              sub_key: "email",
+              subKey: "email",
               operator: "neq",
               value: "",
             },

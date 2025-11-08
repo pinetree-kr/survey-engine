@@ -1,4 +1,4 @@
-import type { Question, ConditionGroup, SingleCondition } from "@/schema/question.types";
+import type { Question, GroupNode, PredicateNode, BranchNode, ShowRule } from "@/schema/question.types";
 
 export type ValidationError = {
   code: string;
@@ -20,7 +20,7 @@ export function validateSurvey(questions: Question[]): ValidationResult {
   // 1. 유니크 검사: id, options[].key, compositeItems[].key
   errors.push(...validateUniqueness(questions));
 
-  // 2. 참조 무결성: 모든 branchLogic 참조 대상 존재
+  // 2. 참조 무결성: 모든 branchRules 참조 대상 존재
   errors.push(...validateReferences(questions));
 
   // 3. 도달성 검사
@@ -105,57 +105,39 @@ function validateReferences(questions: Question[]): ValidationError[] {
   const questionIds = new Set(questions.map((q) => q.id));
 
   for (const q of questions) {
-    // branchLogic의 next_question_id 및 question_id 검사
-    if (q.branchLogic) {
-      for (const rule of q.branchLogic) {
+    // branchRules의 next_question_id 및 question_id 검사
+    if (q.branchRules) {
+      for (const rule of q.branchRules) {
         if (!questionIds.has(rule.next_question_id)) {
           errors.push({
             code: "INVALID_BRANCH_NEXT_questionId",
-            message: `질문 ${q.id}의 branchLogic의 next_question_id가 존재하지 않음: ${rule.next_question_id}`,
+            message: `질문 ${q.id}의 branchRules의 next_question_id가 존재하지 않음: ${rule.next_question_id}`,
             meta: {
               questionId: q.id,
               nextQuestionId: rule.next_question_id,
             },
           });
         }
-        // rule.when이 SingleCondition인 경우 question_id 검사
-        if (rule.when && rule.when.kind === 'condition') {
-          if (!questionIds.has(rule.when.question_id)) {
-            errors.push({
-              code: "INVALID_BRANCH_CONDITION_questionId",
-              message: `질문 ${q.id}의 branchLogic 조건의 question_id가 존재하지 않음: ${rule.when.question_id}`,
-              meta: {
-                questionId: q.id,
-                conditionQuestionId: rule.when.question_id,
-              },
-            });
-          }
-        }
+        // rule.when이 BranchNode인 경우 검사 (question_id는 제거됨)
+        // PredicateNode는 현재 질문을 자동으로 참조하므로 별도 검증 불필요
       }
     }
 
-    // showConditions의 questionId 검사
-    if (q.showConditions) {
-      const validateCondition = (condition: SingleCondition | ConditionGroup) => {
-        if (condition.kind === 'condition') {
-          if (!questionIds.has(condition.question_id)) {
-            errors.push({
-              code: "INVALID_SHOW_CONDITION_questionId",
-              message: `질문 ${q.id}의 showConditions의 questionId가 존재하지 않음: ${condition.question_id}`,
-              meta: {
-                questionId: q.id,
-                conditionQuestionId: condition.question_id,
-              },
-            });
-          }
-        } else {
-          // ConditionGroup
-          for (const child of condition.children) {
-            validateCondition(child);
-          }
+    // showRules 검사
+    if (q.showRules) {
+      for (const rule of q.showRules) {
+        // refQuestionId 검증
+        if (!questionIds.has(rule.refQuestionId)) {
+          errors.push({
+            code: "INVALID_SHOW_RULE_REF_questionId",
+            message: `질문 ${q.id}의 showRules의 refQuestionId가 존재하지 않음: ${rule.refQuestionId}`,
+            meta: {
+              questionId: q.id,
+              refQuestionId: rule.refQuestionId,
+            },
+          });
         }
-      };
-      validateCondition(q.showConditions);
+      }
     }
   }
 
@@ -188,9 +170,9 @@ function validateReachability(questions: Question[]): ValidationError[] {
       return;
     }
 
-    // branchLogic의 next_question_id
-    if (question.branchLogic) {
-      for (const rule of question.branchLogic) {
+    // branchRules의 next_question_id
+    if (question.branchRules) {
+      for (const rule of question.branchRules) {
         dfs(rule.next_question_id);
       }
     }
@@ -238,9 +220,9 @@ function validateCycles(questions: Question[]): ValidationError[] {
 
     const question = questions.find((q) => q.id === questionId);
     if (question) {
-      // branchLogic의 next_question_id
-      if (question.branchLogic) {
-        for (const rule of question.branchLogic) {
+      // branchRules의 next_question_id
+      if (question.branchRules) {
+        for (const rule of question.branchRules) {
           if (hasCycle(rule.next_question_id)) {
             return true;
           }

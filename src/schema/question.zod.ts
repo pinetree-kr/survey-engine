@@ -40,16 +40,15 @@ export const OptionSchema = z.object({
     .optional(),
 });
 
-// 조건 스키마 (재귀적 구조)
-export const ConditionSchema: z.ZodType<any> = z.lazy(() =>
-  z.union([SingleConditionSchema, ConditionGroupSchema])
+// BranchNode 스키마 (재귀적 구조)
+export const BranchNodeSchema: z.ZodType<any> = z.lazy(() =>
+  z.union([PredicateNodeSchema, GroupNodeSchema])
 );
 
-const SingleConditionSchema: z.ZodType<any> = z.object({
-  kind: z.literal("condition"),
-  question_id: z.string().min(1),
-  sub_key: z.string().optional(),
-  operator: OperatorSchema,
+const PredicateNodeSchema: z.ZodType<any> = z.object({
+  kind: z.literal("predicate"),
+  subKey: z.string().optional(),
+  op: OperatorSchema,
   value: z
     .union([
       z.string(),
@@ -60,10 +59,10 @@ const SingleConditionSchema: z.ZodType<any> = z.object({
     .optional(),
 });
 
-const ConditionGroupSchema: z.ZodType<any> = z.object({
+const GroupNodeSchema: z.ZodType<any> = z.object({
   kind: z.literal("group"),
-  aggregator: z.enum(["AND", "OR"]),
-  children: z.array(ConditionSchema),
+  op: z.enum(["AND", "OR"]),
+  children: z.array(BranchNodeSchema),
 });
 
 // 컴포지트 아이템 스키마
@@ -75,7 +74,7 @@ export const CompositeItemSchema = z.object({
   key: z.string().min(1),
   required: z.boolean().optional(),
   nextQuestionId: z.string().optional(),
-  show_conditions: ConditionSchema.optional(),
+  show_conditions: PredicateNodeSchema.optional(),
   validations: z
     .object({
       regex: z.string().optional(),
@@ -89,12 +88,20 @@ export const CompositeItemSchema = z.object({
 
 // 분기 규칙 스키마
 export const BranchRuleSchema = z.object({
-  when: ConditionSchema.optional(),
+  when: BranchNodeSchema.optional(),
   next_question_id: z.string().min(1),
 });
 
-// 표시 조건 스키마 (Condition과 동일)
-export const ShowConditionSchema = ConditionSchema;
+// ShowNode 스키마 (BranchNode와 동일한 구조)
+export const ShowNodeSchema: z.ZodType<any> = z.lazy(() =>
+  z.union([PredicateNodeSchema, GroupNodeSchema])
+);
+
+// ShowRule 스키마
+export const ShowRuleSchema = z.object({
+  when: ShowNodeSchema.optional(),
+  refQuestionId: z.string().min(1),
+});
 
 // 다중 선택 제한 스키마
 export const SelectLimitSchema = z.discriminatedUnion("type", [
@@ -138,8 +145,8 @@ export const QuestionSchema = z.object({
       minLength: z.number().positive().optional(),
     })
     .optional(),
-  branchLogic: z.array(BranchRuleSchema).optional().default([]),
-  showConditions: ShowConditionSchema.optional(),
+  branchRules: z.array(BranchRuleSchema).optional().default([]),
+  showRules: z.array(ShowRuleSchema).optional().default([]),
   nextQuestionId: z.string().optional(),
 });
 
