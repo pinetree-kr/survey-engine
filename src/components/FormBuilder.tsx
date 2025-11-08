@@ -566,49 +566,78 @@ export function FormBuilder() {
                                 </div>
                             ) : (
                                 <div className="space-y-1">
-                                    {orderedQuestions.map((question, index) => {
-                                        const Icon = getQuestionIcon(question);
-                                        const isSelected = selectedQuestionId === question.id;
-                                        const questionNumber = index + 1;
+                                    {sortedSections.map((section, sectionIndex) => {
+                                        const sectionQuestions = questionsBySection[section.id] || [];
+                                        if (sectionQuestions.length === 0) return null;
+
+                                        // 섹션 시작 전의 문항 개수 계산 (전역 번호용)
+                                        const previousSectionsQuestionCount = sortedSections
+                                            .slice(0, sectionIndex)
+                                            .reduce((sum, s) => sum + (questionsBySection[s.id]?.length || 0), 0);
 
                                         return (
-                                            <button
-                                                key={question.id}
-                                                onClick={() => setSelectedQuestionId(question.id)}
-                                                className={`
-                                                    w-full flex items-center gap-3 p-3 rounded-lg transition-all
-                                                    ${isSelected 
-                                                        ? 'bg-gray-100 border border-gray-300' 
-                                                        : 'hover:bg-gray-50 border border-transparent'
-                                                    }
-                                                `}
-                                            >
-                                                <div className={`
-                                                    w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0
-                                                    ${isSelected 
-                                                        ? 'bg-indigo-100 text-indigo-700' 
-                                                        : question.type === 'choice' || question.type === 'complex_choice'
-                                                            ? 'bg-purple-100 text-purple-700'
-                                                            : 'bg-indigo-100 text-indigo-700'
-                                                    }
-                                                `}>
-                                                    <Icon className="w-4 h-4" />
+                                            <div key={section.id}>
+                                                {/* 섹션 시작 수평선 (섹션 사이에 1개만 표시) */}
+                                                {sectionIndex > 0 && (
+                                                    <div className="my-3 flex items-center gap-3">
+                                                        <div className="flex-1 border-t border-gray-300"></div>
+                                                        <span className="text-xs text-gray-400 font-medium">섹션 분리</span>
+                                                        <div className="flex-1 border-t border-gray-300"></div>
+                                                    </div>
+                                                )}
+                                                
+                                                {/* 섹션 제목 */}
+                                                <div className="mb-2 px-3 py-1">
+                                                    <h3 className="text-xs font-normal text-gray-400">{section.title}</h3>
                                                 </div>
-                                                <div className="flex-1 min-w-0 flex items-center gap-2">
-                                                    <span className={`
-                                                        text-sm font-medium text-gray-500 flex-shrink-0
-                                                        ${isSelected ? 'text-gray-600' : 'text-gray-500'}
-                                                    `}>
-                                                        {questionNumber}
-                                                    </span>
-                                                    <span className={`
-                                                        text-sm font-medium flex-1 text-left truncate
-                                                        ${isSelected ? 'text-gray-900' : 'text-gray-700'}
-                                                    `}>
-                                                        {question.title || '제목 없음'}
-                                                    </span>
-                                                </div>
-                                            </button>
+                                                
+                                                {/* 섹션 내 문항들 */}
+                                                {sectionQuestions.map((question, localIndex) => {
+                                                    const Icon = getQuestionIcon(question);
+                                                    const isSelected = selectedQuestionId === question.id;
+                                                    const questionNumber = previousSectionsQuestionCount + localIndex + 1;
+
+                                                    return (
+                                                        <button
+                                                            key={question.id}
+                                                            onClick={() => setSelectedQuestionId(question.id)}
+                                                            className={`
+                                                                w-full flex items-center gap-3 p-3 rounded-lg transition-all
+                                                                ${isSelected 
+                                                                    ? 'bg-gray-100 border border-gray-300' 
+                                                                    : 'hover:bg-gray-50 border border-transparent'
+                                                                }
+                                                            `}
+                                                        >
+                                                            <div className={`
+                                                                w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0
+                                                                ${isSelected 
+                                                                    ? 'bg-indigo-100 text-indigo-700' 
+                                                                    : question.type === 'choice' || question.type === 'complex_choice'
+                                                                        ? 'bg-purple-100 text-purple-700'
+                                                                        : 'bg-indigo-100 text-indigo-700'
+                                                                }
+                                                            `}>
+                                                                <Icon className="w-4 h-4" />
+                                                            </div>
+                                                            <div className="flex-1 min-w-0 flex items-center gap-2">
+                                                                <span className={`
+                                                                    text-sm font-medium text-gray-500 flex-shrink-0
+                                                                    ${isSelected ? 'text-gray-600' : 'text-gray-500'}
+                                                                `}>
+                                                                    {questionNumber}
+                                                                </span>
+                                                                <span className={`
+                                                                    text-sm font-medium flex-1 text-left truncate
+                                                                    ${isSelected ? 'text-gray-900' : 'text-gray-700'}
+                                                                `}>
+                                                                    {question.title || '제목 없음'}
+                                                                </span>
+                                                            </div>
+                                                        </button>
+                                                    );
+                                                })}
+                                            </div>
                                         );
                                     })}
                                 </div>
