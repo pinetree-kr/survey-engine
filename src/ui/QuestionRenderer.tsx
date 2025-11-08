@@ -637,6 +637,17 @@ function renderQuestionInput(
       const rangeConfig = question.rangeConfig || { min: 0, max: 10, step: 1 };
       const currentValue = (currentAnswer as number) ?? rangeConfig.min;
 
+      // step에 따라 모든 값 계산
+      const generateStepValues = () => {
+        const values: number[] = [];
+        for (let val = rangeConfig.min; val <= rangeConfig.max; val += rangeConfig.step) {
+          values.push(parseFloat(val.toFixed(10))); // 부동소수점 오차 방지
+        }
+        return values;
+      };
+
+      const stepValues = generateStepValues();
+
       return (
         <div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "12px" }}>
@@ -644,21 +655,55 @@ function renderQuestionInput(
             <span style={{ fontSize: "18px", fontWeight: "bold", color: "#6366f1" }}>{currentValue}</span>
             <span style={{ fontSize: "14px", color: "#666" }}>{rangeConfig.max}</span>
           </div>
-          <input
-            type="range"
-            min={rangeConfig.min}
-            max={rangeConfig.max}
-            step={rangeConfig.step}
-            value={currentValue}
-            onChange={(e) => updateAnswer(question.id, parseFloat(e.target.value))}
-            style={{
-              width: "100%",
-              height: "8px",
-              borderRadius: "4px",
-              outline: "none",
-              cursor: "pointer",
-            }}
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              type="range"
+              min={rangeConfig.min}
+              max={rangeConfig.max}
+              step={rangeConfig.step}
+              value={currentValue}
+              onChange={(e) => updateAnswer(question.id, parseFloat(e.target.value))}
+              style={{
+                width: "100%",
+                height: "8px",
+                borderRadius: "4px",
+                outline: "none",
+                cursor: "pointer",
+                position: "relative",
+                zIndex: 10,
+              }}
+            />
+            {/* step 구분자 표시 */}
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "8px",
+                display: "flex",
+                alignItems: "center",
+                pointerEvents: "none",
+              }}
+            >
+              {stepValues.map((value, index) => {
+                if (index === 0 || index === stepValues.length - 1) return null; // 첫 번째와 마지막은 제외
+                const percentage = ((value - rangeConfig.min) / (rangeConfig.max - rangeConfig.min)) * 100;
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      position: "absolute",
+                      left: `${percentage}%`,
+                      width: "1px",
+                      height: "8px",
+                      backgroundColor: "#999",
+                    }}
+                  />
+                );
+              })}
+            </div>
+          </div>
         </div>
       );
     }

@@ -96,27 +96,53 @@ export function QuestionPreview({ question, onUpdate }: QuestionPreviewProps) {
 
     case 'range': {
       const rangeConfig = question.rangeConfig || { min: 0, max: 10, step: 1 };
-      const currentValue = rangeConfig.min;
+      const currentValue = rangeConfig.min; // 슬라이더 위치 표시용
+
+      // step에 따라 모든 값 계산
+      const generateStepValues = () => {
+        const values: number[] = [];
+        for (let val = rangeConfig.min; val <= rangeConfig.max; val += rangeConfig.step) {
+          values.push(parseFloat(val.toFixed(10))); // 부동소수점 오차 방지
+        }
+        return values;
+      };
+
+      const stepValues = generateStepValues();
 
       return (
         <div className="pt-2 space-y-3">
           <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
             <span>{rangeConfig.min}</span>
-            <span className="font-medium">{currentValue}</span>
             <span>{rangeConfig.max}</span>
           </div>
-          <input
-            type="range"
-            min={rangeConfig.min}
-            max={rangeConfig.max}
-            step={rangeConfig.step}
-            value={currentValue}
-            disabled
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-            style={{
-              background: `linear-gradient(to right, #6366f1 0%, #6366f1 ${((currentValue - rangeConfig.min) / (rangeConfig.max - rangeConfig.min)) * 100}%, #e5e7eb ${((currentValue - rangeConfig.min) / (rangeConfig.max - rangeConfig.min)) * 100}%, #e5e7eb 100%)`
-            }}
-          />
+          <div className="relative">
+            <input
+              type="range"
+              min={rangeConfig.min}
+              max={rangeConfig.max}
+              step={rangeConfig.step}
+              value={currentValue}
+              disabled
+              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer relative z-10"
+              style={{
+                background: `linear-gradient(to right, #6366f1 0%, #6366f1 ${((currentValue - rangeConfig.min) / (rangeConfig.max - rangeConfig.min)) * 100}%, #e5e7eb ${((currentValue - rangeConfig.min) / (rangeConfig.max - rangeConfig.min)) * 100}%, #e5e7eb 100%)`
+              }}
+            />
+            {/* step 구분자 표시 */}
+            <div className="absolute top-0 left-0 w-full h-2 flex items-center pointer-events-none">
+              {stepValues.map((value, index) => {
+                if (index === 0 || index === stepValues.length - 1) return null; // 첫 번째와 마지막은 제외
+                const percentage = ((value - rangeConfig.min) / (rangeConfig.max - rangeConfig.min)) * 100;
+                return (
+                  <div
+                    key={index}
+                    className="absolute w-px h-2 bg-gray-400"
+                    style={{ left: `${percentage}%` }}
+                  />
+                );
+              })}
+            </div>
+          </div>
         </div>
       );
     }
