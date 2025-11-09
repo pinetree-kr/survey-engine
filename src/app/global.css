@@ -6,3 +6,9 @@
     linear-gradient(to bottom, rgb(241 245 249 / 0.5) 1px, transparent 1px);
   background-size: 20px 20px;
 }
+
+.bg-grid-green-100 {
+  background-image: linear-gradient(to right, rgb(220 252 231 / 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(220 252 231 / 0.3) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
