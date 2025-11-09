@@ -1,0 +1,2187 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: https://linter-set-72355018.figma.site/
+Subject: Landing Page for FormFlow
+Date: Sun, 9 Nov 2025 17:23:07 +0900
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--LU558Jcbm5I4BnugMsddYrayqFGk25XK0hRJmfDlbH----"
+
+
+------MultipartBoundary--LU558Jcbm5I4BnugMsddYrayqFGk25XK0hRJmfDlbH----
+Content-Type: text/html
+Content-ID: <frame-3675D926EFCAA7737D3AA66A2AC53D4A@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://linter-set-72355018.figma.site/
+
+<!DOCTYPE html><html lang=3D"en"><head><meta http-equiv=3D"Content-Type" co=
+ntent=3D"text/html; charset=3DUTF-8"><link rel=3D"stylesheet" type=3D"text/=
+css" href=3D"cid:css-3e6a650b-d8de-4e0f-a765-763caea07505@mhtml.blink" /><l=
+ink rel=3D"stylesheet" type=3D"text/css" href=3D"cid:css-d85f427a-965b-4f85=
+-a142-fdd6f330ea0c@mhtml.blink" /><link rel=3D"stylesheet" type=3D"text/css=
+" href=3D"cid:css-ba219346-8ba1-433c-8bd9-3b9fdf2667f9@mhtml.blink" /><link=
+ rel=3D"stylesheet" type=3D"text/css" href=3D"cid:css-479bd0dd-5159-4c90-9d=
+91-d00f3276bb56@mhtml.blink" />
+   =20
+   =20
+
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=
+=3D1">
+    <meta name=3D"color-scheme" content=3D"light dark">
+    <link rel=3D"preload" href=3D"https://linter-set-72355018.figma.site/_r=
+untimes/sites-runtime.42cd27bce7804a0adacb12007f899961d8ac91388924ba2957926=
+ada52bf734d.js" as=3D"script" crossorigin=3D"">
+    <link rel=3D"preload" href=3D"https://linter-set-72355018.figma.site/_c=
+omponents/v2/0cc338b5bdb3aa964f55ab99749350f778a2d79c.js" as=3D"script" cro=
+ssorigin=3D"">
+    <link rel=3D"preload" href=3D"https://linter-set-72355018.figma.site/_j=
+son/236a52a7-b186-458e-a72b-0f11596dade7/_index.json" as=3D"fetch">
+        <meta id=3D"meta-bkauwd" name=3D"description" content=3D"Created wi=
+th Figma"><meta id=3D"meta-yw3oin" name=3D"robots" content=3D"noindex"><tit=
+le id=3D"title-d871wx">Landing Page for FormFlow</title>
+    <link rel=3D"stylesheet" href=3D"https://linter-set-72355018.figma.site=
+/_components/v2/0cc338b5bdb3aa964f55ab99749350f778a2d79c.css">
+  </head>
+  <body>
+   =20
+   =20
+   =20
+   =20
+   =20
+    <div id=3D"container"><div class=3D""><div class=3D""><div class=3D"tai=
+lwind css-myl2ny css-exq74d"><div class=3D"min-h-screen"><header class=3D"s=
+ticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdr=
+op-filter]:bg-white/60"><div class=3D"container mx-auto flex h-16 items-cen=
+ter justify-between px-4"><div class=3D"flex items-center gap-2"><div class=
+=3D"flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br f=
+rom-blue-600 to-purple-600"><span class=3D"text-white">F</span></div><span =
+class=3D"text-xl">FormFlow</span></div><nav class=3D"hidden md:flex items-c=
+enter gap-8"><a href=3D"https://linter-set-72355018.figma.site/#features" c=
+lass=3D"text-gray-600 hover:text-gray-900 transition-colors">Features</a><a=
+ href=3D"https://linter-set-72355018.figma.site/#pricing" class=3D"text-gra=
+y-600 hover:text-gray-900 transition-colors">Pricing</a><a href=3D"https://=
+linter-set-72355018.figma.site/#docs" class=3D"text-gray-600 hover:text-gra=
+y-900 transition-colors">Docs</a><a href=3D"https://linter-set-72355018.fig=
+ma.site/#contact" class=3D"text-gray-600 hover:text-gray-900 transition-col=
+ors">Contact</a></nav><div class=3D"flex items-center gap-3"><button data-s=
+lot=3D"button" class=3D"items-center justify-center gap-2 whitespace-nowrap=
+ rounded-md text-sm font-medium transition-all disabled:pointer-events-none=
+ disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*=
+=3D'size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visib=
+le:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-inv=
+alid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid=
+:border-destructive hover:bg-accent hover:text-accent-foreground dark:hover=
+:bg-accent/50 h-9 px-4 py-2 has-[&gt;svg]:px-3 hidden sm:inline-flex">Log i=
+n</button><button data-slot=3D"button" class=3D"inline-flex items-center ju=
+stify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transit=
+ion-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointe=
+r-events-none [&amp;_svg:not([class*=3D'size-'])]:size-4 shrink-0 [&amp;_sv=
+g]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/=
+50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-inva=
+lid:ring-destructive/40 aria-invalid:border-destructive text-primary-foregr=
+ound hover:bg-primary/90 h-9 px-4 py-2 has-[&gt;svg]:px-3 bg-gradient-to-r =
+from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">Sign u=
+p</button></div></div></header><main><section class=3D"relative overflow-hi=
+dden bg-gradient-to-b from-blue-50/50 to-white py-20 md:py-32"><div class=
+=3D"container mx-auto px-4"><div class=3D"grid lg:grid-cols-2 gap-12 items-=
+center"><div class=3D"text-center lg:text-left space-y-8"><div class=3D"spa=
+ce-y-4"><h1 class=3D"text-4xl md:text-5xl lg:text-6xl">Build Smarter Survey=
+s with <span class=3D"bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-=
+text text-transparent">Effortless Logic</span></h1><p class=3D"text-xl text=
+-gray-600 max-w-2xl mx-auto lg:mx-0">Create adaptive, interactive forms tha=
+t respond to every answer.</p></div><div class=3D"flex flex-col sm:flex-row=
+ gap-4 justify-center lg:justify-start"><button data-slot=3D"button" class=
+=3D"inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm=
+ font-medium transition-all disabled:pointer-events-none disabled:opacity-5=
+0 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*=3D'size-'])]:size-=
+4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focu=
+s-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructi=
+ve/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive=
+ text-primary-foreground hover:bg-primary/90 h-10 rounded-md px-6 has-[&gt;=
+svg]:px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 =
+hover:to-purple-700">Start for Free<svg xmlns=3D"http://www.w3.org/2000/svg=
+" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" fill=3D"none" stroke=3D"=
+currentColor" stroke-width=3D"2" stroke-linecap=3D"round" stroke-linejoin=
+=3D"round" class=3D"lucide lucide-arrow-right ml-2 h-5 w-5" aria-hidden=3D"=
+true"><path d=3D"M5 12h14"></path><path d=3D"m12 5 7 7-7 7"></path></svg></=
+button><button data-slot=3D"button" class=3D"inline-flex items-center justi=
+fy-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabl=
+ed:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none =
+[&amp;_svg:not([class*=3D'size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 ou=
+tline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visib=
+le:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destr=
+uctive/40 aria-invalid:border-destructive border bg-background text-foregro=
+und hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:bord=
+er-input dark:hover:bg-input/50 h-10 rounded-md px-6 has-[&gt;svg]:px-4"><s=
+vg xmlns=3D"http://www.w3.org/2000/svg" width=3D"24" height=3D"24" viewBox=
+=3D"0 0 24 24" fill=3D"none" stroke=3D"currentColor" stroke-width=3D"2" str=
+oke-linecap=3D"round" stroke-linejoin=3D"round" class=3D"lucide lucide-play=
+ mr-2 h-5 w-5" aria-hidden=3D"true"><path d=3D"M5 5a2 2 0 0 1 3.008-1.728l1=
+1.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"></path></svg>View D=
+emo</button></div><div class=3D"flex flex-col sm:flex-row items-center gap-=
+6 text-sm text-gray-600 justify-center lg:justify-start"><div class=3D"flex=
+ items-center gap-2"><span>=E2=9C=93</span><span>No credit card required</s=
+pan></div><div class=3D"flex items-center gap-2"><span>=E2=9C=93</span><spa=
+n>Free forever plan</span></div></div></div><div class=3D"relative"><div cl=
+ass=3D"relative rounded-2xl overflow-hidden shadow-2xl border border-gray-2=
+00"><img src=3D"https://images.unsplash.com/photo-1591381287254-b3349c60bf9=
+b?crop=3Dentropy&amp;cs=3Dtinysrgb&amp;fit=3Dmax&amp;fm=3Djpg&amp;ixid=3DM3=
+w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXNoYm9hcmQlMjBpbnRlcmZhY2UlMjB3b3JrZmxvd3xlb=
+nwxfHx8fDE3NjI2NzU4MDh8MA&amp;ixlib=3Drb-4.1.0&amp;q=3D80&amp;w=3D1080&amp;=
+utm_source=3Dfigma&amp;utm_medium=3Dreferral" alt=3D"FormFlow Dashboard" cl=
+ass=3D"w-full h-auto"><div class=3D"absolute inset-0 bg-gradient-to-t from-=
+blue-600/20 to-transparent pointer-events-none"></div></div><div class=3D"a=
+bsolute -z-10 -top-4 -right-4 w-72 h-72 bg-purple-200 rounded-full mix-blen=
+d-multiply filter blur-xl opacity-70 animate-blob"></div><div class=3D"abso=
+lute -z-10 -bottom-8 -left-4 w-72 h-72 bg-blue-200 rounded-full mix-blend-m=
+ultiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>=
+</div></div></div></section><section id=3D"features" class=3D"py-20 md:py-3=
+2 bg-white"><div class=3D"container mx-auto px-4"><div class=3D"text-center=
+ space-y-4 mb-16"><h2 class=3D"text-3xl md:text-4xl lg:text-5xl">Everything=
+ You Need to Build <span class=3D"bg-gradient-to-r from-blue-600 to-purple-=
+600 bg-clip-text text-transparent">Better Forms</span></h2><p class=3D"text=
+-xl text-gray-600 max-w-2xl mx-auto">Powerful features that make form build=
+ing intuitive and responses more meaningful</p></div><div class=3D"grid md:=
+grid-cols-2 lg:grid-cols-4 gap-8"><div data-slot=3D"card" class=3D"bg-card =
+text-card-foreground flex flex-col gap-6 rounded-xl p-6 hover:shadow-lg tra=
+nsition-shadow duration-300 border border-gray-200"><div class=3D"space-y-4=
+"><div class=3D"w-12 h-12 rounded-lg bg-gradient-to-br from-blue-100 to-pur=
+ple-100 flex items-center justify-center"><svg xmlns=3D"http://www.w3.org/2=
+000/svg" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" fill=3D"none" str=
+oke=3D"currentColor" stroke-width=3D"2" stroke-linecap=3D"round" stroke-lin=
+ejoin=3D"round" class=3D"lucide lucide-git-branch w-6 h-6 text-blue-600" ar=
+ia-hidden=3D"true"><line x1=3D"6" x2=3D"6" y1=3D"3" y2=3D"15"></line><circl=
+e cx=3D"18" cy=3D"6" r=3D"3"></circle><circle cx=3D"6" cy=3D"18" r=3D"3"></=
+circle><path d=3D"M18 9a9 9 0 0 1-9 9"></path></svg></div><div class=3D"spa=
+ce-y-2"><h3 class=3D"text-xl">Branching Logic</h3><p class=3D"text-gray-600=
+">Create intelligent forms that adapt based on user responses with conditio=
+n-based question flows.</p></div></div></div><div data-slot=3D"card" class=
+=3D"bg-card text-card-foreground flex flex-col gap-6 rounded-xl p-6 hover:s=
+hadow-lg transition-shadow duration-300 border border-gray-200"><div class=
+=3D"space-y-4"><div class=3D"w-12 h-12 rounded-lg bg-gradient-to-br from-bl=
+ue-100 to-purple-100 flex items-center justify-center"><svg xmlns=3D"http:/=
+/www.w3.org/2000/svg" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" fill=
+=3D"none" stroke=3D"currentColor" stroke-width=3D"2" stroke-linecap=3D"roun=
+d" stroke-linejoin=3D"round" class=3D"lucide lucide-layers w-6 h-6 text-blu=
+e-600" aria-hidden=3D"true"><path d=3D"M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.0=
+8a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"><=
+/path><path d=3D"M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A=
+1 1 0 0 0 22 12"></path><path d=3D"M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 =
+0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg></div><div class=3D"space-y=
+-2"><h3 class=3D"text-xl">Composite Questions</h3><p class=3D"text-gray-600=
+">Combine multiple input types into grouped questions for complex data coll=
+ection.</p></div></div></div><div data-slot=3D"card" class=3D"bg-card text-=
+card-foreground flex flex-col gap-6 rounded-xl p-6 hover:shadow-lg transiti=
+on-shadow duration-300 border border-gray-200"><div class=3D"space-y-4"><di=
+v class=3D"w-12 h-12 rounded-lg bg-gradient-to-br from-blue-100 to-purple-1=
+00 flex items-center justify-center"><svg xmlns=3D"http://www.w3.org/2000/s=
+vg" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" fill=3D"none" stroke=
+=3D"currentColor" stroke-width=3D"2" stroke-linecap=3D"round" stroke-linejo=
+in=3D"round" class=3D"lucide lucide-grip w-6 h-6 text-blue-600" aria-hidden=
+=3D"true"><circle cx=3D"12" cy=3D"5" r=3D"1"></circle><circle cx=3D"19" cy=
+=3D"5" r=3D"1"></circle><circle cx=3D"5" cy=3D"5" r=3D"1"></circle><circle =
+cx=3D"12" cy=3D"12" r=3D"1"></circle><circle cx=3D"19" cy=3D"12" r=3D"1"></=
+circle><circle cx=3D"5" cy=3D"12" r=3D"1"></circle><circle cx=3D"12" cy=3D"=
+19" r=3D"1"></circle><circle cx=3D"19" cy=3D"19" r=3D"1"></circle><circle c=
+x=3D"5" cy=3D"19" r=3D"1"></circle></svg></div><div class=3D"space-y-2"><h3=
+ class=3D"text-xl">Drag &amp; Drop Builder</h3><p class=3D"text-gray-600">I=
+ntuitive visual editor makes form creation effortless. No coding required.<=
+/p></div></div></div><div data-slot=3D"card" class=3D"bg-card text-card-for=
+eground flex flex-col gap-6 rounded-xl p-6 hover:shadow-lg transition-shado=
+w duration-300 border border-gray-200"><div class=3D"space-y-4"><div class=
+=3D"w-12 h-12 rounded-lg bg-gradient-to-br from-blue-100 to-purple-100 flex=
+ items-center justify-center"><svg xmlns=3D"http://www.w3.org/2000/svg" wid=
+th=3D"24" height=3D"24" viewBox=3D"0 0 24 24" fill=3D"none" stroke=3D"curre=
+ntColor" stroke-width=3D"2" stroke-linecap=3D"round" stroke-linejoin=3D"rou=
+nd" class=3D"lucide lucide-chart-column w-6 h-6 text-blue-600" aria-hidden=
+=3D"true"><path d=3D"M3 3v16a2 2 0 0 0 2 2h16"></path><path d=3D"M18 17V9">=
+</path><path d=3D"M13 17V5"></path><path d=3D"M8 17v-3"></path></svg></div>=
+<div class=3D"space-y-2"><h3 class=3D"text-xl">Real-time Analytics</h3><p c=
+lass=3D"text-gray-600">Preview responses instantly and gain insights with c=
+omprehensive analytics dashboards.</p></div></div></div></div></div></secti=
+on><section id=3D"workflow" class=3D"py-20 md:py-32 bg-gradient-to-b from-w=
+hite to-blue-50/30"><div class=3D"container mx-auto px-4"><div class=3D"tex=
+t-center space-y-4 mb-16"><h2 class=3D"text-3xl md:text-4xl lg:text-5xl">Vi=
+sual <span class=3D"bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-te=
+xt text-transparent">Branching Logic</span></h2><p class=3D"text-xl text-gr=
+ay-600 max-w-2xl mx-auto">Design complex survey flows with intuitive visual=
+ tools. Watch your forms adapt in real-time.</p></div><div class=3D"max-w-5=
+xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-gray-20=
+0"><div class=3D"relative overflow-x-auto"><svg class=3D"w-full" viewBox=3D=
+"0 0 800 300" style=3D"min-height: 300px;"><g class=3D"connections"><g><pat=
+h d=3D"M 180 175 C 200 175, 200 175, 300 175" fill=3D"none" stroke=3D"#cbd5=
+e1" stroke-width=3D"2" class=3D"transition-all duration-300"></path><circle=
+ cx=3D"300" cy=3D"175" r=3D"4" fill=3D"#cbd5e1"></circle></g><g><path d=3D"=
+M 380 175 C 400 175, 400 105, 500 105" fill=3D"none" stroke=3D"#cbd5e1" str=
+oke-width=3D"2" class=3D"transition-all duration-300"></path><circle cx=3D"=
+500" cy=3D"105" r=3D"4" fill=3D"#cbd5e1"></circle><text x=3D"400" y=3D"110"=
+ text-anchor=3D"middle" class=3D"text-xs fill-gray-500" style=3D"font-size:=
+ 11px;">Developer</text></g><g><path d=3D"M 380 175 C 400 175, 400 245, 500=
+ 245" fill=3D"none" stroke=3D"#cbd5e1" stroke-width=3D"2" class=3D"transiti=
+on-all duration-300"></path><circle cx=3D"500" cy=3D"245" r=3D"4" fill=3D"#=
+cbd5e1"></circle><text x=3D"400" y=3D"180" text-anchor=3D"middle" class=3D"=
+text-xs fill-gray-500" style=3D"font-size: 11px;">Designer</text></g><g><pa=
+th d=3D"M 580 105 C 600 105, 600 105, 700 105" fill=3D"none" stroke=3D"#cbd=
+5e1" stroke-width=3D"2" class=3D"transition-all duration-300"></path><circl=
+e cx=3D"700" cy=3D"105" r=3D"4" fill=3D"#cbd5e1"></circle></g><g><path d=3D=
+"M 580 245 C 600 245, 600 245, 700 245" fill=3D"none" stroke=3D"#cbd5e1" st=
+roke-width=3D"2" class=3D"transition-all duration-300"></path><circle cx=3D=
+"700" cy=3D"245" r=3D"4" fill=3D"#cbd5e1"></circle></g></g><g class=3D"node=
+s"><g class=3D"cursor-pointer transition-transform duration-200" style=3D"t=
+ransform: scale(1); transform-origin: 140px 175px;"><rect x=3D"100" y=3D"15=
+0" width=3D"160" height=3D"50" rx=3D"8" fill=3D"#60a5fa" class=3D"transitio=
+n-colors duration-200"></rect><text x=3D"180" y=3D"180" text-anchor=3D"midd=
+le" class=3D"fill-white text-sm" style=3D"font-size: 13px; font-weight: 500=
+;">Start Survey</text></g><g class=3D"cursor-pointer transition-transform d=
+uration-200" style=3D"transform: scale(1); transform-origin: 340px 175px;">=
+<rect x=3D"300" y=3D"150" width=3D"160" height=3D"50" rx=3D"8" fill=3D"#818=
+cf8" class=3D"transition-colors duration-200"></rect><text x=3D"380" y=3D"1=
+80" text-anchor=3D"middle" class=3D"fill-white text-sm" style=3D"font-size:=
+ 13px; font-weight: 500;">What's your role?</text></g><g class=3D"cursor-po=
+inter transition-transform duration-200" style=3D"transform: scale(1); tran=
+sform-origin: 540px 105px;"><rect x=3D"500" y=3D"80" width=3D"160" height=
+=3D"50" rx=3D"8" fill=3D"#818cf8" class=3D"transition-colors duration-200">=
+</rect><text x=3D"580" y=3D"110" text-anchor=3D"middle" class=3D"fill-white=
+ text-sm" style=3D"font-size: 13px; font-weight: 500;">Developer tools?</te=
+xt></g><g class=3D"cursor-pointer transition-transform duration-200" style=
+=3D"transform: scale(1); transform-origin: 540px 245px;"><rect x=3D"500" y=
+=3D"220" width=3D"160" height=3D"50" rx=3D"8" fill=3D"#818cf8" class=3D"tra=
+nsition-colors duration-200"></rect><text x=3D"580" y=3D"250" text-anchor=
+=3D"middle" class=3D"fill-white text-sm" style=3D"font-size: 13px; font-wei=
+ght: 500;">Design experience?</text></g><g class=3D"cursor-pointer transiti=
+on-transform duration-200" style=3D"transform: scale(1); transform-origin: =
+740px 105px;"><rect x=3D"700" y=3D"80" width=3D"160" height=3D"50" rx=3D"8"=
+ fill=3D"#a855f7" class=3D"transition-colors duration-200"></rect><text x=
+=3D"780" y=3D"110" text-anchor=3D"middle" class=3D"fill-white text-sm" styl=
+e=3D"font-size: 13px; font-weight: 500;">Thank you!</text></g><g class=3D"c=
+ursor-pointer transition-transform duration-200" style=3D"transform: scale(=
+1); transform-origin: 740px 245px;"><rect x=3D"700" y=3D"220" width=3D"160"=
+ height=3D"50" rx=3D"8" fill=3D"#a855f7" class=3D"transition-colors duratio=
+n-200"></rect><text x=3D"780" y=3D"250" text-anchor=3D"middle" class=3D"fil=
+l-white text-sm" style=3D"font-size: 13px; font-weight: 500;">Thank you!</t=
+ext></g></g></svg></div><div class=3D"mt-8 flex flex-wrap justify-center ga=
+p-6 text-sm text-gray-600"><div class=3D"flex items-center gap-2"><div clas=
+s=3D"w-4 h-4 rounded bg-blue-400"></div><span>Start</span></div><div class=
+=3D"flex items-center gap-2"><div class=3D"w-4 h-4 rounded bg-indigo-400"><=
+/div><span>Question</span></div><div class=3D"flex items-center gap-2"><div=
+ class=3D"w-4 h-4 rounded bg-purple-400"></div><span>End</span></div></div>=
+</div></div></section><section class=3D"py-20 md:py-32 bg-white"><div class=
+=3D"container mx-auto px-4"><div class=3D"text-center space-y-4 mb-16"><h2 =
+class=3D"text-3xl md:text-4xl lg:text-5xl">Built for <span class=3D"bg-grad=
+ient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Every =
+Use Case</span></h2><p class=3D"text-xl text-gray-600 max-w-2xl mx-auto">Wh=
+ether you're teaching, organizing events, or conducting research, FormFlow =
+adapts to your needs</p></div><div class=3D"grid md:grid-cols-3 gap-8"><div=
+ data-slot=3D"card" class=3D"bg-card text-card-foreground flex flex-col gap=
+-6 rounded-xl p-8 hover:shadow-xl transition-all duration-300 border border=
+-gray-200 group"><div class=3D"space-y-6"><div class=3D"w-16 h-16 rounded-x=
+l bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-c=
+enter group-hover:scale-110 transition-transform duration-300"><svg xmlns=
+=3D"http://www.w3.org/2000/svg" width=3D"24" height=3D"24" viewBox=3D"0 0 2=
+4 24" fill=3D"none" stroke=3D"currentColor" stroke-width=3D"2" stroke-linec=
+ap=3D"round" stroke-linejoin=3D"round" class=3D"lucide lucide-graduation-ca=
+p w-8 h-8 text-blue-600" aria-hidden=3D"true"><path d=3D"M21.42 10.922a1 1 =
+0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.5=
+7 3.908a2 2 0 0 0 1.66 0z"></path><path d=3D"M22 10v6"></path><path d=3D"M6=
+ 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg></div><div class=3D"space-y-3"><=
+div class=3D"inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full t=
+ext-sm">Educators</div><h3 class=3D"text-2xl">Quizzes &amp; Feedback</h3><p=
+ class=3D"text-gray-600">Create adaptive learning assessments that branch b=
+ased on student responses. Perfect for formative assessments and course fee=
+dback.</p></div><ul class=3D"space-y-2"><li class=3D"flex items-center gap-=
+2 text-sm text-gray-600"><svg class=3D"w-5 h-5 text-green-500 flex-shrink-0=
+" fill=3D"none" stroke-linecap=3D"round" stroke-linejoin=3D"round" stroke-w=
+idth=3D"2" viewBox=3D"0 0 24 24" stroke=3D"currentColor"><path d=3D"M5 13l4=
+ 4L19 7"></path></svg>Conditional grading</li><li class=3D"flex items-cente=
+r gap-2 text-sm text-gray-600"><svg class=3D"w-5 h-5 text-green-500 flex-sh=
+rink-0" fill=3D"none" stroke-linecap=3D"round" stroke-linejoin=3D"round" st=
+roke-width=3D"2" viewBox=3D"0 0 24 24" stroke=3D"currentColor"><path d=3D"M=
+5 13l4 4L19 7"></path></svg>Student analytics</li><li class=3D"flex items-c=
+enter gap-2 text-sm text-gray-600"><svg class=3D"w-5 h-5 text-green-500 fle=
+x-shrink-0" fill=3D"none" stroke-linecap=3D"round" stroke-linejoin=3D"round=
+" stroke-width=3D"2" viewBox=3D"0 0 24 24" stroke=3D"currentColor"><path d=
+=3D"M5 13l4 4L19 7"></path></svg>Progress tracking</li></ul></div></div><di=
+v data-slot=3D"card" class=3D"bg-card text-card-foreground flex flex-col ga=
+p-6 rounded-xl p-8 hover:shadow-xl transition-all duration-300 border borde=
+r-gray-200 group"><div class=3D"space-y-6"><div class=3D"w-16 h-16 rounded-=
+xl bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-=
+center group-hover:scale-110 transition-transform duration-300"><svg xmlns=
+=3D"http://www.w3.org/2000/svg" width=3D"24" height=3D"24" viewBox=3D"0 0 2=
+4 24" fill=3D"none" stroke=3D"currentColor" stroke-width=3D"2" stroke-linec=
+ap=3D"round" stroke-linejoin=3D"round" class=3D"lucide lucide-calendar w-8 =
+h-8 text-blue-600" aria-hidden=3D"true"><path d=3D"M8 2v4"></path><path d=
+=3D"M16 2v4"></path><rect width=3D"18" height=3D"18" x=3D"3" y=3D"4" rx=3D"=
+2"></rect><path d=3D"M3 10h18"></path></svg></div><div class=3D"space-y-3">=
+<div class=3D"inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full =
+text-sm">Event Organizers</div><h3 class=3D"text-2xl">Registration Forms</h=
+3><p class=3D"text-gray-600">Build smart registration forms that adapt to a=
+ttendee types, dietary preferences, and workshop selections automatically.<=
+/p></div><ul class=3D"space-y-2"><li class=3D"flex items-center gap-2 text-=
+sm text-gray-600"><svg class=3D"w-5 h-5 text-green-500 flex-shrink-0" fill=
+=3D"none" stroke-linecap=3D"round" stroke-linejoin=3D"round" stroke-width=
+=3D"2" viewBox=3D"0 0 24 24" stroke=3D"currentColor"><path d=3D"M5 13l4 4L1=
+9 7"></path></svg>Dynamic pricing</li><li class=3D"flex items-center gap-2 =
+text-sm text-gray-600"><svg class=3D"w-5 h-5 text-green-500 flex-shrink-0" =
+fill=3D"none" stroke-linecap=3D"round" stroke-linejoin=3D"round" stroke-wid=
+th=3D"2" viewBox=3D"0 0 24 24" stroke=3D"currentColor"><path d=3D"M5 13l4 4=
+L19 7"></path></svg>Ticket types</li><li class=3D"flex items-center gap-2 t=
+ext-sm text-gray-600"><svg class=3D"w-5 h-5 text-green-500 flex-shrink-0" f=
+ill=3D"none" stroke-linecap=3D"round" stroke-linejoin=3D"round" stroke-widt=
+h=3D"2" viewBox=3D"0 0 24 24" stroke=3D"currentColor"><path d=3D"M5 13l4 4L=
+19 7"></path></svg>Session selection</li></ul></div></div><div data-slot=3D=
+"card" class=3D"bg-card text-card-foreground flex flex-col gap-6 rounded-xl=
+ p-8 hover:shadow-xl transition-all duration-300 border border-gray-200 gro=
+up"><div class=3D"space-y-6"><div class=3D"w-16 h-16 rounded-xl bg-gradient=
+-to-br from-blue-100 to-purple-100 flex items-center justify-center group-h=
+over:scale-110 transition-transform duration-300"><svg xmlns=3D"http://www.=
+w3.org/2000/svg" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" fill=3D"n=
+one" stroke=3D"currentColor" stroke-width=3D"2" stroke-linecap=3D"round" st=
+roke-linejoin=3D"round" class=3D"lucide lucide-flask-conical w-8 h-8 text-b=
+lue-600" aria-hidden=3D"true"><path d=3D"M14 2v6a2 2 0 0 0 .245.96l5.51 10.=
+08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2"></pa=
+th><path d=3D"M6.453 15h11.094"></path><path d=3D"M8.5 2h7"></path></svg></=
+div><div class=3D"space-y-3"><div class=3D"inline-block px-3 py-1 bg-blue-5=
+0 text-blue-600 rounded-full text-sm">Researchers</div><h3 class=3D"text-2x=
+l">Survey Logic</h3><p class=3D"text-gray-600">Design complex research surv=
+eys with advanced branching, skip logic, and conditional question flows for=
+ better data quality.</p></div><ul class=3D"space-y-2"><li class=3D"flex it=
+ems-center gap-2 text-sm text-gray-600"><svg class=3D"w-5 h-5 text-green-50=
+0 flex-shrink-0" fill=3D"none" stroke-linecap=3D"round" stroke-linejoin=3D"=
+round" stroke-width=3D"2" viewBox=3D"0 0 24 24" stroke=3D"currentColor"><pa=
+th d=3D"M5 13l4 4L19 7"></path></svg>Skip patterns</li><li class=3D"flex it=
+ems-center gap-2 text-sm text-gray-600"><svg class=3D"w-5 h-5 text-green-50=
+0 flex-shrink-0" fill=3D"none" stroke-linecap=3D"round" stroke-linejoin=3D"=
+round" stroke-width=3D"2" viewBox=3D"0 0 24 24" stroke=3D"currentColor"><pa=
+th d=3D"M5 13l4 4L19 7"></path></svg>Data validation</li><li class=3D"flex =
+items-center gap-2 text-sm text-gray-600"><svg class=3D"w-5 h-5 text-green-=
+500 flex-shrink-0" fill=3D"none" stroke-linecap=3D"round" stroke-linejoin=
+=3D"round" stroke-width=3D"2" viewBox=3D"0 0 24 24" stroke=3D"currentColor"=
+><path d=3D"M5 13l4 4L19 7"></path></svg>Export options</li></ul></div></di=
+v></div></div></section><section id=3D"pricing" class=3D"py-20 md:py-32 bg-=
+gradient-to-b from-white to-blue-50/30"><div class=3D"container mx-auto px-=
+4"><div class=3D"text-center space-y-4 mb-16"><h2 class=3D"text-3xl md:text=
+-4xl lg:text-5xl">Simple, <span class=3D"bg-gradient-to-r from-blue-600 to-=
+purple-600 bg-clip-text text-transparent">Transparent Pricing</span></h2><p=
+ class=3D"text-xl text-gray-600 max-w-2xl mx-auto">Start for free, upgrade =
+when you need more. No credit card required.</p></div><div class=3D"grid md=
+:grid-cols-2 gap-8 max-w-4xl mx-auto"><div data-slot=3D"card" class=3D"bg-c=
+ard text-card-foreground flex flex-col gap-6 rounded-xl p-8 relative border=
+ border-gray-200"><div class=3D"space-y-6"><div class=3D"space-y-2"><h3 cla=
+ss=3D"text-2xl">Free</h3><p class=3D"text-gray-600">Perfect for getting sta=
+rted</p></div><div class=3D"flex items-baseline gap-1"><span class=3D"text-=
+5xl">$0</span></div><button data-slot=3D"button" class=3D"inline-flex items=
+-center justify-center gap-2 whitespace-nowrap text-sm font-medium transiti=
+on-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer=
+-events-none [&amp;_svg:not([class*=3D'size-'])]:size-4 shrink-0 [&amp;_svg=
+]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/5=
+0 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-inval=
+id:ring-destructive/40 aria-invalid:border-destructive border bg-background=
+ text-foreground hover:bg-accent hover:text-accent-foreground dark:bg-input=
+/30 dark:border-input dark:hover:bg-input/50 h-10 rounded-md px-6 has-[&gt;=
+svg]:px-4 w-full">Start for Free</button><div class=3D"space-y-3 pt-6 borde=
+r-t border-gray-200"><div class=3D"flex items-start gap-3"><svg xmlns=3D"ht=
+tp://www.w3.org/2000/svg" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" =
+fill=3D"none" stroke=3D"currentColor" stroke-width=3D"2" stroke-linecap=3D"=
+round" stroke-linejoin=3D"round" class=3D"lucide lucide-check w-5 h-5 text-=
+green-500 flex-shrink-0 mt-0.5" aria-hidden=3D"true"><path d=3D"M20 6 9 17l=
+-5-5"></path></svg><span class=3D"text-gray-600">Up to 100 responses/month<=
+/span></div><div class=3D"flex items-start gap-3"><svg xmlns=3D"http://www.=
+w3.org/2000/svg" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" fill=3D"n=
+one" stroke=3D"currentColor" stroke-width=3D"2" stroke-linecap=3D"round" st=
+roke-linejoin=3D"round" class=3D"lucide lucide-check w-5 h-5 text-green-500=
+ flex-shrink-0 mt-0.5" aria-hidden=3D"true"><path d=3D"M20 6 9 17l-5-5"></p=
+ath></svg><span class=3D"text-gray-600">Basic branching logic</span></div><=
+div class=3D"flex items-start gap-3"><svg xmlns=3D"http://www.w3.org/2000/s=
+vg" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" fill=3D"none" stroke=
+=3D"currentColor" stroke-width=3D"2" stroke-linecap=3D"round" stroke-linejo=
+in=3D"round" class=3D"lucide lucide-check w-5 h-5 text-green-500 flex-shrin=
+k-0 mt-0.5" aria-hidden=3D"true"><path d=3D"M20 6 9 17l-5-5"></path></svg><=
+span class=3D"text-gray-600">5 active forms</span></div><div class=3D"flex =
+items-start gap-3"><svg xmlns=3D"http://www.w3.org/2000/svg" width=3D"24" h=
+eight=3D"24" viewBox=3D"0 0 24 24" fill=3D"none" stroke=3D"currentColor" st=
+roke-width=3D"2" stroke-linecap=3D"round" stroke-linejoin=3D"round" class=
+=3D"lucide lucide-check w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" aria-h=
+idden=3D"true"><path d=3D"M20 6 9 17l-5-5"></path></svg><span class=3D"text=
+-gray-600">Email support</span></div><div class=3D"flex items-start gap-3">=
+<svg xmlns=3D"http://www.w3.org/2000/svg" width=3D"24" height=3D"24" viewBo=
+x=3D"0 0 24 24" fill=3D"none" stroke=3D"currentColor" stroke-width=3D"2" st=
+roke-linecap=3D"round" stroke-linejoin=3D"round" class=3D"lucide lucide-che=
+ck w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" aria-hidden=3D"true"><path =
+d=3D"M20 6 9 17l-5-5"></path></svg><span class=3D"text-gray-600">Basic anal=
+ytics</span></div></div></div></div><div data-slot=3D"card" class=3D"bg-car=
+d text-card-foreground flex flex-col gap-6 rounded-xl p-8 relative border-2=
+ border-blue-600 shadow-xl scale-105"><div class=3D"absolute -top-4 left-1/=
+2 -translate-x-1/2"><span class=3D"bg-gradient-to-r from-blue-600 to-purple=
+-600 text-white px-4 py-1 rounded-full text-sm">Most Popular</span></div><d=
+iv class=3D"space-y-6"><div class=3D"space-y-2"><h3 class=3D"text-2xl">Pro<=
+/h3><p class=3D"text-gray-600">For professionals and teams</p></div><div cl=
+ass=3D"flex items-baseline gap-1"><span class=3D"text-5xl">$29</span><span =
+class=3D"text-gray-600">/month</span></div><button data-slot=3D"button" cla=
+ss=3D"inline-flex items-center justify-center gap-2 whitespace-nowrap text-=
+sm font-medium transition-all disabled:pointer-events-none disabled:opacity=
+-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*=3D'size-'])]:siz=
+e-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring fo=
+cus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destruc=
+tive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructi=
+ve text-primary-foreground hover:bg-primary/90 h-10 rounded-md px-6 has-[&g=
+t;svg]:px-4 w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-=
+blue-700 hover:to-purple-700">Start Free Trial</button><div class=3D"space-=
+y-3 pt-6 border-t border-gray-200"><div class=3D"flex items-start gap-3"><s=
+vg xmlns=3D"http://www.w3.org/2000/svg" width=3D"24" height=3D"24" viewBox=
+=3D"0 0 24 24" fill=3D"none" stroke=3D"currentColor" stroke-width=3D"2" str=
+oke-linecap=3D"round" stroke-linejoin=3D"round" class=3D"lucide lucide-chec=
+k w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" aria-hidden=3D"true"><path d=
+=3D"M20 6 9 17l-5-5"></path></svg><span class=3D"text-gray-600">Unlimited r=
+esponses</span></div><div class=3D"flex items-start gap-3"><svg xmlns=3D"ht=
+tp://www.w3.org/2000/svg" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" =
+fill=3D"none" stroke=3D"currentColor" stroke-width=3D"2" stroke-linecap=3D"=
+round" stroke-linejoin=3D"round" class=3D"lucide lucide-check w-5 h-5 text-=
+green-500 flex-shrink-0 mt-0.5" aria-hidden=3D"true"><path d=3D"M20 6 9 17l=
+-5-5"></path></svg><span class=3D"text-gray-600">Advanced branching logic</=
+span></div><div class=3D"flex items-start gap-3"><svg xmlns=3D"http://www.w=
+3.org/2000/svg" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" fill=3D"no=
+ne" stroke=3D"currentColor" stroke-width=3D"2" stroke-linecap=3D"round" str=
+oke-linejoin=3D"round" class=3D"lucide lucide-check w-5 h-5 text-green-500 =
+flex-shrink-0 mt-0.5" aria-hidden=3D"true"><path d=3D"M20 6 9 17l-5-5"></pa=
+th></svg><span class=3D"text-gray-600">Unlimited forms</span></div><div cla=
+ss=3D"flex items-start gap-3"><svg xmlns=3D"http://www.w3.org/2000/svg" wid=
+th=3D"24" height=3D"24" viewBox=3D"0 0 24 24" fill=3D"none" stroke=3D"curre=
+ntColor" stroke-width=3D"2" stroke-linecap=3D"round" stroke-linejoin=3D"rou=
+nd" class=3D"lucide lucide-check w-5 h-5 text-green-500 flex-shrink-0 mt-0.=
+5" aria-hidden=3D"true"><path d=3D"M20 6 9 17l-5-5"></path></svg><span clas=
+s=3D"text-gray-600">Priority support</span></div><div class=3D"flex items-s=
+tart gap-3"><svg xmlns=3D"http://www.w3.org/2000/svg" width=3D"24" height=
+=3D"24" viewBox=3D"0 0 24 24" fill=3D"none" stroke=3D"currentColor" stroke-=
+width=3D"2" stroke-linecap=3D"round" stroke-linejoin=3D"round" class=3D"luc=
+ide lucide-check w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" aria-hidden=
+=3D"true"><path d=3D"M20 6 9 17l-5-5"></path></svg><span class=3D"text-gray=
+-600">Advanced analytics &amp; exports</span></div><div class=3D"flex items=
+-start gap-3"><svg xmlns=3D"http://www.w3.org/2000/svg" width=3D"24" height=
+=3D"24" viewBox=3D"0 0 24 24" fill=3D"none" stroke=3D"currentColor" stroke-=
+width=3D"2" stroke-linecap=3D"round" stroke-linejoin=3D"round" class=3D"luc=
+ide lucide-check w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" aria-hidden=
+=3D"true"><path d=3D"M20 6 9 17l-5-5"></path></svg><span class=3D"text-gray=
+-600">Custom branding</span></div><div class=3D"flex items-start gap-3"><sv=
+g xmlns=3D"http://www.w3.org/2000/svg" width=3D"24" height=3D"24" viewBox=
+=3D"0 0 24 24" fill=3D"none" stroke=3D"currentColor" stroke-width=3D"2" str=
+oke-linecap=3D"round" stroke-linejoin=3D"round" class=3D"lucide lucide-chec=
+k w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" aria-hidden=3D"true"><path d=
+=3D"M20 6 9 17l-5-5"></path></svg><span class=3D"text-gray-600">Team collab=
+oration</span></div><div class=3D"flex items-start gap-3"><svg xmlns=3D"htt=
+p://www.w3.org/2000/svg" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" f=
+ill=3D"none" stroke=3D"currentColor" stroke-width=3D"2" stroke-linecap=3D"r=
+ound" stroke-linejoin=3D"round" class=3D"lucide lucide-check w-5 h-5 text-g=
+reen-500 flex-shrink-0 mt-0.5" aria-hidden=3D"true"><path d=3D"M20 6 9 17l-=
+5-5"></path></svg><span class=3D"text-gray-600">API access</span></div></di=
+v></div></div></div><div class=3D"mt-12 text-center text-gray-600"><p>All p=
+lans include a 14-day free trial. Cancel anytime.</p></div></div></section>=
+<section class=3D"py-20 md:py-32 bg-gradient-to-br from-blue-600 to-purple-=
+600 relative overflow-hidden"><div class=3D"absolute inset-0 opacity-10"><d=
+iv class=3D"absolute top-0 left-1/4 w-96 h-96 bg-white rounded-full filter =
+blur-3xl"></div><div class=3D"absolute bottom-0 right-1/4 w-96 h-96 bg-whit=
+e rounded-full filter blur-3xl"></div></div><div class=3D"container mx-auto=
+ px-4 relative"><div class=3D"max-w-3xl mx-auto text-center space-y-8"><h2 =
+class=3D"text-3xl md:text-4xl lg:text-5xl text-white">Start Building Your F=
+irst Form Today!</h2><p class=3D"text-xl text-blue-100">Join thousands of p=
+rofessionals creating smarter, more engaging surveys with FormFlow.</p><div=
+ class=3D"flex flex-col sm:flex-row gap-4 justify-center pt-4"><button data=
+-slot=3D"button" class=3D"inline-flex items-center justify-center gap-2 whi=
+tespace-nowrap text-sm font-medium transition-all disabled:pointer-events-n=
+one disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([cla=
+ss*=3D'size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-vi=
+sible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-=
+invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-inva=
+lid:border-destructive h-10 rounded-md px-6 has-[&gt;svg]:px-4 bg-white tex=
+t-blue-600 hover:bg-gray-100">Sign up for Free<svg xmlns=3D"http://www.w3.o=
+rg/2000/svg" width=3D"24" height=3D"24" viewBox=3D"0 0 24 24" fill=3D"none"=
+ stroke=3D"currentColor" stroke-width=3D"2" stroke-linecap=3D"round" stroke=
+-linejoin=3D"round" class=3D"lucide lucide-arrow-right ml-2 h-5 w-5" aria-h=
+idden=3D"true"><path d=3D"M5 12h14"></path><path d=3D"m12 5 7 7-7 7"></path=
+></svg></button><button data-slot=3D"button" class=3D"inline-flex items-cen=
+ter justify-center gap-2 whitespace-nowrap text-sm font-medium transition-a=
+ll disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-eve=
+nts-none [&amp;_svg:not([class*=3D'size-'])]:size-4 shrink-0 [&amp;_svg]:sh=
+rink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 fo=
+cus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:r=
+ing-destructive/40 aria-invalid:border-destructive border bg-background hov=
+er:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-=
+input/50 h-10 rounded-md px-6 has-[&gt;svg]:px-4 border-white text-white ho=
+ver:bg-white/10">Log in</button></div><div class=3D"flex flex-col sm:flex-r=
+ow items-center gap-6 text-sm text-blue-100 justify-center pt-4"><div class=
+=3D"flex items-center gap-2"><span>=E2=9C=93</span><span>Free forever plan =
+available</span></div><div class=3D"flex items-center gap-2"><span>=E2=9C=
+=93</span><span>No credit card needed</span></div><div class=3D"flex items-=
+center gap-2"><span>=E2=9C=93</span><span>Cancel anytime</span></div></div>=
+</div></div></section></main><footer class=3D"bg-gray-900 text-gray-400 py-=
+12"><div class=3D"container mx-auto px-4"><div class=3D"grid md:grid-cols-4=
+ gap-8 mb-8"><div class=3D"space-y-4"><div class=3D"flex items-center gap-2=
+"><div class=3D"flex h-8 w-8 items-center justify-center rounded-lg bg-grad=
+ient-to-br from-blue-600 to-purple-600"><span class=3D"text-white">F</span>=
+</div><span class=3D"text-white text-xl">FormFlow</span></div><p class=3D"t=
+ext-sm">Create smarter surveys with effortless branching logic and adaptive=
+ forms.</p></div><div><h4 class=3D"text-white mb-4">Product</h4><ul class=
+=3D"space-y-2 text-sm"><li><a href=3D"https://linter-set-72355018.figma.sit=
+e/#features" class=3D"hover:text-white transition-colors">Features</a></li>=
+<li><a href=3D"https://linter-set-72355018.figma.site/#pricing" class=3D"ho=
+ver:text-white transition-colors">Pricing</a></li><li><a href=3D"https://li=
+nter-set-72355018.figma.site/#docs" class=3D"hover:text-white transition-co=
+lors">Documentation</a></li><li><a href=3D"https://linter-set-72355018.figm=
+a.site/#api" class=3D"hover:text-white transition-colors">API</a></li></ul>=
+</div><div><h4 class=3D"text-white mb-4">Company</h4><ul class=3D"space-y-2=
+ text-sm"><li><a href=3D"https://linter-set-72355018.figma.site/#about" cla=
+ss=3D"hover:text-white transition-colors">About</a></li><li><a href=3D"http=
+s://linter-set-72355018.figma.site/#contact" class=3D"hover:text-white tran=
+sition-colors">Contact</a></li><li><a href=3D"https://linter-set-72355018.f=
+igma.site/#careers" class=3D"hover:text-white transition-colors">Careers</a=
+></li><li><a href=3D"https://linter-set-72355018.figma.site/#blog" class=3D=
+"hover:text-white transition-colors">Blog</a></li></ul></div><div><h4 class=
+=3D"text-white mb-4">Legal</h4><ul class=3D"space-y-2 text-sm"><li><a href=
+=3D"https://linter-set-72355018.figma.site/#terms" class=3D"hover:text-whit=
+e transition-colors">Terms of Service</a></li><li><a href=3D"https://linter=
+-set-72355018.figma.site/#privacy" class=3D"hover:text-white transition-col=
+ors">Privacy Policy</a></li><li><a href=3D"https://linter-set-72355018.figm=
+a.site/#cookies" class=3D"hover:text-white transition-colors">Cookie Policy=
+</a></li><li><a href=3D"https://linter-set-72355018.figma.site/#security" c=
+lass=3D"hover:text-white transition-colors">Security</a></li></ul></div></d=
+iv><div class=3D"pt-8 border-t border-gray-800 flex flex-col md:flex-row ju=
+stify-between items-center gap-4 text-sm"><p>=C2=A9 2025 FormFlow. All righ=
+ts reserved.</p><div class=3D"flex gap-6"><a href=3D"https://linter-set-723=
+55018.figma.site/#twitter" class=3D"hover:text-white transition-colors">Twi=
+tter</a><a href=3D"https://linter-set-72355018.figma.site/#linkedin" class=
+=3D"hover:text-white transition-colors">LinkedIn</a><a href=3D"https://lint=
+er-set-72355018.figma.site/#github" class=3D"hover:text-white transition-co=
+lors">GitHub</a></div></div></div></footer></div></div></div></div></div>
+   =20
+
+    =20
+ =20
+
+</body></html>
+------MultipartBoundary--LU558Jcbm5I4BnugMsddYrayqFGk25XK0hRJmfDlbH----
+Content-Type: image/jpeg
+Content-Transfer-Encoding: base64
+Content-Location: https://images.unsplash.com/photo-1591381287254-b3349c60bf9b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXNoYm9hcmQlMjBpbnRlcmZhY2UlMjB3b3JrZmxvd3xlbnwxfHx8fDE3NjI2NzU4MDh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral
+
+/9j/4AAQSkZJRgABAQEASABIAAD/4gIcSUNDX1BST0ZJTEUAAQEAAAIMbGNtcwIQAABtbnRyUkdC
+IFhZWiAH3AABABkAAwApADlhY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAA
+AADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAApk
+ZXNjAAAA/AAAAF5jcHJ0AAABXAAAAAt3dHB0AAABaAAAABRia3B0AAABfAAAABRyWFlaAAABkAAA
+ABRnWFlaAAABpAAAABRiWFlaAAABuAAAABRyVFJDAAABzAAAAEBnVFJDAAABzAAAAEBiVFJDAAAB
+zAAAAEBkZXNjAAAAAAAAAANjMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB0ZXh0AAAAAElYAABY
+WVogAAAAAAAA9tYAAQAAAADTLVhZWiAAAAAAAAADFgAAAzMAAAKkWFlaIAAAAAAAAG+iAAA49QAA
+A5BYWVogAAAAAAAAYpkAALeFAAAY2lhZWiAAAAAAAAAkoAAAD4QAALbPY3VydgAAAAAAAAAaAAAA
+ywHJA2MFkghrC/YQPxVRGzQh8SmQMhg7kkYFUXdd7WtwegWJsZp8rGm/fdPD6TD////bAIQAAgMD
+AwQDBAUFBAYGBgYGCAgHBwgIDQkKCQoJDRMMDgwMDgwTERQRDxEUER4YFRUYHiMdHB0jKiUlKjUy
+NUVFXAECAwMDBAMEBQUEBgYGBgYICAcHCAgNCQoJCgkNEwwODAwODBMRFBEPERQRHhgVFRgeIx0c
+HSMqJSUqNTI1RUVc/8IAEQgC0AQ4AwEiAAIRAQMRAf/EADcAAAICAwEBAQAAAAAAAAAAAAACAQME
+BQYHCQgBAQEBAQEBAQEBAAAAAAAAAAABAgMEBQYHCP/aAAwDAQACEAMQAAAA+W4h+b/oD1zCTKxZ
+JC6yyxBMQlkxC3ABqAFysSrIEMCCb5tWsXIEsxZEtpqdtpuvjxt3p8zpzxNVsdf38ATGuCyNUSF2
+EzCljxQZTGG23yF0LbLaRzuRsaivLKZqnoOblcu/VBttWqGTQoTEOiK1tzjT3HMevlrk22v8206j
+ntvnlgti4utbC/Tzd7z0HyhvH6eiwNfPp52qhNDUi3tTYrCgwTnSLdVZl6zMxevm6PUZlG2LkdJ2
+9z4vkfp70PePxF3f7i7befmFtvqmbx8ftV675V5OuPOY2bhzmtWtqy8TOiuxcFAZAAA1oA1oAADO
+QDOQAACCTT0wVfh/uHWCpiFseK4phYRkJ1mCYmQVblpQqYFchSNYiqV1kAZJJWImRNNudJ28S1W4
+np8aVh0842VnxqG6B15+3KyI12zwMhS/ArN3qaoNpVgQtsVxI5FyVRe9uJL2FlXccbnulb4+uN+w
+1MJsKsSUaUDbado7SJg5aFkuVJEhXSgBmWSVtai+aiez9F1fB7f156dp8+n+q3qNfGXrftTt6+Qv
+of01q68/wb6D+r19Hk/O3fbbxH9N4fedlZn/AA/Xi2cj1ueirl8FL02l849Ck+Svmffec/L9GWuP
+GLkxjQJh30ZrLK4sAMgAAb2AWgAASAAAZgETMiGnpcKnxv29qpJMQtgBrAAgEMysQADICIQLvmLC
+XMwDAAMys2BCpot3ou/z7B83U55Mij0fNzMrXZUrrdjSQFurSWAhllYjW1Gy6DlMnz/XXCrO/wAe
+5qCnWCImC2ZQkeFlWiBQiQAAa5MY7z0Tc/P8/sP0Xpj58H1J9F3j469t9l9tufJb0T6VTvH4a9E/
+UUdMeRej7htYpsts2rssyG35fufDfr8PIuA9S86/vv5rzf8AXf5m/T/j332x/Pn6P/z3+k/L1vd+
+w/qvF5p6R5t63+X+j4z6nmZtzHnnpNeb450Xe8Bl8feC7Xjfk+tWDGgZWceuynNBTMAEAFAN6ALQ
+AAAAACQR4ziSTb0JB/i/tEHS5AKAGQIIUEAGRRbzANCpqrkAYAACQeLZutLUqnn9/wA76PmJn6rY
+d/Ni1PXrjfuNLdjrudVWzlLJG5MDKozCFxVRkrZjQy5oEtQW5aa87Lud48UP1P3lfh2fo/0XR8x+
+r+n2ur8I9/8AoLjGMT0T9AZ3eebd/sLekrstt1it7Lbmm2yxK7XtbrLWma3d7Em2Uqtay5ryksrb
++Ge0879fl+WfDPoXvv6x8n5U/QT11/y3XAtyqP519PEfEu7LnoluyFkgmVTyn1jx5n5Bcp0XO/F9
+kyhK0BJTVZTigGYAWgFXGZZqakmHQAAAAM5AM5ACBTT0ZYPkfsACgiBoIRkIZARhlguQhdpWESYB
+gAAM6aq6jcdX8n9Fo7eno+d9rguY9Z13t+b43zvovn36D8SmRkv14aSuyvv4LsvG2NY2diZNV5mL
+myQm86ivLV/Rfd6n42f6AdzXzS6D6e73c+a/efvmzV/H/c/oydPLux6Wd3mvCv0h58zwPKfpLZR+
+O+j/AFNOXgfZeu7PePGNx6g+olr27JkFqLdNtDM+sRaWJDs8K1hUOWJDDolkszDzI1qWNvCykTLI
+uJnYepqchLu8hme6SbXSgvLaPD/d/wA9Zz8jNFtNT8T2s1YMKFNNtWKASgFoAt74rXCgNgAAABzw
+ERY0LFAGnogHx/2AFaWJAyAIAjEqGoEJpNcqwAIAAAW9zzXpfzvtZOs2er+b9obm19nh6DouF6rz
++vtPy/8ApHwjp4+Vp16fqPwYD9PNvPWtR+3ej849x7ntumPLex6qm6NpRsbgv0G6Mm227at7n3Kb
+r7Gsd73Sh72kxmyZrHuuY8g0nv73PMdJc2pQ97lVtj2Jc1sJNrawtpZorzYLbFhA7MwzyzDTYLL2
+Ko7olpYqS7Iku5XgbPWaYVhb0q2zZtWXlVM5VX5l/T35Pxj5Qa/Mw/ie4AACseuyvOgBoADY6/ub
+ysv9g5v7H57xXUdTy3x/0ABOwBmAGcQlkaKE1BAeiBHyP181uiADACooGoBGpFcozMAyAAADK51P
+fcL2vxf1CaLZ86tFNGR7/lx2XGdB5/T1Xmfp/n3Dr4/XbV+s/njMlke4fpH8/wD6b6zlu0t7Hpzn
+yT9F26vnPomZfXGdHtbbFyS3WltaxlLWsRJtdmpncRrHqq217arbLdKLLbGcdr2K3sdmu12sR2fR
+HZ7IsZ1V3gV8a1zyJtFV2crsZ8kd3tqW9Ll5ZitnZivWbfU6Uu9vdU9w0k2OtFlpqVfjj9m/iDnn
+5c491PxveAUAGPXZXzoBdgA3Wclv2epx6MbPLV6LOwddQCUAxgAEA2gCgYO+A+P+rAAWIYAioiF3
+HRRkAQAQAUABlDqO2837j5n3snluq0nPvxefK/T+Ds9hgZvl+j6t5PvPI8cuZK2/SfiWupvzr9Kf
+tL8gfs3vjN2FGZcF5lVXe9mtQ9rbiXzbRZLpFk2JW1jaRNj5V2vYQ7W0rWTSPbOudcX8IdzPlnqz
+Uuz9JXYzpRfXkotk2JHL9Y68P0e1dkmyUrtLBLC0RplIqyKyyWZFZpaXU7nT9clw/XINOiNaZ2ha
+alf4K/fXzx5X5uVunxfaAURKxjqyzYAoDoXdT2lx5LZ7Iaz49gex+WS6sDjRWrp5rmpiCgCpIDvo
+g+P+omCAhTceFLVUGABAAANYAM7AAALek5a/n39Ep5bM8f1cfArp9vzOwzdZrfH79bwu65/7X5KJ
+g9PgsyMfIxr9d/sL8p/rX0Zy8lMtzMkvqLku3Ydl3L7luFtweNs9Cs5rq6R2jSx2fN5bmvUr0ws2
+xrYW2GWl2ua3d6rl2Esl95hpsTGya8lIslxLBxLGYhmZFl5IsGWJZxK71RxxYlmRdPvNH1zew/fM
+S7tIzTNozlVfNj6UfMDjPwPCnxvawFCOhQrLnYAoyh1He+ZemXluNFnv0nBch2XFc6sSnOwBsAAA
+AAAHeCHyf1DpEaRBDAAgAAAAABYAWAGdAAADvSSkwaxk48RNajSbjTe/4QB14PlYudnX7f8A1T+b
+f036+WTmV5amQWREzbYhaallyX0MzbzNxYkFjXY1k4TZFyRYW6kLausvLsK0WBMsQ5bvCs8mPlVZ
+KQ2DqbemfntHZ37ea5GZ6K2v2bKuPNAzSxMzuRDtJJYCy8oui6HSdY7y/eSWS2s2TLSWzM4vyr+r
+HyT4X8WMr/J9wBoV2VlKsuNgEAA+RiDOQ2KSW1KDVyUQygBQAAAAHcAfL/TJEwyAWAFgBnQBvABK
+ASgFgBnQAAAAAAEStmk1G11Xv+EAdOLbLW7fN+gn6M8K9/8AZi/Jm25i0eWHl85gsNrbYssaZfeH
+sLLa7JcsYeaZyxCwewh11LpaNWJ0vKTPpL8PoI9afybd7noGDpaPV6Mm9Mjnzzd5yzc+fUPouJuf
+VW88jnPR58uzK9EwuMJeowMPds9C0sV2LapMykFki6Pe6PrMqWnpIsaViZaElgwvj99gPjVx1+Vn
+R/le6QNiuyvKiJjOwDMAM5AipggUZdgAAAAAAAAAO3hZ+X+kgCwA3gAAAAAAzQCwAUAgAoAxoAUA
+BHTWNDrNhr/f8MA3ybfaHp836R+5eS+ye3lZYzZwjy0Q5ZrUS07xZZF+s4lGu0+p3edrtpNRM2LL
+y6TaWqOOCXIlmqz8jroax+eVsLJUabtSJadZovpymB5kHhlJh8xgeoHm5hmlYGYpuTIEcZqJaYXQ
+dHoOvPLYfpCSahyZYhg1fxa+0XxK4a/Pj1t8z3yJOj1W1YUwGNAGcgApK6OCwKGgBQAAAAAABIdm
+B8z9GAWAGsgAAAAAAASgFgBKASgGdAAABXZVcc9g5mH9H4QBrm3Y8f3WX0/9U8+9G9nIeZmCZYh5
+bZXl9LHl9c+U1Xo1lU5Yypcl800y7LWjtTZNrKLfh7qZ+Jid+tGp6W/jw5CO4zszxzM9ZfTgu+aU
+oyaMlRpZVeXRXHzhXmaWZYJZpVmWirJpyba2lohpmE0W/wBD355csdYDNZDO+dY5kMcp8QPt78M+
+HTx90n53ukgGqtpikDmAMgAImCFZdgCgAAAAAAAAAO0A+f8AoAAAAAAAAAAAAAAAzoAsAAAlAJSm
+7H3y57Eycb3fEANYf0fzj1XD6jdzyPY+7hLzKTM2WJbFmsq02aPatyFkOrPLpTkJftPGdtyeNcXq
+fSIPL/Wquk1N5pa9X9P2dPn6e3ycoxcvA8/CvR9xkaxzHP8Aq9y+Q5/qM2Y+RVkyjjJDyyDTOZDN
+MRLtNVOzJXZL2Y+VVkUg851BYFGk32l9GMlnfphXllR5aVBoOF+Fv3H+Ffn6edgfO9wSaj021YUg
+YoBlEo9EShAGwAAAAAAAAAAAdoB839EAXIAoBYAAAAEoBYAY2AXIBqAAAAAGNk4l589j3U+34oBr
+L+x+O+45fT3qea6X3cLXWxmXixhmizdR5tsm0tCwemccquROuq9X0XKq64+xxhd7XupfIe47LRfb
+9e7yNRT8rjvzgdfx4+pHm66npCeT9XXeK6y1ZKXMw8ssPLswzTESzZK7EKzCQ4xTk05OiMGdMPOt
+Yup2+q7cMqYbpzZ4G2dWagaF8n+Fn3G+F3l3yToeD2tEFSjJm1EHJIACg1bpQBoAAAAAAAAAAAHa
+AfO/QAFAEoBYAQAKAWAEAGdgFyAagAAAABhZmDeWgptq93xQCyz3/wAB/SEn0m6DR733cLrUtmXt
+rvB4sqLUtq10u1ksh9mctKYq2XXc+aen2cc+cekvbLDy0yjFxot9Rp/Rrop85Xjz9Jfn+iliwe2E
+uTRnZiHlmZZnRZZ8EaZgaWIGZVmZKsijJqJlrZmZ1cHAzcPrwuYnpzHiVYlptYuVfAvhx9t/iD5O
+miA8PuAKEevCsDmAiIlY2dQIAoAAAAAAAAAAAO0A+d+hALAAAAAAAAAAACUAsAUYiQAAAXAz9drh
+oUZfd8cCUt/UX5e/WjP0G3mo3Pu8111dyNbF2YWDWralvRbal20PFo9kJq4+1w8+iWfhqy2HZhpc
+ruruIeHQJZSZdFsH0Su7U6m7bnIt6bD1WzSjF2E4zpcvM2uWWNIS0tQwywO2mPkVXsw0zqrLOmsx
+sqrtxaZbUWxXWWGbVbEj8vfEv7PfFzyddcB4vYAUV2V5VgYoBKRKMhBoAAAAAAAAAAAAAdoB8/8A
+QAAAAAAAAABnQBrIAAAKyoNEgAoQqTrNjrN+fRxMe35AAZH7G/HX7Zuf3NttXtPb5crIpypJuW2Q
+mW3UyacjR7KcPtrb3eTYuMezYnN9X7vTkZGPk+Dz2WLbi2NFijxLSW13MrgrtumvN7/RZzx8v1/s
+TacVd2T76+dZnc19taLN3eN5uWVbzTrtMTBnGMtLGSvE3F681qPRcq3zTu9lkaisTNU5FWQKNNit
+MmrVztwGk1IlnbhyZqKr60/GHxs+vfyB8XbGA8nsAKKrasEA5ghBlDYAAAAAAAAAAAAAADtAX533
+2Im0AAAAAAAAAAABWRIeFSwVmgIBSGTV7TUb82ngPb8omJMr91fhf996z+xtrq9r7fLk5WPlYPYl
+jM2LZu1V053p3RsnuzinIl85x8Pc4fr75uXrNv5sS2NoOM6yzgsZn0h9D0DVWNZb13kszcsw0tIr
+Fui2M0laZFVl1kPIPMi2DKNMoS0tDTKkMVDE3Nd9V2rEySkjJp7Is78IZjVHRlaVaUrsRfn98lvq
+d8r/AA9aho8vrgCim6jCAOQVopANgkIAAAAAAAAAAAAA7RHPn/fR4kAFAAAAAAAAAAAArsRmLEch
+YEAENNuNJ08+rA9nyiYmXP8AoT8+vov15/qXa6nP9vn2WXpdhc5zrZg9EnfcbPHyZHtW3OC5LUbF
+y6em69nTidOp576BofPy02VtSY67ZY3j/wBP2+r7nk9xzmXiZd/l48hkdBbw5c1oPTsjU8k7zf5Q
+tdyZ3a0ssNLMsw7QMxEyEkiDEqszOsLYtqrLGZEtNmmtS/08VGm7VmekZpha8ima+ZHzE+kfzb8H
+dQOHqAAovowSGXBkJqCYqZUAAAAAAAAAAAAADs4iPn/esFZQBQAAAAAAAAAAFBQYJgQAAAjRbzQd
+vLgAer5gytLtvo187Ppp35d/6Lpei9vnst0Ox6Y6Ovie27x9mr+Ta305GY962aTYltkjs3Vna/ZW
+6nie04uY33c+e+i5ravavd8P0NG2+r2pbOp+bywDB2XLnqczMz2Oawuxi3T9cPFrRZNw46y6uEgT
+MykEszEyNBMsLctostJDSGluqu9PEkdsdWupVpuUS7Fj5OfPH96fgrweoA4emSYZii6nFrhllJgJ
+gAAAAAAAAAAAAAAADtK7I+f99GGQAaCESwiVAAAAAAArsrZAGQAAAAF5/f8APd/Jhgen5wytHTfU
+f5g/THry9wz/ADL0v38MpE2PTPJdpoNz38O6au7xeyMinIiy5LNmdbYtVhcfZa3Z9du6vwO0WDOM
+YNWy1/e2Zs6Tm3Uclfz59FjabEs63e8/0c0td9S3WRYsONQSxIMEjITDLBMskOrNjjETISEmkycX
+L9HMCdhpmGWyZqrD2Gts+Nn4j/Yf48+d6xls5dqwGopup5kWxIgCgAAAAAAAAAAAAAAAA7QD5/6A
+AIFhmSWIkGgAAAAAAEdUUBgAAAACrnug57v4sYD0+AZWjuvqN8x/rH355nd42f381lyWMaLZ4Ox9
+PmyszW7KdpvpyOe7rK7qm1LcrIkqvMqjtrLYbhWuS9YsGRar8k1W11vP7do3nG/5Tq7Faal4ZCu1
+NTIkmadofQkkmSWZJZYkYAYFtrZvmHSCZIJDQ5eLmerhEj3cTN2CjFqajdaJn4iflP8ATH5n+b7i
+YMdwAim6jmVZiACgAAAAAAAAAAAAAAAA7Jkn5/3iUkYkaAgkAAAAAAIkFWxGYAZAAAAAo57oOe7/
+AD6APT4x0fL1b6n/ADB+rPp47bo8HO6+fIdHxnUZ+Hk+ry37LByuna6+jJ56udLcV7a7FeZguxMy
+O2sl+U0Wb6Xd5xOZ6ZPnHoebbfTk4SxMstDIOrDyOqram5a8Nmy8NsNDkMSkzIyTLZkTM6CXVFrx
+KyAkkhoM3Ey/VxeYbPVwGAsKXmeo5Bn4Vfnv3Dw/5n0QDPUAIouo5xAFAAAAAAAAAAAAAAAAAAOw
+GX5/3QBLBHbAFAAAAAAgkFJQGABAAAAAMXn99oPT86oDv5CyuyPd/qX8xvot6uHpmbyvW9fPZar8
+mueJ9Pl2UX4PXrtMnGyufSyxHiy2u3JpkLrEduyxHWy2q/J2Jh76LpGdLEkmSXWxZYZYVzZ2GJeG
+oYaCRpzmZmIdWoknQruqL5hiGJgSyutNlY+V6OLSrtDLZQExHDd15zc/BvyD1Dy/5n0gDPQAFptq
+5ysBQAAAAAAAAAAAAAAAAADslZfn/dAEAAAJgFlkkcIbkhUIBgAAAAAAABMHQb3Rer5yAdvKWV2x
++nfoj+A/o56/Pnb/AAs3fG567IwQnp5txgZ+J267DJxMnDIsqvxqy2m0siSr2h5prVsmrLa7MLJi
+UusS2WXWxAmR3R1ZoaksS0aYbSXV9Bich4bPNgkmQJZWqa7Eq8JIYFmq7HTWZFGR6uA0O0OrrA0E
+eV+q+N3n8HPPe24n5f1QCbAESm6jmUBQAAAAAAAAAAAAAAAAADsYsr+f9wAAAAAAAAAAAAAAAAAA
+AAAY12i3Wk9fzoA6+YupyM39ffur8V/t/wB3m6ndavaa4X2V24YUwdOG3Qs6dqtjqttrnbdXby6v
+bXaMMF1tbt2203S3WVWYlkMLe6aXXPf4+rwt56I4fI567Y4kl9Ft0u7aqyKL1l1faLFmnmGyl1nO
+ZYlkaAchgSyLbRomhlfSMXMxNzBvqv7+YaJbHSygCDwn3b863Pwo5Toud+V9QAaAESi6nmUBQAAA
+AAAAAAAAAAAAAADs0mPn/cAAAAAAAAAAAAAAAAAAQAUCGNVpdxp/Z8wA6cTKxcvL91/uv8Tfrf3e
+ftczWbS8HurfNw5Wzfl2FtV3TvjbOijtz3FiWefrZbVbK4Fl9latZV+NdjV70WSZCTy3o47nacxk
++nzdQ+j5fw+v0d/K9tyvoNnmpb6YeX63T2K7kuualolZkapaGyeVZGZZSSRJkEZHXVvJnO4kBsHP
+13XNV1V3bhEkU8wyySqx+Yf0/wDkpj4haTaaz5f0yGVoAK6LqeaAFAAAAAAAAAAAAAAAAAAZ7AD5
+/wB4AAAAAAAAAAAAAAAAABABSJhjS6rZ6z2fLAOnIzsLYZn0J/YH5W/V3v8APs87Czpyuau0wLqs
+i+XLyMe/r3ycLNvudfhbTkdTo9l570nPfT67nu6+n4sB96/g9nBXd3Z5+nBV+j2JyXBe4Yn3Pma3
+f6g8Pp6Cznub8Xo9Gs8m2eNekv5hspe/kGkvpu0ZoYmQpmh4l1ZkaJRglokZkV4LWWWyZCddsNb1
+xFkR25PKOMBTyjEfjL9mfhln4z4GXifK+mAXQBJVVZViwAoAAAAAAAAAAAAAAAAADPYAfP8AvAAA
+AAAAAAAAAAAAACADIA0KyXGj12fgez5YBvibbU7uX6R+x+X+9+7zdFssDPnO26pjDycXMnnvycbI
+79st67cy26m5bXrsjVZVut9vn6dkf5/sttqti2yu2LUYyxl2eu9XDbvy3Kcteqv51VjfpreWZKel
+ystxkY+Ro7K4TE0zo8NMMjAMsyu0TDEo6lrApJIa3ZazeXZX78SQ0JlgFZI/AH7++c+L8kce2r5v
+0wC0AkpptqxQAAAAAAAAAAAAAAAAAAATsAPn/dAAAAAAAAAAAAAABkAAAAArspuNFhZeJ7flgGsH
+Rc71Mn0993/PPffQ8vredrdlnN1lduZhZWJmPPdlYeV37ZV9N2VltVjVz02Zk6Pe6n1+fpLMXL8n
+qusqtxbnrtytiYjIsqsHdZGdGHdGJmWWrIov6RphiXSRrEceVkchkloYGiQCS2QWQA1O21PTOQyt
+34wSVLK+QBpHzL+mXywxfmLWy/M+lMBqgExRVZXjYAAAAAAAAAAAAAAAAAAAHYAfP+4AAAAAAAAA
+AAAAgAyAIAKAIUX49mhxcjH9vyQDWJ7Hju9X6Zegc76b7/LsNlr9hnF91D87iZmFm64NmYWd6OuV
+dVZiWstivYr40YuVR25xtsfnjsr/ADO/z79Jv8w2Evoq6Gj1cOsfmJuepblea83b1FvK8zGvS38l
+7rrjoX5GfVx6m/j79Xq55vO573Da7E8/bevrthk7rI8xI5AjzEqSthYAskSGq2up3m90bvxkUp2Q
+qwWYT5L/AFk+QHPfz3iY+f7wCgDLHrdM6AAAAAAAAAAAAAAAAAAZAGewA+f+gAAAAAAAAAAAAAQA
+YAFgibZAmTFycTWdFRbV7flAFk+lea+syfR3uud7T3+Tq8/Bzc5vtouzcHY67YXzxm4Wd6OuVdTZ
+yX2UvemQ9duEUWr1xsr8XI56uuqs5266m6bdZVjKZGLHrcaYdqnKSwciWUtqv6MejYx256nE6Sca
+4vr8hsadkcZlkeYZkeJVLabh5iVkANTuNNrOVMT35rMlzMBoMpndHxo+yfxS538VgfP+gAaETExR
+W6Y2AAAAAAAAAAAAAAAAAAwAJ2AHz/ugAAKAAAADQAgAoAwAIBAsTOtzIZxGFmYOsaSp09vyQCyf
+aPGPd7Ppl2XkXc+7z9tm4OdjndbRbLh7HWbN50zsDO9PfMtou5Sy2i2aybKrMoYtqrO1G4jJtpv5
+6tuotbsIruct+bPV5ennh8vzduwep89bZRx5hrEvx79SZhqlkaLHrcZlax2WSyVZWCYrvqtsaYlZ
+mDKdLu9NvOVMHfMgMAGwBLrvh99ufhZx1+XwPD7wDVImM5x0vXOqiwKxwQYFJCCQgkIAAAAAAAAA
+HPsAPn/cAAAUAQAaAGgBABgAAAUZBlgJeJEwc7X9OWlRl9nzABlv0T+d/wBO6n757KNz7PPm5mHl
+5l1tNpg7LXbDPlq2et2Xq75NldnE9tV11ZfTZg9+Nkms3FPPdMdfk+Z7nlrua/NtP+g+X6U2Dl+X
+fTW8xd4fT0VvFa/zer0efP3j0CzCzIsZBYvouSWidJmJp7EeGZH0eUZHdGGaDJbqMjRgM2ZiQ025
+0vXGXMHXDCtYATYsxloPg/8Adj4KYeDgeP3gFhZXJc9LTLiTYxErCuCRe9mIucJgxni6+NgRrTYh
+rDZC6yNpCaw2ULrTYkbsD5n3AhRwAAAAAFAEAACAQB4UAAZqwnW7HW9OWmiY9nygBLP1j+T/ANj7
+fuzpdXuPX5s/KxcvEtsSwwNlr9lnzY+01my9foyrKreWntrsyttrugysTKzbbK7M26yq1m5osm+d
+ztlje3ybaeVuOiXl08nfpMXHzo2mRq8xcoiCy6m0eYNamVbWbHrfJmVqeVax5R0dlaWvJxci2yCQ
+mJwXT7bU985ZM9MIw1KSSoOpxfwP+8fwL468rA8ntALQAeYlzAAAHzcHMSvLw8/eaKrqEIiMgDRo
+gqSAaICZWRwDaAfH/QAAAAAAAAAAQrlpEklYAABI5CuhGr2ep68dUB6/lAC3/tr8T/uXpP3Pm8xv
+/X5tnnYWbzuS6WGu2ur2uOGPs9dsvV1usWzkd67ZbbabwysXKzbLEszqy2u5LbaLc6m/Fvq2yp8s
+DD3bXHOU9W+r57hepNc4GeyS5DxKNMMssrWM6NEvW+zsj0zo8PKtYt+PkStKNlMhFOt2OB6MXgdI
+MrRBEABL5f8AAv7w/BHleIA8vuALAnaJqp6JGdCbLBKxwSZgayiDIMcsyTGDJMaTJMaayDHDInHE
+yCgMgxw34HyfvAAAAAAAAAEEChYAVgAAEwAARp9xpe3n1wHq+YANZn0B/AP0Z6T9TbSjN9PnysrG
+yOcvsSyzX7jU7TPCnZa3Y+rvlOr4NbXblZbVdKZOPkY3ZbVbF1lVmVlld2SX4+RVrK0D1vZNiOO6
+PuujIZMxLLyjJLQyPKySyNtY9dljujZjOja0mVjXyMDYpMSYuJk4/oxaQbkyoBMBExh4T8Gvul8I
+8a50Dy+0AsM/AiZ6XL42Totdrhc8wAz214meYMmfGEVlTiSZTY1o1NlYkjiFwY5kyYplhtgX5f3G
+EYlWgkAIUunAmQAVXQaVCAAAAAABdJutJ382CB6fnADWz+lHzc+m+8/o7MxM30ccnIxcrNyLqbrN
+ftdXt+fnxNlgZ3r6ZjJZzNdTdLayWxORj5ONvZXfk91Vua7pCGVi5MWPW82zVtcNZU9WPXb0OjoX
+svOV088Zn6z0zcFtJnrJ0uXGwlbKmxGq1kepdWyW+i+GImJCTAqtX0YJDpmJDNmCKlQPzJ8L/tx8
+QeHTVAeX1gFyV2JLUBnUEKPNYWFYWlUpaJI4gy81FWlYWlUF5jzbkTjiZJjFdYjnzPt1y4AAK1do
+yzrTgmcuRMkK4QjoAAABMBZWFJot3ou/lxQPR4QA3/1D+Yf1M6T2zNwsztwyMvFy5brqbjA22o2/
+Pz0Z2LlezpmOjcpZbXa01kPg2RTfNPbTdhc6PNtXcuIZWHlzLtg63rvop5zbzObZia/o3tvIT3bj
+UZ1YnSc4SdgchtMSL22sxyms9CsMHYK+TWK+zOjDvXZhXk0X3UzBIxEpgRE+nI8TogTjMAbCssfj
+b4pfZT4zcOuIB5fWAXIj15tYCpExABQAEwFgjEhBIIORLJWCgCgAAHXRB8/7FhWDiA4gPMBMEAoE
+kBMBoIRTNXYAEgAtOi3ej7+PHA7/ADwBvr/qr8tPq10npmVjZnbjffRdJlXU2mBudPuMclvqf1dM
+90s5x76rWnsUxbrab8WbUtzLHreW10tmq8CMjtKM7Knm4be72y58s8+/TE/pN+M7zutTyuds9FR8
+vn2dnH3cnVYV7scVZ218nnOX37aecHo7yecYvqyHGd5iZkrOrQl9NxLKxJDRrHrs9OCVIZZiiJjU
+EsrzfwN8fPrP8lePWoDzegA1kqtqxtAJVUAAAAAAAAAAAmAAYYuCiLYKywOoWY+f9gAAAACZUAAA
+AAoA2SLFFmAmLKxphjF0e70fXxVAd/ABLfo31b+WX1c27LKoyOvC3Ix72cq2m26wdxpdxjgwHr67
+N634yy6u2WwDMuuqtxt7arIttotLlbUb3G+x7srGVuUllbWbLEbSy2t15m3o9X2m3TkNmlR083Hm
+ex71zh9P6m5rdtW8WOlmTOj00hqzdTfNRJMg0G2ptqs682FJlhTWmEEel6V+anyv+mXzH83VypuH
+Z4gJpsqlgDOqyYoAAAAAAAAAAAJyac9q0ssnfDTOrTDMsZ2QHg+kAAAAAAAAAAqsbMQVKxAAMzKj
+TRAY+k3Ok7+FAOvhJiW/Z/qv8u/qhvG9urs68brqsi6ssR8zC2ur2mfO8zHs7bOym3nbraLsatIj
+Ocm2q3Onuotzu22nD1ls7B2utpdTdwy7JYMytvLsliWPVZtZW9VZWBnSvI1do28eYZnozJ57tenp
+Nm9blliPgzLNWSptZbXZnczE5sxMaxqb8bJ9GAiZIJjWoUM5KL6Jfk583/oL8+fN2gDh6AAAAAis
+CgAAAAAAAAAAJMjPxc2dmuquz2EcMckM8DxewAAAAAAAAEZdHBKeEKAEAGQBsATE0m50vf58AdfI
+Mrt/o36hfNH6Z9MbRq36cMm7GuXKmtoxdtqNrnjcK3p6Z9uJl51ZbRdzt8RjaluBbvOvTg5767zT
+yfc+g8D+k36Bk8wfDz0t2q2/mk2I+K0q2sO6NcWWVXb3KWVrkSrEsrMTYspYEjOj1ayWxLRJMMmm
+RYs53JEpMBvOoycXJ64JWEmAugURsXKwD43/AIS/af4s8voAnh3iWgiJgImIQCgAAAAAAAAAB0vM
+zJqtx6XtSyblbE1jHJG84Dx+wVkJFLGauVcRokCCBNJgLABQBgAQAABcHTbbU9/nwB18w6WN/rL6
+P/PD6GdOWyvw7t88nJxMismUaTG2uo2WOOTkYuX32mx0W030y7Ma7kydFXh+7e5nbZXmvAa31R/P
+nS7x7pea6vnMz2jF6C3zOeXp9fmc91nN7Hc39ni2i+7v9A6ng+q8Myo6DL8k5uOtnLk6ezSc+eu2
+unN/mcfp69MfzC1PTrfFt/HpgTiujJWVKTNOLNy6hWoyMLK783hJGiIu4JjRtZsdRJ8SfyJ+pfy1
+4vQMpx7MoAAAEVgUAAAAAEuijCoOC31XGe6tj1WWI80RKFZBp//EAEgQAAECAwQHBAcFBwMDBAMA
+AAEAAgMEERIgITEFBhAwMkFxEyJAURQjJDNCUGEHFVKBkUNygqGxwdE0RFNUYpIWk+HwJWOi/9oA
+CAEBAAE/AfHxE3NDJRPAUVFRBhKEJx5LsHUTR3kGQlGs1wTY1AjHcVjWqtO/EsFgqqt6yVo+Xhxo
+9lwwT2jtHBBjU6yAoUQNtfUUUu5rY8InIPaT+qnI0kJaKyHEtviRA44UCdNTDvj5LtIhbS0aeW4r
+dfDAZWqCeGGGKKGQHYp5qUIrrNNjXkIOdaqjNxnQrNChKR3nhKGi5mnCVGguYaG5RU+bvTVaT9zR
+UVlWVZQhOXYFFtCg2HRPLKYJkSyu2K7R+yuyqrdoVRObQqXDvRIhFP0TACF3E5F5IaPJSsz2DnGz
+VPfae52VbtVVV3rnkimyE6gKECK44MKh6KnomUFyg6saTf8AsioOpc87NQdRnfEVB1Ll25qHqtJt
++FM0FKN+BTGjZdsF3c5LTbQJl1FRUVFRUTvmz0ESiblFRWVYKDUIKewBMs0Vpir3l2xXauWdytwQ
+3ltaYKyVYKpinChQ9yUHNoi8KqJJTZmI2FYGW/reslNgxHZNJUHQ2k4vBKxD/CoOpunYn+2s9VB+
+z3SbuOIxqg/Zyz9pNfoFB1C0SziLnKBqtoqGfcVUPRMizKA39E2VhDJgQhDyVhWVROLQMUIrCp7/
+AE7+i00fan9blVVO+alPzQTtrG1RZRNhhOa0BAhWwq4q25E7a3mtqrCsbHUTIsESDm2+8eS7TBWz
+4drS40aK9MVB0PpWNwSUY/wFQNTNYYv+1sfvOAUD7PNKO95HhM/UqB9nED9rOuP7raKX1C0GziER
+/VygasaChcMlD/PFQ5KUh8ECG3o0IAIquwrSU42Vly/nyWjdNzcWaDYgwKdEYylShQhR56xEs0UN
+1poOzSby1mC0e97n4rSOEq7otMH2p/VVVVXafmpT801FiI2MNE59VaKreoqKigMtRQFOQWw3ALuo
+quCa6itFVN+u+Y0vNGguP0xUDQmmI/u5COf4C3+qgalaxRP9s1n77wP6VUH7OtJuHrJqCzoC7/Cg
+/ZxKj3k9EP7rQP8AKg6iaAZxQ4j/AN55/soGrWgoPDIQepbX+qhy8CGO5CY3oKKmyiogtKaQZISv
+auaXY0AUbXKY+CWaOpUbWvSz8ixv5KLpvSsTOZd+WC1Tixosg4veXd7mprSMODb5lqkZr0mXbEs0
+qtYzNx30Zk0rV/RUz2vaxeSnTDdGxdwqWNqAOimYoZEILealcYI2aSaSFo+CQclpXCUf0WlT7S/r
+ePhh48p2aYiU7YEGldmURTZZVNjVaCJVUx9l1VGjuimp8HRMY55o0F3TFQdC6WjcEjGP8BH9VB1M
+1gif7drP33gf0qoP2eaRd7ybgs6Au/woP2dSg95PRT+60N/yoOo2r8POFEiH/uiH+ygau6EgmrNH
+wa+dmv8AVQ4MJg7jGt6CiFyioqKipsATWrW8ewwR/wDsT9DwGaJJLO/YtWkzRks+WYTmVNSkjCgx
+KGrgtUW00V/EVPMmWaTiGhcHuUoyxLsFKYKZ7Vkcs7OtTgpWGWQQDmpvQhjTNvtDTyUGCIcMNHJR
+JaE/EtTGBooqJ0Nrs02ExuQWmv8ASP6LSR9pd1vH5qU9AoFO2BNeAjFRNVVWlXwdE2G92TSVC0Rp
+KLwSsU/wqDqjpyJ/t7P7zgFB1D0g7jmITP1Kg/Z/LftJx5/daAoOpOg2Zse/q/8AwoOr2hYXDIwu
+pbX+qhwYLBRsNregoqbabKKl+iptamrWst9HlwfxFTGlQ+REEMxpQu+ijmKRg5y9FmnnCG4/ktXZ
+aLA0XCa8UOdFYb5Kisjy212VuacPsb+i0gfaHdbx3ACI+UUKoVTYU/YMk7c0KoqKyqLBGl2yUIMQ
+5NKh6Kn4nDAefyUHVbS8T9jTqoWpE8eOIxv81B1Ggj3kyfyChanaHZxB7upQ0boCXdT0eHX64qHH
+0ZDLQ3sm1yGCfpmHCLy9hDA6gd5lR9Y2ZshPoOdF/wCpZx0WrJc8gByUOpY0kYkbRuqbgIFTuj5a
+dDBFB7uVFD0Fopn7CvVNkZJnDAZ+i7OGMmgbXcJTSSNzrDhJP6Kd9+7reO4Yn/JmsJUKUJTZFGSC
+iSqfCITgnIBckdgVnY1qA7yLGhdxFzaK0rSqVZceSECM7JpUPRc6/KE5QtWdJv8A2RChalzruJzQ
+oWpDPjjfoFC1P0a3O05QtX9FQ8pcfmmSMrD4YLB+SmXdlAe4DIJusbrPusVB01NvihphUFM0dJ6T
+idoWuADT5JkXS8wTR8Qj6BM0RpGIAXQyfqSpPV2YbFD4lnAqLoF0UkOmO5bqAB5qa0FDfKOZDPep
+hVSehJSHBaIjA99BaJ+ipcoqX6XKbit2JwFM4dzrKaSTlNe+dtO07gFF3yVjKlQYFE1zWoRk6KrQ
+KiQgVMQCOSOaaE4I7Aq4bBVWH+SEvHd8JTNGzTvgKh6vzz/gKhapTTs8FC1O/E9QtU5JudSoWr+j
+WfsgVDkJNnDBb+iENo+FUVFRUVNkWEIkMtPNM0BINORQ0dKgYM/NQJSDCZZDQm+jwKtqBzXpkvZr
+bqoEVsVgc3JUVFRUVFTxcXgKbkqbaXdaTSTcpn3rrx+WtGKl4SOAVFaoraDlBxKmJVjoNVNQ7MQp
+rk922BBMQ0Cg6Diu5KFq2TmoWrcLmoWgZVvwqHoyVb8ATZeE3JoQaPJU2UQCoqKioqKioqbKKiop
+2G50Y0YSf7L0Kcc/tWsoB8KkWu7CrhQk5bKKioqbaKnhabY3AmjDc62mkoVG94bxvw4ZcmSDzyTp
+EgKLDs/I4LalQhQIp7kXK0Ux6hFOjmxRTo7xVbmhmAxQoLWhoQc1NIVaL0iGOaZFY7ZMve0CyoNS
+wV202Uu0v0VNtNlNlPEx+BDLYL+uJpLFReM3jflKWkyNCaxRplhUw6p+Ry4xQyRKiFBOTCoRRyU6
+Ec7mgx60KPNOZRCceQpCNEe7FTVqxgjCmSeakIMUNxTW0Uy2MaWQoAcGCqAVFTbRUVL1NlFTZTZT
+ZS7TwAzN6PwrlspcoqKi11Ps5T+M72CiXKhUb5EFAXJOUQoO2AKE5NbVT4onZ3NAt9YnydtQ9G4K
+WkxDKsAoQ2DkgFRUVNtFRU3NFTbRUVNxS5hhijFhDN4THseO6Qd0Od6PkENzru71KdxHewolF24T
+o6e+vyIKAUDgnKKjmmP2Q81LWbK0o8VKOdzV5vfChjAJoVEFTZTeUuUVFS5S5TaeXW7NSPbxoT+0
+IscuRxB/sn6KlnmprnX81Ly0OA2y2tMM/pum870fkhudeXdxOzO8oqFUcuzcuyciKfIobsVDdgnJ
+7U5qDUAgF6RYYpqLadcGa1cb3kwIBDbS7TcUVLlLsWPNiYiMYyopgUH6aJHq2hNrZFc+dyiPLwLb
+0bNu4oitenI57sZqBBDk2TaV6ExdhDCjNhBqi0r8iBUOIg+qcohTXYqGnEAKPFTjU3G5rVtqYEEF
+TYN2NsxFiteAxtUYulK4QgodqwLWe3nu+Y8C3K9F427krXp3eRum8FBikKE95RL6JwiKMXhE/IwU
+2Iu0T3Jmaa+gUSKopuszWrTcExBBUVLo2RQ+x3c06HPHIqUhR2+8dVU2Dcc938Q8C3K9F94Nyclr
+071pvG/BOKhx4YavS2L0qGpmI1yPySqtbArSKiXWcS1bHcCagNgF3nuBuOeym5+MeA5JmV6J70bl
+2RWvJ9ebxvg0XaFWyrZRcflcS7C4lq231QTQghvhtF3nu/i/JBRY0GEKxIjW9SvTQfdwYsT+Gg/V
+1E2JOl3+na0fWJj/ACCitnzHc1geGkuq+oyphZTpbSTxCrFoQTXGnPL9EJGZeXWomVkDE40AqVAh
+dlBYytaDPcHJNyvP97fpsfwla7O9pN4/Nol2Dxhaut9SE0IKm7G0bgZ3qXIkeBD4ojR+a9Jc8+qg
+ud9T3R/NdhNRPeR7I/DD/wAlQpSXhGrYYtfiOJ/U7l0aEwirhivTJXH1rcBU48kNJShc1oeCXGg2
+nJDK8fe7mLwFa6O9rdePzaJdl+MLV9vqAmhAb8bgZ7KhRJj1ZczGifpYDKA4nyXpcwXNAg8qlGLp
+gm0GCnlRMh6YeK27Nr+SlJWfZGDosaraHCqfo2E/iixv/MqHoqXhGrHRGnzrU/zQl5kF1mbd/E0H
+/C//ACDf+F/6t/yvSJocUm4/uuaf60QnTzlY4/hTJlz3gejxh9SAAvvOZcYjGwu9U2Scs8F6TOxK
+0h2e8aYE1of7oP0m50v3Kfjw+v8Ahdlpcud3/KmQ8kZOefDIMahxFa+fNDRjyIduMe7X+Zqn6Hhv
+i2nRXdENESzQ+zUW802QlWua4Q8W5bXZIXv2h3Mb3bui1xd7Y68fmpUS7K+8C0C32dqAQvja57W5
+lekwh8SY9rhhsKG4HPYR2jv+0fzVBSlEGjyF8ZnwByvUQ94dzMe5d0Wtrqzr+t4/NSn3ZMetatCN
+9magNwNsxKiKeKiZo+CDi5QYTGNwui83mohNKcymto2myl8fF4A5X28TtzNe4f0WtJrOv63j81Kf
+dkB65vVaHb7M1DcDbHgxnuwdRCQjE4xExtloG0bhqHeeT5IkDMqNNw4YacwTyX3pAt2aFHSkPuUY
+7vEhfeEYh9mDWhojOaVFfVDE4YFV00W0oP0UlCnhELo7sstjefXwB5X2Zncz2Es/otZDWdf1vH5q
+U+7o0evb1Wih7M3cjwBNGqoYz6oQLeMTH6J8tBiBoLBQIQII/ZhCHDw7owuU2Ny/PwB5X2c9tNlF
+RU2aRwlX9FrCazr+t4/NXJ93RI9ob1WjR7O3puRfO2a0pLy8QMdmU/WCEHECE40R1jifDLOKGnZ9
+7qCWp9Vo2PNRYZ7VtDstCvRMYa2jmqjzT5mBDcA51Koz8oDTtAomkZZjQccfIJ+mYAoQxxCOkO9T
+sjw1P0R0lO8Xo/dp9apk3pV7aiCO9iMDgoP3o+KBEFlnNNy8AcxeORUPc6VPscTotOGs4/rePzVy
+dd0MPaWKQHqG9NyN1FhSL4tXgEofdrHcLaozchDGAH6IaRlrNWt/kpeYEW1QUopmZhw20riVBiNo
+OZ8lZmH87A/mhKwviq7qVEk5eJg5q+7JOoNjL6r0WXw9WMEJeAMobf0VkeVxuQ8AcxedwlMy3OmT
+SSidFpg1m39fnbsk67oMe0tUn7lu5G5t40UWVl3uq44r0aSBtYKmjq40XbyDOTVCiQoocGYKY0M4
+RO1bFc4+TlLRbMMdzDzCa9rhgbuCtspxBGLDbm4KmxvCL9Nz8QvO4SoeW50+aSMTotKms0/r87dk
+nZ3dAD2lqlfdN6bkX+aceSa0AKLJMiPqXoaNlvxpmjJYGuJXoUv+BQ4UNlbLaI5Ijs3Wxkc0YDHY
+tNk/RWJoZPaVMmfEb1Yr3fyUCFpW2bbhSn80yV0gal8bkea+75t0Cw6YxrWqZoaLb70bujJQNFwo
+Tw+0SdhTcvAfFeicJTMtzrGaSD+i0ifaX9bx+avyTs7uro9oapf3Y3IvnBMGNdkaRmnRiREoCm6L
+fWpilNbRoCGw5KlRRMcYT7ByPCdy7IoZeA+K9E4CmZKm41oNJB/RTx9of1+dvyRzuBatj14UDgGw
+XxdpsdmgL52RIbXtoU1k0w0BD2/XNRomkmx3WGVbyQfpV3w0UmJns/XcVbruEoeA+K9F4Cm5bnW0
+0kH9FN+/d1+dvRzuBasN9cFB4QghtFwX24v2i6d27hO2ifGgs4ojW9TROmoIa1wNppriMcBmU3SE
+qXhto1OWGabpOXNsUdVtainl/dQ56G+I1oY7HnufivRuFNy3OuJpIuUz753zuIjcGa1WHrQoXCEN
+wLzjgmDaLp3FFTZGmIEMd6IAvSYjvdwHH6u7o/muznX8UZsP9wVP6legwDx24n7zif5JktLM4YDB
+/CFGlYMZoD24Y5GmfRCUlw4OsYilPyXoUrYLeybQin5IQoQNbDa9NyMzejcKGW4K12dSSKj+8d87
+iXRmtVW98KHlsGwXRe4nIbg7MkIwcSG16oz8y3AwSeibOTjoQd2FCTSijTOkauayAfoU6NpYWe7S
+0fJSo0j6ztCMu71RgaSI/wBWwdIf/wAr0Kc+OOIvWrf6JrY0HKTZ/A7H+dF6a0ccOIzq3/CZOSj+
+GMz9UKHJUTosNj2sc6hKE7KmvrW4GmfkvTpWw91sd0Go550Tp+TFn1o72X1/+0Xp8scicvJfect6
+zi7gqcP/AL5qJpSCyFbofzX3zgKQHEn9FE0rEER4bALg11KgqViOiS7HubQkZbRmb0bJDLc69O9k
+Ki+8N4/NYl1ua1UbiEzJBBC/aARjKPpKNDeQIZKl9IzkSKB2JookeIHgEYKHSiG6p2hx4VluDy67
+HwoT+JjXdRVfd8l/wNHTD+iEhKD4D/5FR9HS0axaHCKDpWqGjpeoPeJAIrhzXoMDv1r3gATXyXoM
+rZaLGAFBimycq01EMVTZWWaDSE39F2ME09W39FYZ+EJrGtGAuDnejckNzr672cqJxm8fmsS6zNaq
+twCYggheLkIdc0GgclYb5INb5J7QQm91N3HNOxNlACm55jwLb0bluStf3eqT+I/O4l1nEtVR3AmI
+X3OTGUvAYkKGeWx72sFScEdIylmvaBDS0if2oR03I146qVmoUwy03Y91ExtB9bwuHiHgW3ouY3JX
+2gO7qdmfncS7D4gtVx6oJiCF1xTW33cSIpiEDUKZhMiwixxwK+4pGzS0U3QmjhzUPROjA/DPqoMC
+FCFGiiyTRafU5clgjFhD4gnTMMQ3OBrRHSkAUwOKdpKC0ONk4U/mhpGHWlk5VR0yKtswjiF98RSa
+CBiFJRo0Zhc9lnyGz4h4FuV6LxDclfaC5HP53EuweMLVkepChkK1RdoE11dpcmt5rnffkm4tVHMy
+yT2dtDpkvQXWaGKvu8U94VD0WxsQOtmqeXNYbLanyR0nM+kWIkAsChl8Q8YC9HaeIkpsCCMmBOhQ
+3NILRQoS8AfswjAgkUsBBjB8IQa3yCDGB1qgr57fi8C3K7RROMbk5L7QXesR+dvuwOMLQPdlQpWO
+4xKKzVCEFZoUDgi9Nb53BddwqFw7JhkRzKMzRk55xxiJkpHwrEO2PAbFZiMeSgNFaOz81WND5Wgm
+zEI86J8xCY20ThVemyo/aBemy1mtvBO0pKNbW1XFDSMsWNdU0caDBRdKyzAaVJDqFHTMH8Ds1LT/
+AKQe6wjvAGq+L8vAHJNyvP8Aebl2S+0B3rj88fdlveBaAh1lQoMs1rqo4LtnVUR5EOqgTDnmiY0X
+BeOShbJkx7PqxiqaTUBukLQtnC49g7T6FQ3HhOYRYw5gFOgQi2zZFEdGypFLJ/VCRlg2ljBegyhN
+eyC9Ggd3uDu5L0SVrXsWfojKSxc09m3u5YJrGNyaAviPgDkUMrzvebl3CVr872k/Oyn3ZMetatB9
+2VamRAVUKjE7EUTWWXqGdovlN4tw5toOQFtgI4gmxhWjsCnRIbaVdmu1h14gu2hfjCdMwGipeF6d
+K/8AIE2bgPcA14dXy2jM+AOSGV4+8O5icJWvbva3fOyn3ZAeub1UgbMk3opGIXPVhCG5BmCI76GC
+G5KOY3AQ7kWnJycxjsxVR5MRGBoNkBM0VCaHC2cUNGQAxzanvDFfdcsWNbjQKHoaWFaknyUGTgQn
+VaNozPgHZX/jO5i8Dlru7213zsp93RorHb1UhAtSjeilZTsyhtfxIcKZlfG12SGV8KIy0368lCi2
+sOYzWG4GZ8A7JC8OM7mP7p3Ra5u9uf1+duyTruiR7QzqtG0Es1NIKG1+aZkm57AheKIwUPK+3ZEg
+Nea1IPmFMyUWLYIikFqGjpr/AKhS0q+FEcTELq3m/wB/AOvt4juZr3L+i1vd7c/r87dknXdCisyz
+qpYH0ZvRQAaIbX5qGuewbnhdfG7bl4A325nczp9nf0WtTqz7+vzt+Sdd0CPamKUb6hqaKIbXZqHm
+nIZIblzahR2zPZ9w4prZ+1mnNn8KFGHP0FDimw9Jc3BCoYKpuW7bl4A8rxTOe50gaS0TotZTWeid
+fnb8k7O7q8PaWqXeGwmprgUNrs03NHJMyQ8A3Ldt4R4A5i8ckzc6UNJSJ0WsJrPROt4/NXp2d3Vt
+tZhqJoxqlTVqG12aGewZptwbwbtuQ8AcxePCUzLc6ZNJKJ0WnDWdidbx+avRzuBart9oC7AuaFAh
+2GobXZoZ7HYOQv8APwZyQyHgOd53CUzLc6eNJGJ0WmDWcf1vH5q9G4FqqPXBMiAAJpqhtdmuaCiJ
+mWwb05bs5HwPxXn8JTMttL2sRpo+J0WlD7U/rePzWJdC1UHrF5KFkhtdnsGSeMFDyv8APcHbVGKw
+ZuC7aF+IIxoQzeEIsP8AEEY8ICtsIEHI7HZHwPxXonCU3Lc6zmmj4nRaQPtL+t4/NYl0ZrVNveXZ
+OqFDFAhtdnsbkim4Ov8APcHY6K5zrMP8ymSrAbRJJ6r0BhiOcXHFDQ8EHjcV91QSSXOOJQ0RA/GU
+7QsseZClZZkvCsNOGw5eB53ovCm5bnW11NHvU7/qH9bx+axLrc1qi1NIVbjs9jctjhzTd0LjuSe8
+uNhv5lMY1jaDZUbK3AQjl4EZm9F4UMtzrk6mj3qb9+7rePzV91nEtUh3VadaTMkNrs0UzLYRgoZx
+peGy2wc0HN81ab5q03zVpvmqtpmo03DrZa7FMimlIbLX1XYzLuKJZ6JksG423HqU/R8wa0jJujJr
+MzC9Aj9oT22FmlE3R8wGOAjnEJ8hNutUjUyAxUOS0gH++7tRzUSQ0ix9WRa2j+ik4EeFDIixLZtY
+eBGZvReFDc67OpIOUx7114/NX3YfEFqo31YTGIIbX5opmW17aYoRhTFenS9aWkZ6XHxhQpiFE4XV
+RiwxzXbOPCEIMR3E5PlWltKo6Pif8hXoEU/tCvu+JZIEUpujY1ffFTOj2x4VntHN6FS+j4kpEDa2
+vqUJizg9tn+ia9rsjswv+XgRei5BDc69O9iKje8dePzV92Fxhaqj1ITXhBDa/NFMyuGEwp+iJdzq
+p2hIDuZUpo6FLnukqJB7OYDswVDa0DDcRGB+BUM/s3oycKtRVvRCA8B3rCa+aMnNmvrfyTZHSIPv
+kZWf9Ia4Re7TEKLA0l3i2LTyClIM+2LWJEq3y2nMeBF6NyQ3OvzvZSonGbx+aFPuweMLVvCWCY57
+oqZkLjs0UzK6Nsy2rFLurDG45qLDtDDMZKDGtYHBwzG55jwIvReW6+0F3s6fxG8fmhT7sv7wLV5n
+soUGCAaoXHZ7Gbh+LSpbCo3HPZFgMifQ+YTocy2E8B9o8k372Chv0jU1avSNI9njCo7CiMfSYd7u
+o6Jk1pGorBw2/EPAtyvRcxuvtDd6pO4j86Kfdlfehav4SzUx4KFx2exm4ORTMHIX+e7+LwLcr0Tj
+G6+0R2COfzop92SHrWrRhLZMdFJxXF6bcdnsYgheKomGov8APd/F4FuV5/GNyV9oju8jnePzRyfd
+kB65vVaMhVlG9FLS1goIbAncWxiG4HGmGy8hWggR53RnuxxHwHJC873m5OS+0N3rb5+aOTrujBWO
+3qtFkNlmphBQQ2uz2NzQvlfEE6GHKLKRHnB9EJCYH7Yr0ScP7VOl5+gAiKDAng8Wn4JzZquDggJ3
+/tVZ38LFbnf+Jv6p8eO2GCYePkMU6enREIECo80NJzFpvs5xKOkorSfUkjH+S++RVtIRI5qJNshu
+oWPy5NqvvGB+GJ/7ZX3lKficP4ChpKRqfXBfeej/APqYf6oaQkD/ALmF/wCYQmpU5R4Z/iCMeCGu
+dbBDQSaY5L0yVwrFaK8iefku2hVpbCFKbk5IXne83LsivtBd7Qb5+aOTruiR7Q3qpckSzVKOJQQ2
+u4tjc0ELxTuSGwXW3qBBjAOEXBSpVlvkF2UI5sb+iMtLHOCz/wAQhJyoDw2CxtoUNBTAr0CXo7A4
+r7rgl1TEiHAjEjmoMNsKEyG3JjQB+W5OV88Z3L+ErX53tbvnbk7O7oYe0tUvBtQGqXgliFw8WwZo
+Xyn5JuV9u7HPr4A5X/jO5icBWvbqzrvnb0c7ugh7S1Sjg2E1NcCghtPFsGaCF92SYe6heblu2+AN
+8cZ3Mf3blrs6s8/r87ejnd1fHtDUXEQ2qUJLU1DaeLZzQuC7D5oXrTWjEr0ttaNaXLtZs5Qh+ZUx
+NR4Tm9y1UZKUmokZzrTLNL7cvAG+3iO5mT6l/Ra4urPv636KioqKioqfLno3AtXG+0NQgWmNUCHZ
+CbcPFs5oXRc4YnVBw81Uee10RjRiU6Yc/wB2380yWrjENpAAZDZQbhuXgDyvs57mc/07+i1sNZ+J
+13NFRWVZVlWVZVlWVZVlWVZVlWVZVlWVRUVFRU8Y9G4Fqy314UHgGwIbTxbDmhf57HNBUSUc51Q9
+HR8euEUqDLzDXGsSqmJLSLh6uap+SgwZqH751o+aHpNnulhTXTtOFq7Sb/4h+qEeY5wCo066E7gr
+9E3SrXWvVkWRivvWFRhsmjgvveWrQ1UOI2IxrmnAjC43hHgDyvHJM57mfNJZ/RazurPxOu/ruaKi
+oqKioqKnjH3QtVm+tCbEoAmmoQuHiRTs0L/O+QCKFOgOZjDP5KFMNdgcHeW2g8lYZ+EIwYJzYE2S
+lRX1QxTWta0ADAXBkPAcxeOSZudJmkpE6LWJ1Z6J131lUQaiPlT7rc1qo31gTYYoEBRC58SKfmgh
+cGznuDknwWPGIViah8JtjyKEy60A6C8KLpCFCJtpuk5YtLrWARnZYEAxB5pszAdk8JseE5tQ8UQe
+w/ENhyKGQ8BzF52RTMtzpg0k4nRadNZ2J131pVQKcflT7rc1qmO8Ew4DYENvxbHoXxtF03DLwCSS
+wEoyUqWkdmKHNRNHyr6VZkmaNlm1pXyQ0RCbDLWvIBOK+5G2T651TzUvCMKC1la05o5HwPO87hKZ
+ludOmkjE6LTJrOP67+qqqqvyl91ma1VbgmkpqCCGz40U5C+Nwd27I+B+K8/hKbludYnUkInRaUNZ
+p/W8xlUYC9HKdCorJVFRUVFTcVVVVVVVVVVVXxj7sPiWqjO4msTQght+PY9NyvjwbsvA/FeicBTc
+tzrO6mj4nRaRNZl/W819EI6EwE+KCrStKqqqhYLBUCoFRUVFZVlUVFRUVFRUVPGPuwuILVVvqggg
+hc+NFPTcrg2jcHMbt3Lr4EZ3ovCm5bnWw00e/op3/UP676qqqqqqqqqtK0rSqqqqqqqqw8YU+7B4
+wtVx6gIIbRs+NFOTMr43HMbs8uvgRmb0XhQy3OuLqaPepv37ut43aqqqqqu+qqqviyn3ZfjC1ab7
+OEENgQ2DjRTkzK+NxzG7OY2RNISTDQx218hif5L7yg8occ9ITlDnYb69yKMCe8wty6pukxYxh9/m
+BiP1TNISr3NAfmaCop/9zTpqAGF1qoBpgKrtoVoNtCp3IzN6LkhluddXUkXKY967xtVVV8WU+7Le
+8C1db7M1BDYNo40UUzK+NwM91FmoEM0Lu9yaMSi+eiubYYITfN+J/Rfd8J3vnPjH/uOH6DBQ4UOG
+KMY1o+gpswXoMp/xNyAoMKUXokvaBsYj6+WK+7oTYbmw3vbU1zr1/VP0NAda77u8CDkoMIQoYb5b
+hvO9FyG616d7EVG94750U67J+9atACks1BBC43jR2MvjcDPY+LDZm4BOnIXZucOSE9LYd8YpsWE5
+tQ8UXaM/EE+clWZxW/qhOl/uoLnfU90fzXZTET3sYMH4Wf5UISUAd0sb9a4lO0hIg4zMP/yX3no7
+/qWfqvvTR/8A1DV96aO5zUMfmmzko5j3NjNeGipsm1/RNmYBANrOn80CPNAg5HdNvReW619d7KVF
+4z86cnXZAeub1WhBSWaghdbxo7GbRcGV2u0ZqJENbLM0yXYMXd4+afCY9tkjBP0TJu5H9V6BLdl2
+ZYHNrWhU1q7o2OOFzf3XEKHq0+UfahRDEHkc1BhgmhgteRmLRa79CgNGDCJLdn++MP1UKVkCKshQ
+iPoAhChBw7jcvJUHlsoPJPgMcx7eG0KVGa+6odXd84lN0YGRKw32QBgKZZ/5Q0dMsh2WRg2jTZoS
+O8QnQtJdq/vCxaFkh2NAEXaTD2tzwcSaDzwXpGk2nGFh0/ngnaTjshwi6B3n/DjzK++xU+qPdz8/
+yULSkJ72t7N4LjQXG5XomY3X2gO9nT+I/OnJ13Rw9e3qtED2ZvRBDYENjONFBMvi8NkR9nAZlQod
+gfU534svCi8Q6HmFbjwBSIO0h/i5jqF6HJxRbZ3a/Ew0/ouxn4bu5HEQUyiDH9QvS5hnvJR/Vhtj
+/KbpKROcUMPk/uf1TIkN/C4HoU97GNJc4NA5nBWhhjnfstPILsodR3B+lxuV6JxDclfaE/1adxHx
+dFTxzsk7O7ooe0N6rRgpLtQvM40U3JMzvi+XABQW1eXn8t0+WcxxfANk82/C5QJpr4hY4WIlOE/2
+89jmtcKEA9U7R0g7/bQ+oFP6J0kwQXMhmlSD3iXjDqho6Y/5ufma0yqvRp1rDSKSQ4FmPKlOapPU
+79pwq2tmlef/AMIzekxDbag4uH4D3eqlorosFry2zWuB67huV6JxjclfaE7BHM+KAQCoqKip4tyd
+nd0MKzLVo8Ul2oXofGimIcV8Xz6x9OQQ3cWBCjVD21/qFSdgZevZ5ZPH+VCnZaIbNqy78Du6f0O+
+5JuV5/HuSvtDf3kTiqqqr4YIfIHI53dBCsy1SY9S1C4NkPiTskzJfFtG6iP+EZlMYGtQ3beI7IsC
+BFFIkNrh9RVHR7W+6mI0Lo60P/6qo0KebLhrIpiPtAkmjTTywTPvRsMg1qLFMc/PzX3jMNDy6Bw2
+hzFbPknaTsPiWgMG4N+KtP78lB0hDfEEMtdbP03ByQyvO95uXZL7QnetKPiQh8gejnd1ebWZapYe
+qbsFzkofGnZJmSPFfGyo2xIob1UJhGJz2Ddt53yxla2RXohAgg1ENoPTcHJDK8febl+S+0B3tB8U
+35C9HO7q032lqge7bdGyHxI5JmSehtGwp8UNCEOK/EuopiVmjEBhxKKCyfa/vOqFPzOk4OLYQcz+
+ak5yC5gcQapsRjhgdgy3befXwDsr/wC0O5icJWvrva3eJCHyF90LVdvtAULgF0IqHxJ2SZkn5JmW
+0bHuooTKm0blKp0DsItpo7pzC7CG8WmGz0XaR4XE20PMKDGhvGB3bf7+AOV/4zuYvAVr07213iQh
+sHj33RmtVR64KHwhDYENnJQsynZJmSOShnaNjzaf9EYrjgwIQovN6jieDu5iF6XPw6VhqUjxIrTa
+bRRG2m0UF1g/RHJOloT/AKHzC7ObZwvDh9UJiPXvQD1Ciz0OE7v5JmlJV3xLtYVaWwD1Qc3zVR5o
+xYQze0fmjpCRbnHZ+q+8pc8LYr+kMps5H+GSinrZH9128+cpMfnEC7bSf/SQ/wD3f/hekzvOSP5R
+Gn/Cjz5gvZahOslgLuZBJpyUKfhvfZsPaa0xChT8s9tbVjvEC1hWi7WF+NvLn5obg3xxHcx/du6L
+XZ1Z5/XxIQ2Dx77ozWqg9YEzhFwbDkoWZTkzLYDZeg9vmqjZHmGtw5qG1zz9E1rWjDbQFDZEb36e
+ahvq2hzCGQ2vgQXmrmAlHRskaer5qNIykf3kIOUfVuTf7uLGhH/teaJmio8sO8e1b+Ii1/JQIbbN
+psrAi/u5/wA02bloeD4LoX8GH6hQ48GJwRGu6FM4RcLWOGIBRgwSQbAqjo+VLSLJoW04j/dO0dCL
+3G24VAFMOWC+7HCILL6MFo/WpKEjPNxExX6VKf8AezITA3vurnhQY/4T5rSzXe4Js/TiTdITIe0P
+l83AYHz63DfacTsrfmfcu6LXE1nn9fEhC/8A/8QAKRABAAICAQMDBQEBAQEBAAAAAQAREDEhIEFx
+MFGBQGGRobFQwdHw4f/aAAgBAQABPxDoGLm5eFw9KxcuLi9LgLjhD5xWFnaHoVKZaDxMsMEqS1Da
+MMWxIhKJxdRwojZxw1avMSL9mFsJ0IApwwDao967MGYoNQA26mgq1gty1R9r7xR6aPYAssc2xgFt
+W75YZS9DjjUbinuPEcVDHEuWluUgvZiDnkOcKAqQfLxLmrlTRhM0S0EnWkzCkzThaJ9M9VkuXm4s
+vqcuFl9TN5xcFfoVLYil/aFmK7QiRlysVlwQ5QJx8EWKuC3dy1bZZ7YKiuOZTBpa6iVO4GuBw8Fb
++8GXFOg4iF4lTeNYXIqURxDkuoqysDKyuNy8XB6DCRIfZwSoJ6VSc2N/aVlz4lDwStrU4DGimr4S
+joSrhA+KLhJJLNKgy/TXLl5vK9Vy8ri49A5dTfGtlmaZeEkfYlrWDuMJ5RO+Cd4MLFVWuLJctLl4
+QFo21xB4RLAhuSpfXKV7wIstiF4nJuO2tsYVC3OZTKlSicS5fRcuDheRgMIIV44WU/w6lXaHuwlf
+X+bgabobM4toU95rfGjPgg+yAJSBuWJVG6ElTyIT5k4qCVL5jgUcP0i9Fy5cuXLxcvC9N4WPTUqV
+NJumrNs2MZJOGMIxo1BlpdEdsuXhbG81FaQTc4biAzlKi+5ElABFZbctnMplSicS5bLemonTTKZd
+g/YW/U/PXUflCADwe8yjfBRPT9iD+rlP+Jv5AS0nc/8AcDDwAgtFShKum4EERxeg92A1H4qcci4g
+JAIWg++QOYttOeu8Xy0v8joFxYokI/RX0XFwvoX0ri+o6gLIkqYS1EwlveXLly5TLS0LQE+7CkBZ
+KBKRKCC3icjFu+KZWblpbL9KpVbn2cgVfgg1+XJ+awUWXAA+7ENSPv4X+4p1P3/ipEhvHYP82lcB
++z/EAdoBN4KFjzgAPdYm/wAxxZ+Nlp+LSELFy1bKMiDkI1qNqGEzWsB3YocRqRxx8KLgpG4sYLwj
+s/aBzK+EPrH5JLvMnMMuVy/omCXLly4vquGPorNI4RASbwwRhRQMGkoqUphAZwjmdkCw5lSpxOJc
+uX6VMtLIz2KvwT93YPzSEiykAD7iTyQ+8hX7hASHei/FCFhfcL/NoKBPY/4gqBOJQ5DICc85p5TA
+1dm/N+0AqjG737y7MRXPdlS1uXHC4OwVOyppGOTVVe87KjmGySbY1bCK0llLFEOU1rECrzpd5XRc
+XB+lGX6S9N+szSLllMRJtDAqFXEuXhaKlstxxOM2+naLUx7Bcq/K3CULQ+8CmfERJXiv6Nyvv/vB
++KSvb5oD/NoKEGg/4lmBAZaVzqEEBKlSoEoyBAh5w9+EggDFrYgoQBQCzc+/dHbvaX3nNab8Ri1t
+FxqoJKS8risr8yWeVLly5eT12Sn16l9b030L6BirRms2hN02hDNSsU4LS8IpAhQ5pgvZj9K+I2fl
+MpuZ92Er35RjbH45V/gX+Qtxuqf9SzFdABuVcmbn4CUW1bVQZyBKXi2WKkAFPZYVCAgQJUAic6gQ
+IEqEVAxROYEAwoj1glsqElBHdLAOB8YfpsBElTi0MrKzUqVhIvkI787oC4leiJAVH1OPSc2S83L6
+0dSj4g0WQhqKGo7qMEFuEKjeGFqgQEgtIgRBD0CUipbDSUc5XxNvviVf5nEqn5mHqJV8zzUrrL8o
+VXgTBNXmqIoJbxTAusnlcv5JSWnIBAeKoyPtqk+eYvhpaG2KaLOahsLEGlQ1RZ7zkNoCi6MKAECB
+CH3QgIEAgSpWAMqBuEUQIGKhcLloripUP44aGAlSsVn4Sx35mMNykGovoq5d6l9TLly5eV6V62KE
+BSDwa4iYgrRC1go5aSgm8JvO1hV1B2xRzhJp/wAUrKlVcYPiuV14UNeZBeBB/APBK1AktDFTNM4p
+jJvtvdQqGIUd0F03N8bucQsqiU0AVZUt6t7lMIIIIIOECBKlQJUIahKlcwM1AlcQJUCVCVKgSrgq
+Q4y0qBcMKgEZ8KivzPVs+jT6Ny5foPSvQvoWRrag4SKW2VUSk5IghiwVdQSQQlseWBDoQEYooLUU
+VhlXUtcviD0ICBDBJMBJhKwmjAMJMhaIhcPsCDKUgwlpfZKhgIICVhTiBCGoEDJzKlYrFSpUCVcS
+VCKxvgVwBAlSoSok+Nx35/VKQEYtyRU+g9B6Tlw+hSwTiIQMdZUbljFKYlRekVcVYYscnCZqEidM
+oLY7QmgbgjKUXE/ukAqBzCAhASoHEqClSi4ECBKYcIRUCEBCK4wqAwIECBzCVAqBKgQMUSoQJUqV
+Az/SDhDCulnxqK/P6g3CRcGahrUJPRYeux9A3OBFRz+0UocKtThZuwY5CCgl1wkb4dVFSLGEYCvM
+GjzhIICBgQQEqBKgEIqEClYgwgHAGVKgQECVKgQIECUVA5lQJXEqVKwqxUrGjzA4SmCgMCVgQxSE
+/d6nqNxpqV5x8zb0L6rl9NnRcX0dpvBhcYxuNMoZojGU2bMENywS+NQOyWCU+SagwTRCCCjAlXCC
+CKlSpUqBKgYlJUCaTlCAgYIECBhWKllCBbo96iTRpDlrl7S/G0NjZTKlSiVxAlSiVKhb85WKgSoP
+yQcEqBKlQMpKkR35up6jcCWA1Lvo3k6rzcuXL9LaUpLo1geYkhINxUJsseRFeRslkhwBAgoEICBA
+gQIECBkJSBAgYGCoEqEBCVCCEH6MBAgcyyjvk6d3vChbuuiuDfmy7nYLDlfAoxUCBCGag/aViuMj
+94ZUCVipWGVIn7XSx6hMJ3QTsxI1HXRcHHHQPSuXF+rUJbAsl0O824kWhcdlcXjRLBOIxCBAhAQJ
+UCAgSoEqVAgYWqBAlQh2SiVCVQ+6Hf2nCgsh+0D5QhKm0PPnAxUrFQJWAlQJWKlQ8PmVKxwSsIOM
+hKlZaTiSbulj0m4oodKyG3UcVU5tdV9Vy3ouXGPrVMrhjcRTALisC8AbkHpzRNDOIgggoEGCBAyV
+CoSrxrHPo7jdZcD9t5gSohTAcY3ioFsqGEuJxAgSoECBKJRcMEqVitwzUqVAgMNwDiVKlSpUqVBw
+zmEXL1HpVMQKlNHwm9wxuMuH6FfoHIhG5uXOIZWRFjvo0zgsHEEEIIBlEJ3ggRCgbwkLXAAQwMAQ
+gEqVK4QKlQ4lHtAlYDAET8bKgYqEqVAJWCVK6NErjBKgYJKgQMVndLQjth0nqAFwtGfC6jjU2w+q
+xl/RiJaNsVRcSxdBNWMPBiDAEqVcCVBAlQlQlYhTA5gQIEJUqAwCVCVAhKgSvwMqBKgQMBKxUqEY
+XCJyg4ys1j9SFYIYpyH4pacdw6T1JH3Z92ffiOivRtluLj9S6m3QQWcgGCBUIQJU7wIXKhA4gSio
+eJWBKgQlQJCVxKhKwSpUrEIPArsiW6e9z+IQ8N9y3A8JNClyACoXi+bi3Y9g4PHgP2XLIyjLjQHF
+c3HUbq+6VKlQhKhNkHGVipUqcvhAgQlQJURACfrS7rz6Vy5eL/xnU2eggvySvCCGAYDBuBCVK5wq
+JRDxKhAhcqUwJslSpTCUVgEqVBb+0oGD7dmv575J4IMv7EV+eb8BOSw3zfmxnMrnUqVAlEqKHchw
+ZtRftOflW1Bod2A7DV3XOyDhiug8oGCGKlSpw8cs8mD1j9A/Vups9BBfmlXjzFQJUrJuECBCEqJx
+DxioQqoECVBywgKvEANuw9hgtex0sd5vctSmVTX/ANMCs7EoGOEoDzWuoiqr2BH6qPfbofyBZbw4
+K/58LqPleP3SN/aLPCe9X+MMJVquPPNxFUJ8LggIW8hdwPXqBfvFoARSoUsnAHXluwS1Vq6FDVtW
+7ucZbAPQ9hsYApBctbQD90qI3NgQClX887gTdAVrQjR+IRjit7VqBKm2aZqVKYszUDASujh5ks87
+1n0Vnb1bl/WaTZ6CC/PK/FiGAgSoQIOYECLUBHaEtzshNIGshAgQIEPMVLcfufdK6BXYqB0XxOZe
+QlM/bJXMqEIUXLYELhmpUrMYOgI1gyRJU4eVPmCGLJeT1MMv+VpN3oJd5iV+AxBKgZrIJUKKqS2X
+/MBGsOI6gcSoOYBAYEqBArAKvYIZflAhFSoEAJUqb+UDJKlSoEqVKzUCH9oGKhKnaD82DFPS68if
+O2K9Mwxfqn12vTJd40o8MHECVAlSpUqHmBglxIVvqc+XUIwcTiBCVjmE72V7JwIHYBOziLWpbvTb
+XEEaIL9yWJUQ3y3TC7NwIYJSAUN058Wy2CWrZ33dSof2QOioGQwZrB48pUqBAiRg/PKhOIYDKfJT
+52hhJXpl/wAzXpkv8aV+EgYrAQJWDKgSuIEIRIXgIEqBA4icRlra8RKNrt7rLHxO0j0i2HaO2C+J
+aoXZxq4SiF4Izd5ZrASsVKwErjNT+05xWXTLr5RGVgBDIAj+TnylLly5fpn/ADNOkS3xpR4UDBip
+UqOoWBqBghAgheE9exRO6q3ERyN7zYs0rYgnZxRRUdQZrr+4zuWj2iF2CGZRsvUWq8LqKlQLLG5a
+2rujkZST91eyy5bob3C18qIcC+1h97qX0o2gpKSq5hLeWBCVAhvFQhKyECAQ/llSpUDH6kDT5wSp
+Uroq8ifO3rE/zdGb9BLfISjwoSsBAlMqJDCEqBCoESEJXWdWxoAu6OfhkVNkuuIfCwvQ6glwR3A5
+ndj8kGRseSEgaCiuKljk0oFQv5NKLJd0/BgOhDUM4wEIGCVAwSsUQOhhioK8EMBgwYSVPmWfO/T2
+j098r/m7pv0Ev85DXhIZCEMNVCVCECBCVHZhPEKwBU8pTptVXcXJanuxHRQMeTTlJV8t834jqR7x
+15hRszUBjQtamw0eYVYuQ374Ome17SpXMCVDoUQOglRwVOMVP1OlMVKlT5UnyNiyXLw/6u7piX+W
+GoCEMBCFyuIeJUCECBKjpEsEpRHbw9rg2reLnDnkg43a5w4tuUFHMPa/9jF9ub0fJBdB/cScg/Y9
+0EtwqCuI3gIAcBdMWWqus69ol22D3XKzRuzeOA+IOPgySsBCpTK4xXQEop4lZDAkOOAhA6flaXeZ
+6Zgxf9MCW+aGvDCEIFymGHUHGAgSoQ3FaWJSorVWhhD+TZzRdFZDlK2jhIAX/wCiughDP6UFDxKl
+SucBKlQxWawE/wCYSiErMHHAlSs1GfOks8jqelr/AD3qrYl/nh/DDAyECMpCBghFRtCVASoGKhCH
+iEXnYwN2EVQINmtWqXQnjd0QbuPse2CV0hWAxRKlSpUMVggK/ErqmrNTmBAlRJ8qR35XU9DKxcv/
+ADGPibujYlkxXiyECCBhCDiAQJUIYHxwJU2YBKlGNYdZn2nQ/X9/1OczfGAbTxAfZ8VFOOT7c7jY
+U7s3XZzXL2hpN0EAcC/8lYJWQlQOWalQJtIOMrISss+NRX5Xqf8ANYdTNJs5JolsBgBCAQIYZpCG
+oQgSiK5UIIGC5U06KlQIEItKgi6Uovl8E7O+3/7b9Q0M9qz8v8nfPcrPwohNF/aDdEgpLgpGxwwb
+Ggcmg04vtF6slFbWz5hEgNILyDKlZrKrJNfmasVKhipUEoP2ivzdT/msOpwd9GqWJBxhgYHQKISo
+ECcBcB+wTZgQIYqBjshFAq0Q4Fw6cRVa9nujA4qdtfdieMK4Y8HiTuqViaxdLruuo6P/AInvBX8Q
+zmsq88pW/GP6+U/NyMUt9qjFRYfEF7Q6A1B1R99EKRzrsbp/6Si5iAbFdjzB7/YeeF6ryhYtJarw
+7b3j+1B7rSMUfKBQ5uj83ceAgAcnKrbfYixxMDbdanLo5XaBj9yVisVNfmDhKyQKyyjwR35fTP8A
+kh0Mtyd9GmchNUGQIYAjCO1A5qCVo9QfeNlFtirqDlhCEMGHZOAuDZ0OveAAAohWe8JWNzBZB68Y
+f1F7pTtH/lKxC/8An3nMwK4fYpze0IZTZJy97wbiqw24oor2RbsaLFHJXDrmCaI2NrywgIJT7iPM
+LWrLUCADDRUaAlqvl5ZUrB58pUqVnXymhioEoxUqMpKK/L/olwdLnaOSaZzEPBkFQwQiUztkfk/i
+aoS1ut+ILRIjshVxqVeYBAgQME5jpLkHzAUNEqEqVKhKlfaJ+eBAhkldFSpWand56WbecCVKxUOh
+QyfsdT0P0t/RVKwOWXnZ6CapSk1MCGCBi5ogcncIGCBhFVqEfmBtgNP5jgCvmDQWDoI4toa5hArx
+z2lwu3LDBkQJ2xo+YECVioeg50fPVxmYuGDOk5ZP2pfS9D9Kn09y+ju6CGVMDwZCEISnglTbuBCc
+SoQnAMZSKyUoIVFVeZW0vzLELlxlmKBWMeppLBykJ5KEC74MWPPrRce6nNRCKt23sEdbRFg4tAu3
+3lAy17pUqP6nIQgQPUKlSoVKgmYrAYCVNGciTZ1McX0DF+ir6Nh1M2eggvySl/tGREEjwC4RLuUI
+IEDBCHeACKr5QSWfvizbz3uDkbK3cvzhuNVEce6Vbxq3c4QStEDfl2p/wTNJQIFQYDh1xGSUaUqa
+wuK0QGi+I4BMp7kMVO3xCErpOkz2ZpxRKlZIJUDFYMbpYibPU4vFfSXL+jXN9Lqd/QQ35oVR7R+r
+3FMwSlUCA0RluAgcwggQqECHlNGL+V7oY4aYPmqS4HBCV4KcqJd4OAcM7r7s3NgV7PEJjuCzncUF
+neuYimOVWcwiWKFA3Ck2wuWaBKg0m4HgdUAHtAArEdKRbEhvhUIYMFyodNYLUxU5lY/hOMhKyTZ4
+lhR30Jhjm4/RpgfoV9F1O/oIb88ENbJwBGjiHDpnFHMWIm1CEN4BAhCBOUaJgpqYLHggnHlyQhKg
+HxXDfsxlxv3uEs77QJrYu4JngdWxuCMB472urgWwW7puOu63ChP0EAQ/UQhKxXRUrorH6EPGVgJU
+pmzxEwGLhl14JaPQRcMfqj6nR6ZLPNKofaceMLKYe2QjUhJRU4oZEIEohDWHGDBCEIStd9kRtUG/
+C2CUgVFwVGj7zf2d8w+GOm5QCnf3jRhV3V5lY/jgQ6KyYDBnfBw65WagSpUqcPHLfJmssY/UVK6H
+B9JpF0Es8aNIQFxS4VfKVzejNDBAgYIQmkFPDJgMbsan3B5gtHDb0eYTHrSs4bACixPNo8x1c20G
+qGG3jVbzX55UOuodJNkDjqvPWScRqOvEy3yvUxw/VXLjK9SvR1Zt0E+Nox6i5YYYFCGxFeBCBKhk
+6h4MVhyQhAh3HqGhyvZhBXHEJdqUucHecQCV0fu4LwYLh6Rp0ss5+cBAlSo68qWeRm8uH6tweq+j
+sm/QS3xJyX2IBgEJonNk4oyEIQMGFj8RXVdQIQh0ilD1wMWLRL1dyhSq78sPMCqVawSoY7vLrrpJ
+zKgTQ8wxWe0F+XASoHSq8iWed1OH6cxea9Rh6dv0E+FIan2TcZVxBFY8SawIYMEYS/Cw1OIVCs6w
+1g1isGs1N3lh1VgyGKwdeepn7/oJKPKnzF1MfqCXg+gfSN+glvklvhlbIvBwgx2cSEIQhGEGvvDA
+2IfkKqJ4EbwsIDuOxDYLa56iurW5MmTpMbeXSTRn9snV8yz516n/AC19eCW+eXG9obgQ3ljcrTEh
+CEIR2QwQwEIwEGoQwdNdEIGQ9KGKzvmr5waydFy++fOP15+hv09ekJ8ym3dogYEAlcNOI6ZgQlc4
+BAncwQwYInDNCGDBDBh0z9IwQyQ9Awqh0fqZjB0/Kc+cfrz6F5OlfUfE3dK2L47KwwIYdEIaGawh
+DBjshgwQqEXhhVHSQhnZ4n6hkwQ6TpdfHo5KlkOn5Wnyn1n6i/TOhfW7PRuS94VvtBGBDK0IOBiE
+8wg4gQhjvCEMVgwGsEOjmBCfrQ0dBO2Kh6HZ46nUtMqcQisVKiT5AlnndZ+or607eg8k4TKt5Q0c
+CGN2TVLJZYhDBguEEIQhCE0hCA94EoKgld894eo63zF1/eXZXYbh9gnuZRqHrn8dFZRo4Ov58l3k
+dZ/1FHfRqlog0FDAhhdkXDBcGCEOcEIIQhCEJ2wjYOe7ogEf7qr8RcWhPAwItZ4uXUGyCApPaB/f
+ahliFeenHJkh0GTfx1bZonb0PgbHfkdZ/wBTZ6dc0MIEAwwY1isRlCQhLhDcIYNuCGBDG0Xd/wCE
+IBBgukgl7JQ7wRhcIhaSaK9zovpPVQRzqydXwBivysV0n/TerolJYoQl6XgQx9k5GVBYoShDeDG7
+LCOwJ7ND2EPYQr0m4iogme59oS6TtcFy3dL2MY5b4Iw1B5oslhRb7LFbL3Z37sPTXDlob3EAholu
+wWyptQ+yodpxFnstC1tsuyhUaCuoh9BNXmakJWDHaEZ8QjvzMI9J/wBR76RiwbuDnIw6GHvCIqwP
+uEDSIkorL5miPCXlm4NRlhFufYlLvzOLX5pwNXmU8gd7hgrUwG6RV1QYkLx3YdV/fAQinmCEGl3B
+IVCGXfnDqIdVZ3fPQY/eg4Oowyvwx35us/6bqbvQQXClIFq4+cBhhPBFHeBAhrZE3O1uNlkESKIS
+FrnAAEIMIQhDDXOgKavuRqtPd1OPuKCOMUHgDwRjxrRTomqGCzdRSpS6U5gfhfNjef2ZXSQ9Lv8A
+MOnTygaiQheec1l9o78/Wf8AT06pvzQXvtKwXVwpAhDGOCbobhDhyIXOR9s0IQhAxXGJdw5lBKeU
+EIZI/wBsF+qY1fPVv6NlaI78/wDtNOob88u8OFN4QhjdE1YbhDBkgpy4CEIYMQlItjriSBDU5pVe
+YQVp51Uth0DxXKwuOkCrtXmB2uh5RVSWLsby/oeoydR6JzoKxzh1KaT9zqf9TXqm/LKXvaaJj5g4
+MbqLcNwhghCc5Pm++BUCGCEN4Q6TIR/mEMErB0HVq6ucTNQ6HTNeb/PU/wCpq9SzzEZSKUsWoQhN
+cdE2YucDBg1NIXsO0rYQhCEIbZOox3eCF9BDqOh0zR146B6NGaU2f7TRm3QS7xpTI5HMRTVGbM2h
+CEJzCOoaRLRd6hbVhPYpx7wrjme0JshcCF5IQz+gYOs63aanVzg9DdL2R2/7TVm/QT4Wlg+xBuJv
+gY0xm6bwhgME0iVMMvc5oQsUxG1SCbQjbOQrvqdiva5caXAe58sp7s8ySpAgkebWRgolEL0BontA
+zUy69oAVsNuefEp2Pn/xnveQP/JyALrYkPZPJJoGh+vhpzERQoC3UAGugAjb+oXaCNbiQRsdJ39H
+ipodWzxm4Obw/wAUvOP+svo1Zv0Es8KVL7E3bmMK8OHQiGCLicbxQcBhBwt9BCntL+KJTAA+2DBX
+D3ipy3xHYXkzbHzCygbmnYWRUOBrV6vsewXxLzSZQtWvAcwbK8RCjB174aOtGGErLP05eHUx/wA9
+hlmvSEv8sYZ7EIxIQmqOzNIYIZlrFxhDBDGjCGSGTp1sK6TrfKHUejuvHPlPUx/02adMS3yy2/Yh
+PGYg4muMu0GECGGFXLBFCEOgLhDAwyYXD5eghCGDJ0awl+tVXinzp1Mf85lMrLNJu6Dct80FD2nO
+OgJqj2nbiQgsUMOyOmbCCEIY7RuQCL3X9jiGgiIqXcg7PmGHSBg/s9BCGDqIzQ6mfs+jQn3T5y6m
+WjkWyUymUymUyn/BZcuXlw26NpZ5CL4kevAhCa4s4piQwYGVqe0dyIe2glQliMJwSv3cE4rV7diH
+UAQS5ZShZAPY6CGNfpGDor+UOnmmbeUOtiryJ84dYEolZWU9MAHrB3+rzDFNujaXTJ8MMxBmqOyc
+JBUNQhBhkQemW8B7TmzfMvyCcRB8Fhevunkm+BAC3+YFtvEWCh4SKS2tDc4SJmxDupGtSnia21LK
+l5e4wxc/QwdN8YMEIQxt1OCn9pcuX0s+Rp8wdV4uXLly2Wy2HUolEolJSUwr9N3AxyOHB30byxox
+JWYmCacNM1IQMkIQQhBhCUYsl3X93plZx21CWy55EvE374gxborUQR7riVpgoPYhLbjpn6x1XDoO
+lgdL5Q8PRzLYufnGfMvWdRAVGjLiVYZebl4uXLly+hh9SejRLoPRhYSBh1gJompgY4wGEkIQIQIS
+sV/xJwk4tfhGXyC7CyBQQGii7nBYpdmrg0ClLj1W6urlkn3XNcl/eE/Sh/Bg6jqMPVfpZqlYrLPk
+efOPWdQw4Rswwlkv6xhh6qlRxu9OqcpAgMWBi+MZsTQhCDCGNoZEIQmkIQuIwG1Io+BR4mxVKIii
+VGy3VwY0lNXw3KRGbfZ4qIJs1H60NGDqYMuGTHb464OOTFy8/K8+U/Qtly5cuXLhBmXLly5cslks
+l/VmWM3enTEozjxr0zsgj5IeCBgwQg5YQhCoYImiHoEMI6ToOgyfx1rX0M4yz5FnzN0kOeKCR4YX
+l5eWlpTjnHMtlstLS0t0Cn0C5foXlnd0jhOCwpRmJ2hpGPkmiEMEAhNmEIQwYXUOk6Cf0PSIMOk2
+8dSqGvoXoZ8wT5E6r+ChhKSkrAYLyDCkpKykZeq60t6z6r1BcqsXfAgYNMOya8EvAITdyMMHoAhg
+hNPBDqHpIdG3q2zTL6HLPnaO/I6mXLZbLly5fQLy+N4KEsuImuNJcWdV9F9KYI+uG/JK8uQwIawT
+tmmGDBC535IXcCVBj0B0Xn+aXLzeDJghD0VzjXDF9Kz4QxX5Xorl9QLly5cuXLly8XLl9IuXLxWW
+HS4I+jp1BfnlXhyGQmmCdmIhOIRhGQhCEMXNwM3i4YMfsztF9b2/6rMuHjdv/WERBVbTV9wqbKBY
+psOwDlj1LawSiHAnI6MVXIFyEaeAvjvO3Is52Qp0kIQyQn7nVp8zR1MIz4kx35nqcv0Ny5fWK6Lw
+dLK9PXqG/PKvBlMCGccwwhg5IYQhAy7mnAwyS8VDR1e4fAQc5N3vwWj5Zv8AdH8tUBSrsQ/WEQiW
+PCQF4IqhQOwK1Gr0EqkcIB4shWo1vvLt9yM5uFqq1JQCBVfaEdEtyFbbhvBDo/pm8/sQOPQZR4Y7
+83U7y9Z9SZOh9LXqi/MT4VhpgQhrK7TmOCEITtDxghCcXhyg3IG0pUeK3FoqpfLDDFqu+Ijv8xP0
+E5M/DOfthBynu1+XzFhbbR+ReWB6NDfCJVy3qrRFpHzZE65BrkkUNOuQH2swXGmDhvkBZs3FoFuL
+hFglpZ7kr0dHz1f1lQ62UlFfn6nL6Fy+i5fo3L6LJZis1FxbLi9F9Wk36bPEnwvIQhnHENM7+gEJ
+26IhgNyoLcHWt/qO7naiQFoqravZQQiFHuSnr/eIs98GjPZ1JyD4pHuo/YliY5tRKaKlokAKp+Mc
+GjC4XVGA8WRZdZXAtVzbW15vtDxaAUHAcA1u08BzkBW7su0u44Qk3AAHIm15YKVRZsq9N7ogAm2B
+bvC9iaq9RAPEB0UOWuKrmPZiwRtJRQa7u4tDmwHl8ODH9up9C55nMZSifv8AU5fpKJUr0SOL9dcT
+fpu8aV4QQwFTth0msfLghAhHU1MECEqCEVPJxEFbb5FCMIQcEm008eBIpK9uX/e8kDDtyH3890OB
+b2Hw4/5NYh3MHxx+kdr2Qq/BIBY/uD/JsTEgC+NspRS9Od9HMLgxvW3kucpyjY049FPS/dKGT9zq
+fpAgoxUqVH0Bl+jWbzcesr/CnxMghCEMDlNcyYNwuEXiaGCEuEIzWIV5fwMk7wneGDxDiry/7Ds/
+ci4y5b37rsxTGewsiyoLsb/NI4epVS96UrUIB01DsHspAbauBaNC7LfeIHhFtHDkFV35QBQe2Jfg
+qi23ENK6ikBBY+5OcHR2mjqXomrOeZ1MrL9NDDnv0b0hjXpCfKZ8JMyEJ2m2OiaTjiQhCo6mhgwY
+NRon78IXUJ2hCEIQnOChAVTpPcTkZReRaSC8vEV9V2NMKhkxb0mF5TR1czKlSmUznFy4+GcgnI6B
+cWOX6AQwwkqV669Lm5cuXNemJ87lXjMAvBg6ZtmzMIYGFhgwQ1HKiEg+WHfnJCEIQz/Dj7bqKkES
+47frCSEyREg/BcAIh8JW6KuPLceGlFdrF7FU9mDRwSGlDzzzyfhDF0eNKva9uMEIdG2aoemOdk46
+bP1JghDCfQVKzfqo3Pmcq8UMiE7pszY2hCEMOBRCyrhCDUcvRLTfxrghCFQh0beeSDi2LadAKhsL
+r+wKCNiEbhDBkm6aMHRzUeh6NviXnHf1BBCHQ/RPpNnQbl3kIK8EIQgxR0zfipGwxcEIawJsSpHK
+xwSPaV7QckPURTbQ5TQl2Q2pqXI3MQ6TBj+zqIQwQhgxshm8sKwy+lV4pf0lSsv0I4MBh9VzfqHf
+RtLvKQV4YYGGGjN3QArMIRGDNzgjxi4RApJd8r+zcAUL3hBX5knG/wAd8EuEKhLYMMaPlg6DJCEM
+mI11HMal9HEvCrxst8r0US4uX6RGGPQsuXL9C/VO+m5+L8UUvIMdpzk8A25xJCXgQeZ4RT8yLR+C
+J6EFguuOTsgvCUuzT9nAYNfEME8K7HmFp5YJKvw4V72xp5lNWkSspNIGI0Z9lD/ygI5Vv2Lv6h+x
+lPyhFHBN8of3HOpe1b80MarPFvINeV/0IovUEcFB5HmBF5Cl8WVFTo47fupfbid78R4fmIdJBhCG
+T0O70rkYq8yfIGSL9BUqVKlegHoei5cM362z06sE/wAEIMGKERfGdkUjPlotqlwTTCB1bUGXx3So
+CEGNKwgA4IQR9h/cZfYWKFsGHwTSkVVBAlNcwjmtWnMNXtL+IspzF3FPNhi60HdQPia5L9+D8pD7
+8NsV5LlQMa4QdRSUmxqudzfnEsKW3Z5hLQxRAAAFcVUqIoPdBNFOgJUoQFAj7lt3tq4Am1Xwgvdt
+taVK/QTT7RtS6Id4CVOLbaGjo7fObxc7M/JxcLl9Kryp87fRB6HTBlx//8QANxEAAQMCBAUDAwEH
+BAMAAAAAAQACEQMQICExQQQSMDJRBSJAE2GBkQYUM1JxkqFCVIKxI1PB/9oACAECAQE/ALwovGAY
+KeqeCSm6KLyFKlZ9Krwz6bKTiR/5GyLPnlyTdBNqnDtfUY4ucOUgwNDBnNHCULU5aQQnMLzJahRf
+4X7ud19D7pwg3OAXOAFQovFowAYaeq3tJ6MWGF9Wo8MDnEhohsnQLJSpwQgx3gr6T/C+i5fR+6FF
+qFNo2XB+j8ZxPC1q9OmOSmDJJjTwis7v7ipUo4Bc2NotCjGBipokgrawIKi0KEWu+oDt0YsGHwUK
+TvCFF3kIUfJQpMQYzwoCCIXo/C0uK9V4Og+eR9VodHhcFwf7Jta9zfTgQyryS73zG+ZX7XN9PH7P
+TQ4VtIfXYBDA3adkRCo+t8Xw/pz+EZyhj5kxnmipF3dxucAwz04wzamE4BbIiU1gF4UKEbwfBXI7
+wvpO8hfTZu5RSG5KDGeEAOgEV6PxdHg/VOGr1Q4spvk8uqp/tx6TwocOH9OeZcXe5wGZ/VftB+19
+f1bhWUDwzaTGv5tZJgQhraFFtkdSsrG0IYZvCjEBhJhVuJdo1fVrk6qnxDx3Kg8OEhF2a2QtKEnZ
+crkGHyvp/dfTag1vhAIh2y5T5XKNygxq5RMxeOo3UYXaFHVQoRUdCFGMDFxFSBCYvpKsyAvTTUa8
+glcgmzRKgCwsLzabRebDqN1Fgps7Qo6qThAkhOoUW0webNOicAtGEY6/cqTcwogqsJC4UxVAQ0RT
+NFFxiyQ6wwN1GF/aVuoCOiIwFzjYnox0K7c5VIwVIIToXCUD9UusUztsLAYIwD4LdVFsrP7SjqoO
+EBQiLBRijDtgc2V9IgprfauQlyotAbdnbcC4uUPhs1w1ewrdSjgBUolDFHQ2xAJmlimj2hEXGEoW
+ARsMABREXKlDAzW8hSqvYUFCN5ClSs0OiRYI2nGzSxTdBgGGLixaQos1vDR7qj58Bv8A9lENByIX
+KSiDggYWWm9X+GULGx+CbQoUYAmaWKGgRsAgLAYxkJuMJxyqe+Gt2IWlE326MIYt7g4Bqm6W3W2A
+WnE0Si0bmAjErJT9sJQtNpU2p6HBKrdiFiiMA+CbQjYBN0tvaLDFBUHyo+64fh3mkahaY2T+XmMu
+/AE2gdM3p6HDW7AhcmxQ6IsMEWKjCNQhpYajHFgJTonK0o+oVq9IUqx547Tp+EWMOjo+xUL8rLz0
+jYpnacNftCFiipsOsDgGEaoaWbqMYW6OTVODJ+4B++6hQh0xZumHiNGoWOqNoQnojoDE3W7O4Le4
+QuAndAIWyRIwxgb24eI2QsdbR8lut6fcMIQY4qRMJ9F1Om1xj3aQicMAa6qR4UhMquYcg38tB/7T
++Ie/uDfwA0foIUt8L2eT+iyWSyQjwjEaYW9uHiNkLHVHqDrM1vTHuwAIAAIuJtSd7S06J7YOAZCe
+pKBwDQXi1fUIWNh8lmtiqXcmiUWOUJogIm7Dmo5spzTmwbcFwFbinODC32iSC4A/gKtSDHw50RsA
+nGnGQNpHhEjx0QjcaDDX7rlD5VPWxVHUppgJjnOdHlPofTPuTicA1T9UCimPcxwc0wQZBVer9QB8
+AyMwiaZGQIP9VkpapHVGgw1+/wCdTsVS1KplpC9rdCi8vbmjcoap+gwMcYI8ZhO5CNwVkhyp0IdT
+YXlSq/8AEwA/Kp2KpbrQWYck/XAFq3ACQQnckSD+Fl5uPg1u83KHyqdiqehtKYnZhDAwic04CVFi
+cIQwjFvg3VXvNz8unYqkPYUVCpoaG04ZxjBNhhCOAap/f86npYqn2I2pJp9ydrhNycQscEqVJsNQ
+jrgGqf3n5zNLFU+xFBU9UMnJ4zwm7GF5/wCynimDk4n8Qvb5UjCThFgUNRhCPcfnMsUzsCKCp6o6
+qJbghG1GhVquhrSfJ8J9GByl4Y0edT+AntZPtdP4hQFCAHm0qcW1xqEMJ1+czSxTe0I2pn3J2qa6
+CnlhiEAqtOjSYxzSX8wlOrvIicvFiVwvq3FUaDqHPNJ2rYVQUC7OWHyMwU9rAcnyoHlR1W62GDex
++Y3S4HtCK2TO5HW8oS7hyPBubMe0jlectj4TmAGA4H7hQoU9RuqGDyt7H5YTdL7BOQ0TNU7W5VJ3
+tITtUT8NmuE6Fb2Pyxqm6W3XhONqfcnYGFPLSJ3UKPuhQBH8Vn6r92d/7Kf94TmEEiQoTKNV7oa0
+k+Av3Djf9vU/tK/ceN/21X+wo8NxI1ovH9WlFrgYII6LdUFN3drrn5bdUNLDVbp1qfcnIG7EeiHH
+yhVqjR7h+U973mXOJPkmeixShd3YULH5bdULDULdOQTNU5RcHNPGdwCUOGq7w3+pAREXF5U9Bm+A
+lO7ChY/LZrdncEbsOZTtEDgcWkBACdVS9N4d9PmHG03H+QA83+U5paCGOpt/5Zo8PU/mYf8AmFBU
+YBaMWaKp72Fin9nQhcq5VyrlXKuVcq5esy7O4I3ZqU7QYDeYX1mvEVP7hqjwziJY5rx9jn+hUFe7
+ALTjlMGRwv7VvjFpQ+Gy9PuCLYRQTNUdBgN97FAnypUnEME3ZpgJVTsQ6ElSpUqVKlT1mXp9yJN2
+bo9qhGxsThnomxuztuRap2hC8qVPXjLosuzusbMR7bmxwShgAJK5HeFBUFTco3boLSgiq2gQUo9G
+VKlSpwBHosvT1K2Rsxf6bzgNgxxbPKY8qE1j3GA0n+gRovb3Dl+x1QY49rCfwjTq7sd+iLHjYrNS
+bBE2N29oU3JVXZA/IAtChBMuzfA1bXKNioQAaJI/oEXuJzKa5zSCCQRoQuF9f9X4dhY3inlh1Y48
+w/yqvHurEE8zTuA4hOPNPvP5XI7ws1JUlfhAjwiRY32GGrso+ay7N8DENLGxu0SfsE90mwuDOqgr
+md5Kkrm+1xYoW2FoWVqpzClTY9KVPXZdlymaJqKNjYNJMBOIAgWGLmK5vspFxab7BDBV7sB6J6Qx
+su3S5TdEzVO1sBJRcGZDXcqTKocRwtbh/ouoNY8dr25c32KNIFxDT+DkU5pBIIghR1BjhBVe/Aei
+bbWhQoUKLRjZduiFimaJpgp4NqdLlZzuyGyNWO0BEoEggqvDwHjfVCs8CDmPBzTntOjAP6Kn9Pm9
+5IHkCSqXBem1WS31Atd/I+lH+QSFU4bkcWgOcRsIn9M0YH+j9VzN/kH+VI8BSEOVZeVyn7YItChA
+XqdxwHq//8QANhEAAQMDAgUCBAMIAwEAAAAAAQACEQMQICExEjAyQVEEQBMiUmFCgZIFFCMzU2Jx
+gnKRobH/2gAIAQMBAT8Am03NpU2JtNgFXMNVAhoVXV5UKMYUWGOlmvDi4DsYtUDuAxumg8Ik9lOi
+ZWLWkQNVKnAIruqrviTOgiE14YNHL4jV8aNpRq/ZAyLhG4uRyZCJU3NjhX2RMNF4sLGcJUqo1reC
+DMiSgitLBoBJDQJ3UXi0oOXxG+QvisXxR4XxD4Tqr0XOPcp9em14YXalCwCeIQGgwNxiRcqVKlTe
+UTabi3qCmMaWJw1QBKmDC0UqbU61BvoKrCP4jnCDHbCbDCQuILiCNQLjPhcTkS7yoKi1Z7mUXuG4
+Giq1/XCJqbjsvQ1Kp9QQ55PyncrSEfTMdVDzuFpFhKcZTdr9lNxjNyVKm8olTYnASivUKmTKO6ZU
+LE4y4nKVKkKQpQJla+Qp13RKCKnEqbVml9JzRElP9DWqdVQL03oRQcXcckiFCFpQlFDbGFOM5yiU
+TebgEmF6b0LIBeV8H0YGgVf0dJw+VespOY+Cm0obKOMqSpNtFpaTYnE4SibhTccmLxySVNpucPRU
+ZMlVCIXx1RqS4L9ttpPpNc0QQjWdwxffA4ygcJUjEnGeR3GAu90AlM9Z6h9Ujg0lMkgcg2lGxOPp
+NKarOgKQQqDoK9dr6c3OyC3xnKcZ5ZQuSh1DMiZQY0bBDOVOE5elqaQqwkFBrmvTZX7Q9SBQDFNn
+KbzaeSMJU4zgcIQHzDAXlcSB53fCnULShXBCe+aiL2tYvVVC55u7IlTeLTjOM5k2Av8AjbgMRyTj
+CnXCShMokwqvVY7IoYzhKnGeSbGx2QtNm9YwFpWnJm82KFoyOyqdVuyNygUThOOxUhBRSjV5n/CP
+D2IUFEKVKlTYYSpuzrwCPsRaVKnB2yqdVydUSgbla8qVK1uVpmbytFT68J5ko8kjB+yf1G53ygIo
+IoWA1sZlfN5UICOSEUEcIVLrPuRaULPOidvc73nP/YID+5Mpu4eKNEYnUo7oytVHMNwtVR6z7A2O
+QU4v2R3ud0cwE6PCg+AgSj6h7mhrjIGyhp7oqfsteWDZ+9gptR63Wj2ZGBxf0o72KlFBFDDsolQB
+fdcX2PKi8WfvaDaFR6ne4OVTpKNjcHEI8kAqFARsMBc74FUO+EKPanCr0m5xAULibKdTLWg+cJFt
+AgD9Sg+U1xG0fmJT6rnbgfkI/wDikKW4gGwRChO3tFiqGx9yVtclVem5uULEmzTpCIg2kebDTEqL
+QoQF5U3O6hSgbUOk+wKHJKCJtW6VNnGxsF3Rs1boj+2VH9gVGg6qYbGiewAwSjwwYUP8hEO+qEGu
+nV03GE2OHe0Lvah0ewnnVtlFnWJABKZUa4SESpuEd0YnYoR4KkgyEXFwR4Y0C+ZfPPZS5aoYwhid
+7SEVKodAt35xQFpyONba7rOIIVMQTygYTiI0GqBd4R4/AQGU5zgdlQ/lhH2MqMjjXu5Gw3KadMe1
+zKCOyk+M91F5wF5TjoqPQPYAqeQca93lSim9RQ3RQuETqp+yBU3GZzGDukql0C45psOZWu9Qjsh1
+I6HEYQpUc4oYO2KZ0j2BxHJrb3dbsu6dspwGMc87YSn9KZ0j31bqXezl3XZd12QQuMHvDQmuqEat
+A/OVLvCl/hDEjAXI0xKbt707qr1XdbsjvbY4C9WqymJcUKk6hpeftsPzKBeRq2PtKl30rid9Kk+E
+MQji7bE9kNrTzSOYbFVOq5RXZd0EWym8f2Uu8BMdVqPe0/LwlNpMCgLgavUegoVagq8MVBsU01gB
+EOHg6FNc6NWELjP0lTrscihcXdtidx/lAWjmzz39S7op26hdkN8dqwPkYvDweJm/ceU15IEtIU/Y
+oOGRCjI7Y/iahY82OVKlSpRTt7FHdGw3uEVUGoKG3OnJ22P4moe4Ki0WOyfuUEUd798XBAOCk/Sv
+yKNaD/Lf/wBL47fof+koPBHdcQTqtNrZc4AIeq9N/WZ+oL959N/WZ+oIVqJ2qNP5qR5wnF2I62oB
+RzTyjebO2R3sUd13t+LFyGQRsYRYw7tCa1rRAAGEYlRg3rHsZRQUoHAnF3SnIJyN+6G1wUU3awRh
+fHpdiXf8QSuIIFFRzDgE3+YEPZTYcl/SnIJyN+6AsLgEEqT4VT1tZr+H91eB9ZiP/FxhxBe17v8A
+XRCuz6Xj/QoOauJvnnHFg/iIIqMSVJXEVxKVxKVxKedU6UUE65QGqGARtCNJzNaf6TshWA0cC0/4
+UjytMDlGBxp9ZQyKM+wnKp0ooJymbFN3QwCIUYFQPC+GzwoseUcafWbzlChQoUKFCjnVdkUEVFiE
+E245EXPLONLqdY2hQo58cmrsiLG0IhBCwz7ZHlFRhSiXWgoZzhFowCKjkVtrmwNxtcDCMIUHlBGx
+QwpDex5UIDnzatYI7WNghtyAEUIQdGymUbHlFBG0qlsVPva1gjY2CG1oxFjieQFFjcRakPlUWHKA
+ULgXDy5vVu7bAbJuyFigLC5OR5JRwlUenmsHNKF6tgjtYqdENkDohaECuETKEBFRgLxmFNjaVFqX
+TzWjKcZxlVd7lFdkQm9KCC7qEVwnyoKmx2QaUGjyouc5zOxVPpHJnAbYf//Z
+
+------MultipartBoundary--LU558Jcbm5I4BnugMsddYrayqFGk25XK0hRJmfDlbH----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://linter-set-72355018.figma.site/_components/v2/0cc338b5bdb3aa964f55ab99749350f778a2d79c.css
+
+@charset "utf-8";
+
+@layer properties {
+  @supports (((-webkit-hyphens: none)) and (not (margin-trim: inline))) or =
+((-moz-orient: inline) and (not (color: rgb(from red r g b)))) {
+  *, ::before, ::after, ::backdrop { --tw-translate-x: 0; --tw-translate-y:=
+ 0; --tw-translate-z: 0; --tw-scale-x: 1; --tw-scale-y: 1; --tw-scale-z: 1;=
+ --tw-rotate-x: rotateX(0); --tw-rotate-y: rotateY(0); --tw-rotate-z: rotat=
+eZ(0); --tw-skew-x: skewX(0); --tw-skew-y: skewY(0); --tw-space-y-reverse: =
+0; --tw-border-style: solid; --tw-gradient-position: initial; --tw-gradient=
+-from: #0000; --tw-gradient-via: #0000; --tw-gradient-to: #0000; --tw-gradi=
+ent-stops: initial; --tw-gradient-via-stops: initial; --tw-gradient-from-po=
+sition: 0%; --tw-gradient-via-position: 50%; --tw-gradient-to-position: 100=
+%; --tw-leading: initial; --tw-font-weight: initial; --tw-shadow: 0 0 #0000=
+; --tw-shadow-color: initial; --tw-shadow-alpha: 100%; --tw-inset-shadow: 0=
+ 0 #0000; --tw-inset-shadow-color: initial; --tw-inset-shadow-alpha: 100%; =
+--tw-ring-color: initial; --tw-ring-shadow: 0 0 #0000; --tw-inset-ring-colo=
+r: initial; --tw-inset-ring-shadow: 0 0 #0000; --tw-ring-inset: initial; --=
+tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-offset-s=
+hadow: 0 0 #0000; --tw-outline-style: solid; --tw-blur: initial; --tw-brigh=
+tness: initial; --tw-contrast: initial; --tw-grayscale: initial; --tw-hue-r=
+otate: initial; --tw-invert: initial; --tw-opacity: initial; --tw-saturate:=
+ initial; --tw-sepia: initial; --tw-drop-shadow: initial; --tw-drop-shadow-=
+color: initial; --tw-drop-shadow-alpha: 100%; --tw-drop-shadow-size: initia=
+l; --tw-backdrop-blur: initial; --tw-backdrop-brightness: initial; --tw-bac=
+kdrop-contrast: initial; --tw-backdrop-grayscale: initial; --tw-backdrop-hu=
+e-rotate: initial; --tw-backdrop-invert: initial; --tw-backdrop-opacity: in=
+itial; --tw-backdrop-saturate: initial; --tw-backdrop-sepia: initial; --tw-=
+duration: initial; }
+}
+}
+
+@layer theme {
+  :root, :host { --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple =
+Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; --fo=
+nt-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation=
+ Mono", "Courier New", monospace; --color-green-500: oklch(.723 .219 149.57=
+9); --color-blue-50: oklch(.97 .014 254.604); --color-blue-100: oklch(.932 =
+.032 255.585); --color-blue-200: oklch(.882 .059 254.128); --color-blue-400=
+: oklch(.707 .165 254.624); --color-blue-600: oklch(.546 .245 262.881); --c=
+olor-blue-700: oklch(.488 .243 264.376); --color-indigo-400: oklch(.673 .18=
+2 276.935); --color-purple-100: oklch(.946 .033 307.174); --color-purple-20=
+0: oklch(.902 .063 306.703); --color-purple-400: oklch(.714 .203 305.504); =
+--color-purple-600: oklch(.558 .288 302.321); --color-purple-700: oklch(.49=
+6 .265 301.924); --color-gray-100: oklch(.967 .003 264.542); --color-gray-2=
+00: oklch(.928 .006 264.531); --color-gray-400: oklch(.707 .022 261.325); -=
+-color-gray-500: oklch(.551 .027 264.364); --color-gray-600: oklch(.446 .03=
+ 256.802); --color-gray-800: oklch(.278 .033 256.848); --color-gray-900: ok=
+lch(.21 .034 264.665); --color-white: #fff; --spacing: .25rem; --container-=
+2xl: 42rem; --container-3xl: 48rem; --container-4xl: 56rem; --container-5xl=
+: 64rem; --text-xs: .75rem; --text-xs--line-height: calc(1 / .75); --text-s=
+m: .875rem; --text-sm--line-height: calc(1.25 / .875); --text-base: 1rem; -=
+-text-lg: 1.125rem; --text-xl: 1.25rem; --text-xl--line-height: calc(1.75 /=
+ 1.25); --text-2xl: 1.5rem; --text-2xl--line-height: calc(2 / 1.5); --text-=
+3xl: 1.875rem; --text-3xl--line-height: calc(2.25 / 1.875); --text-4xl: 2.2=
+5rem; --text-4xl--line-height: calc(2.5 / 2.25); --text-5xl: 3rem; --text-5=
+xl--line-height: 1; --text-6xl: 3.75rem; --text-6xl--line-height: 1; --font=
+-weight-normal: 400; --font-weight-medium: 500; --radius-2xl: 1rem; --blur-=
+xl: 24px; --blur-3xl: 64px; --default-transition-duration: .15s; --default-=
+transition-timing-function: cubic-bezier(.4, 0, .2, 1); --default-font-fami=
+ly: var(--font-sans); --default-font-feature-settings: var(--font-sans--fon=
+t-feature-settings); --default-font-variation-settings: var(--font-sans--fo=
+nt-variation-settings); --default-mono-font-family: var(--font-mono); --def=
+ault-mono-font-feature-settings: var(--font-mono--font-feature-settings); -=
+-default-mono-font-variation-settings: var(--font-mono--font-variation-sett=
+ings); }
+}
+
+@layer base {
+  *, ::after, ::before, ::backdrop { box-sizing: border-box; border: 0px so=
+lid; margin: 0px; padding: 0px; }
+  ::file-selector-button { box-sizing: border-box; border: 0px solid; margi=
+n: 0px; padding: 0px; }
+  html, :host { text-size-adjust: 100%; tab-size: 4; line-height: 1.5; font=
+-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, "=
+Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"=
+); font-feature-settings: var(--default-font-feature-settings, normal); fon=
+t-variation-settings: var(--default-font-variation-settings, normal); -webk=
+it-tap-highlight-color: transparent; }
+  body { line-height: inherit; }
+  hr { height: 0px; color: inherit; border-top-width: 1px; }
+  abbr:where([title]) { text-decoration: underline dotted; }
+  h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+  a { color: inherit; text-decoration: inherit; }
+  b, strong { font-weight: bolder; }
+  code, kbd, samp, pre { font-family: var(--default-mono-font-family, ui-mo=
+nospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Couri=
+er New", monospace); font-feature-settings: var(--default-mono-font-feature=
+-settings, normal); font-variation-settings: var(--default-mono-font-variat=
+ion-settings, normal); font-size: 1em; }
+  small { font-size: 80%; }
+  sub, sup { vertical-align: baseline; font-size: 75%; line-height: 0; posi=
+tion: relative; }
+  sub { bottom: -0.25em; }
+  sup { top: -0.5em; }
+  table { text-indent: 0px; border-color: inherit; border-collapse: collaps=
+e; }
+  progress { vertical-align: baseline; }
+  summary { display: list-item; }
+  ol, ul, menu { list-style: none; }
+  img, svg, video, canvas, audio, iframe, embed, object { vertical-align: m=
+iddle; display: block; }
+  img, video { max-width: 100%; height: auto; }
+  button, input, select, optgroup, textarea { font: inherit; letter-spacing=
+: inherit; color: inherit; opacity: 1; background-color: rgba(0, 0, 0, 0); =
+border-radius: 0px; }
+  ::file-selector-button { font: inherit; letter-spacing: inherit; color: i=
+nherit; opacity: 1; background-color: rgba(0, 0, 0, 0); border-radius: 0px;=
+ }
+  :where(select:is([multiple], [size])) optgroup { font-weight: bolder; }
+  :where(select:is([multiple], [size])) optgroup option { padding-inline-st=
+art: 20px; }
+  ::file-selector-button { margin-inline-end: 4px; }
+  ::placeholder { opacity: 1; color: currentcolor; }
+  @supports (color: color-mix(in lab, red, red)) {
+  ::placeholder { color: color-mix(in oklab, currentcolor, transparent); }
+}
+  textarea { resize: vertical; }
+  ::-webkit-search-decoration { appearance: none; }
+  ::-webkit-date-and-time-value { min-height: 1lh; text-align: inherit; }
+  ::-webkit-datetime-edit { display: inline-flex; }
+  ::-webkit-datetime-edit-fields-wrapper { padding: 0px; }
+  ::-webkit-datetime-edit { padding-block: 0px; }
+  ::-webkit-datetime-edit-year-field { padding-block: 0px; }
+  ::-webkit-datetime-edit-month-field { padding-block: 0px; }
+  ::-webkit-datetime-edit-day-field { padding-block: 0px; }
+  ::-webkit-datetime-edit-hour-field { padding-block: 0px; }
+  ::-webkit-datetime-edit-minute-field { padding-block: 0px; }
+  ::-webkit-datetime-edit-second-field { padding-block: 0px; }
+  ::-webkit-datetime-edit-millisecond-field { padding-block: 0px; }
+  ::-webkit-datetime-edit-meridiem-field { padding-block: 0px; }
+  button, input:where([type=3D"button"], [type=3D"reset"], [type=3D"submit"=
+]) { appearance: button; }
+  ::file-selector-button { appearance: button; }
+  ::-webkit-inner-spin-button { height: auto; }
+  ::-webkit-outer-spin-button { height: auto; }
+  [hidden]:where(:not([hidden=3D"until-found"])) { display: none !important=
+; }
+  * { border-color: var(--border); outline-color: var(--ring); }
+  @supports (color: color-mix(in lab, red, red)) {
+  * { outline-color: color-mix(in oklab, var(--ring) 50%, transparent); }
+}
+  * { border-color: var(--border); outline-color: var(--ring); }
+  @supports (color: color-mix(in lab, red, red)) {
+  * { outline-color: color-mix(in oklab, var(--ring) 50%, transparent); }
+}
+  body { background-color: var(--background); color: var(--foreground); }
+  :where(:not(:has([class*=3D" text-"]), :not(:has([class^=3D"text-"])))) h=
+1 { font-size: var(--text-2xl); font-weight: var(--font-weight-medium); lin=
+e-height: 1.5; }
+  :where(:not(:has([class*=3D" text-"]), :not(:has([class^=3D"text-"])))) h=
+2 { font-size: var(--text-xl); font-weight: var(--font-weight-medium); line=
+-height: 1.5; }
+  :where(:not(:has([class*=3D" text-"]), :not(:has([class^=3D"text-"])))) h=
+3 { font-size: var(--text-lg); font-weight: var(--font-weight-medium); line=
+-height: 1.5; }
+  :where(:not(:has([class*=3D" text-"]), :not(:has([class^=3D"text-"])))) h=
+4 { font-size: var(--text-base); font-weight: var(--font-weight-medium); li=
+ne-height: 1.5; }
+  :where(:not(:has([class*=3D" text-"]), :not(:has([class^=3D"text-"])))) p=
+ { font-size: var(--text-base); font-weight: var(--font-weight-normal); lin=
+e-height: 1.5; }
+  :where(:not(:has([class*=3D" text-"]), :not(:has([class^=3D"text-"])))) l=
+abel, :where(:not(:has([class*=3D" text-"]), :not(:has([class^=3D"text-"]))=
+)) button { font-size: var(--text-base); font-weight: var(--font-weight-med=
+ium); line-height: 1.5; }
+  :where(:not(:has([class*=3D" text-"]), :not(:has([class^=3D"text-"])))) i=
+nput { font-size: var(--text-base); font-weight: var(--font-weight-normal);=
+ line-height: 1.5; }
+}
+
+@layer utilities {
+  .\@container\/card-header { container: card-header / inline-size; }
+  .pointer-events-none { pointer-events: none; }
+  .absolute { position: absolute; }
+  .relative { position: relative; }
+  .sticky { position: sticky; }
+  .inset-0 { inset: calc(var(--spacing) * 0); }
+  .-top-4 { top: calc(var(--spacing) * -4); }
+  .top-0 { top: calc(var(--spacing) * 0); }
+  .-right-4 { right: calc(var(--spacing) * -4); }
+  .right-1\/4 { right: 25%; }
+  .-bottom-8 { bottom: calc(var(--spacing) * -8); }
+  .bottom-0 { bottom: calc(var(--spacing) * 0); }
+  .-left-4 { left: calc(var(--spacing) * -4); }
+  .left-1\/2 { left: 50%; }
+  .left-1\/4 { left: 25%; }
+  .-z-10 { z-index: calc(-10); }
+  .z-50 { z-index: 50; }
+  .col-start-2 { grid-column-start: 2; }
+  .row-span-2 { grid-row: span 2 / span 2; }
+  .row-start-1 { grid-row-start: 1; }
+  .container { width: 100%; }
+  @media (width >=3D 40rem) {
+  .container { max-width: 40rem; }
+}
+  @media (width >=3D 48rem) {
+  .container { max-width: 48rem; }
+}
+  @media (width >=3D 64rem) {
+  .container { max-width: 64rem; }
+}
+  @media (width >=3D 80rem) {
+  .container { max-width: 80rem; }
+}
+  @media (width >=3D 96rem) {
+  .container { max-width: 96rem; }
+}
+  .mx-auto { margin-inline: auto; }
+  .mt-0\.5 { margin-top: calc(var(--spacing) * .5); }
+  .mt-8 { margin-top: calc(var(--spacing) * 8); }
+  .mt-12 { margin-top: calc(var(--spacing) * 12); }
+  .mr-2 { margin-right: calc(var(--spacing) * 2); }
+  .mb-4 { margin-bottom: calc(var(--spacing) * 4); }
+  .mb-8 { margin-bottom: calc(var(--spacing) * 8); }
+  .mb-16 { margin-bottom: calc(var(--spacing) * 16); }
+  .ml-2 { margin-left: calc(var(--spacing) * 2); }
+  .flex { display: flex; }
+  .grid { display: grid; }
+  .hidden { display: none; }
+  .inline-block { display: inline-block; }
+  .inline-flex { display: inline-flex; }
+  .size-4 { width: calc(var(--spacing) * 4); height: calc(var(--spacing) * =
+4); }
+  .size-9 { width: calc(var(--spacing) * 9); height: calc(var(--spacing) * =
+9); }
+  .h-4 { height: calc(var(--spacing) * 4); }
+  .h-5 { height: calc(var(--spacing) * 5); }
+  .h-6 { height: calc(var(--spacing) * 6); }
+  .h-8 { height: calc(var(--spacing) * 8); }
+  .h-9 { height: calc(var(--spacing) * 9); }
+  .h-10 { height: calc(var(--spacing) * 10); }
+  .h-12 { height: calc(var(--spacing) * 12); }
+  .h-16 { height: calc(var(--spacing) * 16); }
+  .h-72 { height: calc(var(--spacing) * 72); }
+  .h-96 { height: calc(var(--spacing) * 96); }
+  .h-auto { height: auto; }
+  .h-full { height: 100%; }
+  .min-h-screen { min-height: 100vh; }
+  .w-4 { width: calc(var(--spacing) * 4); }
+  .w-5 { width: calc(var(--spacing) * 5); }
+  .w-6 { width: calc(var(--spacing) * 6); }
+  .w-8 { width: calc(var(--spacing) * 8); }
+  .w-12 { width: calc(var(--spacing) * 12); }
+  .w-16 { width: calc(var(--spacing) * 16); }
+  .w-72 { width: calc(var(--spacing) * 72); }
+  .w-96 { width: calc(var(--spacing) * 96); }
+  .w-full { width: 100%; }
+  .max-w-2xl { max-width: var(--container-2xl); }
+  .max-w-3xl { max-width: var(--container-3xl); }
+  .max-w-4xl { max-width: var(--container-4xl); }
+  .max-w-5xl { max-width: var(--container-5xl); }
+  .flex-shrink-0, .shrink-0 { flex-shrink: 0; }
+  .-translate-x-1\/2 { --tw-translate-x: calc(calc(1 / 2 * 100%) * -1); tra=
+nslate: var(--tw-translate-x) var(--tw-translate-y); }
+  .scale-105 { --tw-scale-x: 105%; --tw-scale-y: 105%; --tw-scale-z: 105%; =
+scale: var(--tw-scale-x) var(--tw-scale-y); }
+  .transform { transform: var(--tw-rotate-x) var(--tw-rotate-y) var(--tw-ro=
+tate-z) var(--tw-skew-x) var(--tw-skew-y); }
+  .cursor-pointer { cursor: pointer; }
+  .auto-rows-min { grid-auto-rows: min-content; }
+  .grid-rows-\[auto_auto\] { grid-template-rows: auto auto; }
+  .flex-col { flex-direction: column; }
+  .flex-wrap { flex-wrap: wrap; }
+  .items-baseline { align-items: baseline; }
+  .items-center { align-items: center; }
+  .items-start { align-items: flex-start; }
+  .justify-between { justify-content: space-between; }
+  .justify-center { justify-content: center; }
+  .gap-1 { gap: calc(var(--spacing) * 1); }
+  .gap-1\.5 { gap: calc(var(--spacing) * 1.5); }
+  .gap-2 { gap: calc(var(--spacing) * 2); }
+  .gap-3 { gap: calc(var(--spacing) * 3); }
+  .gap-4 { gap: calc(var(--spacing) * 4); }
+  .gap-6 { gap: calc(var(--spacing) * 6); }
+  .gap-8 { gap: calc(var(--spacing) * 8); }
+  .gap-12 { gap: calc(var(--spacing) * 12); }
+  :where(.space-y-2 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-=
+block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse)); ma=
+rgin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-r=
+everse))); }
+  :where(.space-y-3 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-=
+block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse)); ma=
+rgin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-r=
+everse))); }
+  :where(.space-y-4 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-=
+block-start: calc(calc(var(--spacing) * 4) * var(--tw-space-y-reverse)); ma=
+rgin-block-end: calc(calc(var(--spacing) * 4) * calc(1 - var(--tw-space-y-r=
+everse))); }
+  :where(.space-y-6 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-=
+block-start: calc(calc(var(--spacing) * 6) * var(--tw-space-y-reverse)); ma=
+rgin-block-end: calc(calc(var(--spacing) * 6) * calc(1 - var(--tw-space-y-r=
+everse))); }
+  :where(.space-y-8 > :not(:last-child)) { --tw-space-y-reverse: 0; margin-=
+block-start: calc(calc(var(--spacing) * 8) * var(--tw-space-y-reverse)); ma=
+rgin-block-end: calc(calc(var(--spacing) * 8) * calc(1 - var(--tw-space-y-r=
+everse))); }
+  .self-start { align-self: flex-start; }
+  .justify-self-end { justify-self: flex-end; }
+  .overflow-hidden { overflow: hidden; }
+  .overflow-x-auto { overflow-x: auto; }
+  .rounded { border-radius: 0.25rem; }
+  .rounded-2xl { border-radius: var(--radius-2xl); }
+  .rounded-full { border-radius: 3.40282e+38px; }
+  .rounded-lg { border-radius: var(--radius); }
+  .rounded-md { border-radius: calc(var(--radius)  - 2px); }
+  .rounded-xl { border-radius: calc(var(--radius)  + 4px); }
+  .border { border-style: var(--tw-border-style); border-width: 1px; }
+  .border-2 { border-style: var(--tw-border-style); border-width: 2px; }
+  .border-t { border-top-style: var(--tw-border-style); border-top-width: 1=
+px; }
+  .border-b { border-bottom-style: var(--tw-border-style); border-bottom-wi=
+dth: 1px; }
+  .border-blue-600 { border-color: var(--color-blue-600); }
+  .border-gray-200 { border-color: var(--color-gray-200); }
+  .border-gray-800 { border-color: var(--color-gray-800); }
+  .border-white { border-color: var(--color-white); }
+  .bg-background { background-color: var(--background); }
+  .bg-blue-50 { background-color: var(--color-blue-50); }
+  .bg-blue-200 { background-color: var(--color-blue-200); }
+  .bg-blue-400 { background-color: var(--color-blue-400); }
+  .bg-card { background-color: var(--card); }
+  .bg-destructive { background-color: var(--destructive); }
+  .bg-gray-100 { background-color: var(--color-gray-100); }
+  .bg-gray-900 { background-color: var(--color-gray-900); }
+  .bg-indigo-400 { background-color: var(--color-indigo-400); }
+  .bg-primary { background-color: var(--primary); }
+  .bg-purple-200 { background-color: var(--color-purple-200); }
+  .bg-purple-400 { background-color: var(--color-purple-400); }
+  .bg-secondary { background-color: var(--secondary); }
+  .bg-white { background-color: var(--color-white); }
+  .bg-white\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .bg-white\/95 { background-color: color-mix(in oklab, var(--color-white) =
+95%, transparent); }
+}
+  .bg-gradient-to-b { --tw-gradient-position: to bottom in oklab; backgroun=
+d-image: linear-gradient(var(--tw-gradient-stops)); }
+  .bg-gradient-to-br { --tw-gradient-position: to bottom right in oklab; ba=
+ckground-image: linear-gradient(var(--tw-gradient-stops)); }
+  .bg-gradient-to-r { --tw-gradient-position: to right in oklab; background=
+-image: linear-gradient(var(--tw-gradient-stops)); }
+  .bg-gradient-to-t { --tw-gradient-position: to top in oklab; background-i=
+mage: linear-gradient(var(--tw-gradient-stops)); }
+  .from-blue-50\/50 { --tw-gradient-from: color-mix(in srgb, oklch(.97 .014=
+ 254.604) 50%, transparent); --tw-gradient-stops: var(--tw-gradient-via-sto=
+ps, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-=
+from-position), var(--tw-gradient-to) var(--tw-gradient-to-position)); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .from-blue-50\/50 { --tw-gradient-from: color-mix(in oklab, var(--color-b=
+lue-50) 50%, transparent); }
+}
+  .from-blue-100 { --tw-gradient-from: var(--color-blue-100); --tw-gradient=
+-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-=
+gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(=
+--tw-gradient-to-position)); }
+  .from-blue-600 { --tw-gradient-from: var(--color-blue-600); --tw-gradient=
+-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-=
+gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(=
+--tw-gradient-to-position)); }
+  .from-blue-600\/20 { --tw-gradient-from: color-mix(in srgb, oklch(.546 .2=
+45 262.881) 20%, transparent); --tw-gradient-stops: var(--tw-gradient-via-s=
+tops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradien=
+t-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position)); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .from-blue-600\/20 { --tw-gradient-from: color-mix(in oklab, var(--color-=
+blue-600) 20%, transparent); }
+}
+  .from-white { --tw-gradient-from: var(--color-white); --tw-gradient-stops=
+: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradie=
+nt-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-g=
+radient-to-position)); }
+  .to-blue-50\/30 { --tw-gradient-to: color-mix(in srgb, oklch(.97 .014 254=
+.604) 30%, transparent); --tw-gradient-stops: var(--tw-gradient-via-stops, =
+var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from=
+-position), var(--tw-gradient-to) var(--tw-gradient-to-position)); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .to-blue-50\/30 { --tw-gradient-to: color-mix(in oklab, var(--color-blue-=
+50) 30%, transparent); }
+}
+  .to-purple-100 { --tw-gradient-to: var(--color-purple-100); --tw-gradient=
+-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-=
+gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(=
+--tw-gradient-to-position)); }
+  .to-purple-600 { --tw-gradient-to: var(--color-purple-600); --tw-gradient=
+-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-=
+gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(=
+--tw-gradient-to-position)); }
+  .to-transparent { --tw-gradient-to: transparent; --tw-gradient-stops: var=
+(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-fr=
+om) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradie=
+nt-to-position)); }
+  .to-white { --tw-gradient-to: var(--color-white); --tw-gradient-stops: va=
+r(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-f=
+rom) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradi=
+ent-to-position)); }
+  .bg-clip-text { background-clip: text; }
+  .fill-gray-500 { fill: var(--color-gray-500); }
+  .fill-white { fill: var(--color-white); }
+  .p-6 { padding: calc(var(--spacing) * 6); }
+  .p-8 { padding: calc(var(--spacing) * 8); }
+  .px-3 { padding-inline: calc(var(--spacing) * 3); }
+  .px-4 { padding-inline: calc(var(--spacing) * 4); }
+  .px-6 { padding-inline: calc(var(--spacing) * 6); }
+  .py-1 { padding-block: calc(var(--spacing) * 1); }
+  .py-2 { padding-block: calc(var(--spacing) * 2); }
+  .py-12 { padding-block: calc(var(--spacing) * 12); }
+  .py-20 { padding-block: calc(var(--spacing) * 20); }
+  .pt-4 { padding-top: calc(var(--spacing) * 4); }
+  .pt-6 { padding-top: calc(var(--spacing) * 6); }
+  .pt-8 { padding-top: calc(var(--spacing) * 8); }
+  .pb-6 { padding-bottom: calc(var(--spacing) * 6); }
+  .text-center { text-align: center; }
+  .align-middle { vertical-align: middle; }
+  .text-2xl { font-size: var(--text-2xl); line-height: var(--tw-leading, va=
+r(--text-2xl--line-height)); }
+  .text-3xl { font-size: var(--text-3xl); line-height: var(--tw-leading, va=
+r(--text-3xl--line-height)); }
+  .text-4xl { font-size: var(--text-4xl); line-height: var(--tw-leading, va=
+r(--text-4xl--line-height)); }
+  .text-5xl { font-size: var(--text-5xl); line-height: var(--tw-leading, va=
+r(--text-5xl--line-height)); }
+  .text-sm { font-size: var(--text-sm); line-height: var(--tw-leading, var(=
+--text-sm--line-height)); }
+  .text-xl { font-size: var(--text-xl); line-height: var(--tw-leading, var(=
+--text-xl--line-height)); }
+  .text-xs { font-size: var(--text-xs); line-height: var(--tw-leading, var(=
+--text-xs--line-height)); }
+  .leading-none { --tw-leading: 1; line-height: 1; }
+  .font-medium { --tw-font-weight: var(--font-weight-medium); font-weight: =
+var(--font-weight-medium); }
+  .whitespace-nowrap { white-space: nowrap; }
+  .text-blue-100 { color: var(--color-blue-100); }
+  .text-blue-600 { color: var(--color-blue-600); }
+  .text-card-foreground { color: var(--card-foreground); }
+  .text-foreground { color: var(--foreground); }
+  .text-gray-400 { color: var(--color-gray-400); }
+  .text-gray-600 { color: var(--color-gray-600); }
+  .text-green-500 { color: var(--color-green-500); }
+  .text-muted-foreground { color: var(--muted-foreground); }
+  .text-primary { color: var(--primary); }
+  .text-primary-foreground { color: var(--primary-foreground); }
+  .text-secondary-foreground { color: var(--secondary-foreground); }
+  .text-transparent { color: rgba(0, 0, 0, 0); }
+  .text-white { color: var(--color-white); }
+  .underline-offset-4 { text-underline-offset: 4px; }
+  .opacity-10 { opacity: 0.1; }
+  .opacity-70 { opacity: 0.7; }
+  .mix-blend-multiply { mix-blend-mode: multiply; }
+  .shadow-2xl { --tw-shadow: 0 25px 50px -12px var(--tw-shadow-color, #0000=
+0040); box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var=
+(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); }
+  .shadow-xl { --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, #000000=
+1a), 0 8px 10px -6px var(--tw-shadow-color, #0000001a); box-shadow: var(--t=
+w-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow),=
+ var(--tw-ring-shadow), var(--tw-shadow); }
+  .outline { outline-style: var(--tw-outline-style); outline-width: 1px; }
+  .blur-3xl { --tw-blur: blur(var(--blur-3xl)); filter: var(--tw-blur, ) va=
+r(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hu=
+e-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(-=
+-tw-drop-shadow, ); }
+  .blur-xl { --tw-blur: blur(var(--blur-xl)); filter: var(--tw-blur, ) var(=
+--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-=
+rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--t=
+w-drop-shadow, ); }
+  .filter { filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contra=
+st, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(-=
+-tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, ); }
+  .backdrop-blur { --tw-backdrop-blur: blur(8px); backdrop-filter: var(--tw=
+-backdrop-blur, ) var(--tw-backdrop-brightness, ) var(--tw-backdrop-contras=
+t, ) var(--tw-backdrop-grayscale, ) var(--tw-backdrop-hue-rotate, ) var(--t=
+w-backdrop-invert, ) var(--tw-backdrop-opacity, ) var(--tw-backdrop-saturat=
+e, ) var(--tw-backdrop-sepia, ); }
+  .backdrop-filter { backdrop-filter: var(--tw-backdrop-blur, ) var(--tw-ba=
+ckdrop-brightness, ) var(--tw-backdrop-contrast, ) var(--tw-backdrop-graysc=
+ale, ) var(--tw-backdrop-hue-rotate, ) var(--tw-backdrop-invert, ) var(--tw=
+-backdrop-opacity, ) var(--tw-backdrop-saturate, ) var(--tw-backdrop-sepia,=
+ ); }
+  .transition-all { transition-property: all; transition-timing-function: v=
+ar(--tw-ease, var(--default-transition-timing-function)); transition-durati=
+on: var(--tw-duration, var(--default-transition-duration)); }
+  .transition-colors { transition-property: color, background-color, border=
+-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-f=
+rom, --tw-gradient-via, --tw-gradient-to; transition-timing-function: var(-=
+-tw-ease, var(--default-transition-timing-function)); transition-duration: =
+var(--tw-duration, var(--default-transition-duration)); }
+  .transition-shadow { transition-property: box-shadow; transition-timing-f=
+unction: var(--tw-ease, var(--default-transition-timing-function)); transit=
+ion-duration: var(--tw-duration, var(--default-transition-duration)); }
+  .transition-transform { transition-property: transform, translate, scale,=
+ rotate; transition-timing-function: var(--tw-ease, var(--default-transitio=
+n-timing-function)); transition-duration: var(--tw-duration, var(--default-=
+transition-duration)); }
+  .duration-200 { --tw-duration: .2s; transition-duration: 0.2s; }
+  .duration-300 { --tw-duration: .3s; transition-duration: 0.3s; }
+  .outline-none { --tw-outline-style: none; outline-style: none; }
+  @media (hover: hover) {
+  .group-hover\:scale-110:is(:where(.group):hover *) { --tw-scale-x: 110%; =
+--tw-scale-y: 110%; --tw-scale-z: 110%; scale: var(--tw-scale-x) var(--tw-s=
+cale-y); }
+}
+  @media (hover: hover) {
+  .hover\:bg-accent:hover { background-color: var(--accent); }
+}
+  @media (hover: hover) {
+  .hover\:bg-destructive\/90:hover { background-color: var(--destructive); =
+}
+  @supports (color: color-mix(in lab, red, red)) {
+  .hover\:bg-destructive\/90:hover { background-color: color-mix(in oklab, =
+var(--destructive) 90%, transparent); }
+}
+}
+  @media (hover: hover) {
+  .hover\:bg-gray-100:hover { background-color: var(--color-gray-100); }
+}
+  @media (hover: hover) {
+  .hover\:bg-primary\/90:hover { background-color: var(--primary); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .hover\:bg-primary\/90:hover { background-color: color-mix(in oklab, var(=
+--primary) 90%, transparent); }
+}
+}
+  @media (hover: hover) {
+  .hover\:bg-secondary\/80:hover { background-color: var(--secondary); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .hover\:bg-secondary\/80:hover { background-color: color-mix(in oklab, va=
+r(--secondary) 80%, transparent); }
+}
+}
+  @media (hover: hover) {
+  .hover\:bg-white\/10:hover { background-color: rgba(255, 255, 255, 0.1); =
+}
+  @supports (color: color-mix(in lab, red, red)) {
+  .hover\:bg-white\/10:hover { background-color: color-mix(in oklab, var(--=
+color-white) 10%, transparent); }
+}
+}
+  @media (hover: hover) {
+  .hover\:from-blue-700:hover { --tw-gradient-from: var(--color-blue-700); =
+--tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-positio=
+n), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-grad=
+ient-to) var(--tw-gradient-to-position)); }
+}
+  @media (hover: hover) {
+  .hover\:to-purple-700:hover { --tw-gradient-to: var(--color-purple-700); =
+--tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-positio=
+n), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-grad=
+ient-to) var(--tw-gradient-to-position)); }
+}
+  @media (hover: hover) {
+  .hover\:text-accent-foreground:hover { color: var(--accent-foreground); }
+}
+  @media (hover: hover) {
+  .hover\:text-gray-900:hover { color: var(--color-gray-900); }
+}
+  @media (hover: hover) {
+  .hover\:text-white:hover { color: var(--color-white); }
+}
+  @media (hover: hover) {
+  .hover\:underline:hover { text-decoration-line: underline; }
+}
+  @media (hover: hover) {
+  .hover\:shadow-lg:hover { --tw-shadow: 0 10px 15px -3px var(--tw-shadow-c=
+olor, #0000001a), 0 4px 6px -4px var(--tw-shadow-color, #0000001a); box-sha=
+dow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-off=
+set-shadow), var(--tw-ring-shadow), var(--tw-shadow); }
+}
+  @media (hover: hover) {
+  .hover\:shadow-xl:hover { --tw-shadow: 0 20px 25px -5px var(--tw-shadow-c=
+olor, #0000001a), 0 8px 10px -6px var(--tw-shadow-color, #0000001a); box-sh=
+adow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-of=
+fset-shadow), var(--tw-ring-shadow), var(--tw-shadow); }
+}
+  .focus-visible\:border-ring:focus-visible { border-color: var(--ring); }
+  .focus-visible\:ring-\[3px\]:focus-visible { --tw-ring-shadow: var(--tw-r=
+ing-inset, ) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-co=
+lor, currentcolor); box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring=
+-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-sha=
+dow); }
+  .focus-visible\:ring-destructive\/20:focus-visible { --tw-ring-color: var=
+(--destructive); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .focus-visible\:ring-destructive\/20:focus-visible { --tw-ring-color: col=
+or-mix(in oklab, var(--destructive) 20%, transparent); }
+}
+  .focus-visible\:ring-ring\/50:focus-visible { --tw-ring-color: var(--ring=
+); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .focus-visible\:ring-ring\/50:focus-visible { --tw-ring-color: color-mix(=
+in oklab, var(--ring) 50%, transparent); }
+}
+  .disabled\:pointer-events-none:disabled { pointer-events: none; }
+  .disabled\:opacity-50:disabled { opacity: 0.5; }
+  .has-data-\[slot\=3Dcard-action\]\:grid-cols-\[1fr_auto\]:has([data-slot=
+=3D"card-action"]) { grid-template-columns: 1fr auto; }
+  .has-\[\>svg\]\:px-2\.5:has(> svg) { padding-inline: calc(var(--spacing) =
+* 2.5); }
+  .has-\[\>svg\]\:px-3:has(> svg) { padding-inline: calc(var(--spacing) * 3=
+); }
+  .has-\[\>svg\]\:px-4:has(> svg) { padding-inline: calc(var(--spacing) * 4=
+); }
+  .aria-invalid\:border-destructive[aria-invalid=3D"true"] { border-color: =
+var(--destructive); }
+  .aria-invalid\:ring-destructive\/20[aria-invalid=3D"true"] { --tw-ring-co=
+lor: var(--destructive); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .aria-invalid\:ring-destructive\/20[aria-invalid=3D"true"] { --tw-ring-co=
+lor: color-mix(in oklab, var(--destructive) 20%, transparent); }
+}
+  @supports ((-webkit-backdrop-filter: var(--tw)) or (backdrop-filter: var(=
+--tw))) {
+  .supports-\[backdrop-filter\]\:bg-white\/60 { background-color: rgba(255,=
+ 255, 255, 0.6); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .supports-\[backdrop-filter\]\:bg-white\/60 { background-color: color-mix=
+(in oklab, var(--color-white) 60%, transparent); }
+}
+}
+  @media (width >=3D 40rem) {
+  .sm\:inline-flex { display: inline-flex; }
+}
+  @media (width >=3D 40rem) {
+  .sm\:flex-row { flex-direction: row; }
+}
+  @media (width >=3D 48rem) {
+  .md\:flex { display: flex; }
+}
+  @media (width >=3D 48rem) {
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0px, 1fr)); }
+}
+  @media (width >=3D 48rem) {
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0px, 1fr)); }
+}
+  @media (width >=3D 48rem) {
+  .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0px, 1fr)); }
+}
+  @media (width >=3D 48rem) {
+  .md\:flex-row { flex-direction: row; }
+}
+  @media (width >=3D 48rem) {
+  .md\:p-12 { padding: calc(var(--spacing) * 12); }
+}
+  @media (width >=3D 48rem) {
+  .md\:py-32 { padding-block: calc(var(--spacing) * 32); }
+}
+  @media (width >=3D 48rem) {
+  .md\:text-4xl { font-size: var(--text-4xl); line-height: var(--tw-leading=
+, var(--text-4xl--line-height)); }
+}
+  @media (width >=3D 48rem) {
+  .md\:text-5xl { font-size: var(--text-5xl); line-height: var(--tw-leading=
+, var(--text-5xl--line-height)); }
+}
+  @media (width >=3D 64rem) {
+  .lg\:mx-0 { margin-inline: calc(var(--spacing) * 0); }
+}
+  @media (width >=3D 64rem) {
+  .lg\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0px, 1fr)); }
+}
+  @media (width >=3D 64rem) {
+  .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0px, 1fr)); }
+}
+  @media (width >=3D 64rem) {
+  .lg\:justify-start { justify-content: flex-start; }
+}
+  @media (width >=3D 64rem) {
+  .lg\:text-left { text-align: left; }
+}
+  @media (width >=3D 64rem) {
+  .lg\:text-5xl { font-size: var(--text-5xl); line-height: var(--tw-leading=
+, var(--text-5xl--line-height)); }
+}
+  @media (width >=3D 64rem) {
+  .lg\:text-6xl { font-size: var(--text-6xl); line-height: var(--tw-leading=
+, var(--text-6xl--line-height)); }
+}
+  .dark\:border-input:is(.dark *) { border-color: var(--input); }
+  .dark\:bg-destructive\/60:is(.dark *) { background-color: var(--destructi=
+ve); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .dark\:bg-destructive\/60:is(.dark *) { background-color: color-mix(in ok=
+lab, var(--destructive) 60%, transparent); }
+}
+  .dark\:bg-input\/30:is(.dark *) { background-color: var(--input); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .dark\:bg-input\/30:is(.dark *) { background-color: color-mix(in oklab, v=
+ar(--input) 30%, transparent); }
+}
+  @media (hover: hover) {
+  .dark\:hover\:bg-accent\/50:is(.dark *):hover { background-color: var(--a=
+ccent); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .dark\:hover\:bg-accent\/50:is(.dark *):hover { background-color: color-m=
+ix(in oklab, var(--accent) 50%, transparent); }
+}
+}
+  @media (hover: hover) {
+  .dark\:hover\:bg-input\/50:is(.dark *):hover { background-color: var(--in=
+put); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .dark\:hover\:bg-input\/50:is(.dark *):hover { background-color: color-mi=
+x(in oklab, var(--input) 50%, transparent); }
+}
+}
+  .dark\:focus-visible\:ring-destructive\/40:is(.dark *):focus-visible { --=
+tw-ring-color: var(--destructive); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .dark\:focus-visible\:ring-destructive\/40:is(.dark *):focus-visible { --=
+tw-ring-color: color-mix(in oklab, var(--destructive) 40%, transparent); }
+}
+  .dark\:aria-invalid\:ring-destructive\/40:is(.dark *)[aria-invalid=3D"tru=
+e"] { --tw-ring-color: var(--destructive); }
+  @supports (color: color-mix(in lab, red, red)) {
+  .dark\:aria-invalid\:ring-destructive\/40:is(.dark *)[aria-invalid=3D"tru=
+e"] { --tw-ring-color: color-mix(in oklab, var(--destructive) 40%, transpar=
+ent); }
+}
+  .\[\&_svg\]\:pointer-events-none svg { pointer-events: none; }
+  .\[\&_svg\]\:shrink-0 svg { flex-shrink: 0; }
+  .\[\&_svg\:not\(\[class\*\=3D\'size-\'\]\)\]\:size-4 svg:not([class*=3D"s=
+ize-"]) { width: calc(var(--spacing) * 4); height: calc(var(--spacing) * 4)=
+; }
+  .\[\.border-b\]\:pb-6.border-b { padding-bottom: calc(var(--spacing) * 6)=
+; }
+  .\[\.border-t\]\:pt-6.border-t { padding-top: calc(var(--spacing) * 6); }
+  .\[\&\:last-child\]\:pb-6:last-child { padding-bottom: calc(var(--spacing=
+) * 6); }
+}
+
+:root { --font-size: 16px; --background: #fff; --foreground: oklch(.145 0 0=
+); --card: #fff; --card-foreground: oklch(.145 0 0); --popover: oklch(1 0 0=
+); --popover-foreground: oklch(.145 0 0); --primary: #030213; --primary-for=
+eground: oklch(1 0 0); --secondary: oklch(.95 .0058 264.53); --secondary-fo=
+reground: #030213; --muted: #ececf0; --muted-foreground: #717182; --accent:=
+ #e9ebef; --accent-foreground: #030213; --destructive: #d4183d; --destructi=
+ve-foreground: #fff; --border: #0000001a; --input: transparent; --input-bac=
+kground: #f3f3f5; --switch-background: #cbced4; --font-weight-medium: 500; =
+--font-weight-normal: 400; --ring: oklch(.708 0 0); --chart-1: oklch(.646 .=
+222 41.116); --chart-2: oklch(.6 .118 184.704); --chart-3: oklch(.398 .07 2=
+27.392); --chart-4: oklch(.828 .189 84.429); --chart-5: oklch(.769 .188 70.=
+08); --radius: .625rem; --sidebar: oklch(.985 0 0); --sidebar-foreground: o=
+klch(.145 0 0); --sidebar-primary: #030213; --sidebar-primary-foreground: o=
+klch(.985 0 0); --sidebar-accent: oklch(.97 0 0); --sidebar-accent-foregrou=
+nd: oklch(.205 0 0); --sidebar-border: oklch(.922 0 0); --sidebar-ring: okl=
+ch(.708 0 0); }
+
+.dark { --background: oklch(.145 0 0); --foreground: oklch(.985 0 0); --car=
+d: oklch(.145 0 0); --card-foreground: oklch(.985 0 0); --popover: oklch(.1=
+45 0 0); --popover-foreground: oklch(.985 0 0); --primary: oklch(.985 0 0);=
+ --primary-foreground: oklch(.205 0 0); --secondary: oklch(.269 0 0); --sec=
+ondary-foreground: oklch(.985 0 0); --muted: oklch(.269 0 0); --muted-foreg=
+round: oklch(.708 0 0); --accent: oklch(.269 0 0); --accent-foreground: okl=
+ch(.985 0 0); --destructive: oklch(.396 .141 25.723); --destructive-foregro=
+und: oklch(.637 .237 25.331); --border: oklch(.269 0 0); --input: oklch(.26=
+9 0 0); --ring: oklch(.439 0 0); --font-weight-medium: 500; --font-weight-n=
+ormal: 400; --chart-1: oklch(.488 .243 264.376); --chart-2: oklch(.696 .17 =
+162.48); --chart-3: oklch(.769 .188 70.08); --chart-4: oklch(.627 .265 303.=
+9); --chart-5: oklch(.645 .246 16.439); --sidebar: oklch(.205 0 0); --sideb=
+ar-foreground: oklch(.985 0 0); --sidebar-primary: oklch(.488 .243 264.376)=
+; --sidebar-primary-foreground: oklch(.985 0 0); --sidebar-accent: oklch(.2=
+69 0 0); --sidebar-accent-foreground: oklch(.985 0 0); --sidebar-border: ok=
+lch(.269 0 0); --sidebar-ring: oklch(.439 0 0); }
+
+html { font-size: var(--font-size); scroll-behavior: smooth; }
+
+@keyframes blob {=20
+  0% { transform: translate(0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px) scale(1); }
+}
+
+.animate-blob { animation: 7s ease 0s infinite normal none running blob; }
+
+.animation-delay-2000 { animation-delay: 2s; }
+
+@property --tw-translate-x { syntax: "*"; inherits: false; initial-value: 0=
+; }
+
+@property --tw-translate-y { syntax: "*"; inherits: false; initial-value: 0=
+; }
+
+@property --tw-translate-z { syntax: "*"; inherits: false; initial-value: 0=
+; }
+
+@property --tw-scale-x { syntax: "*"; inherits: false; initial-value: 1; }
+
+@property --tw-scale-y { syntax: "*"; inherits: false; initial-value: 1; }
+
+@property --tw-scale-z { syntax: "*"; inherits: false; initial-value: 1; }
+
+@property --tw-rotate-x { syntax: "*"; inherits: false; initial-value: rota=
+teX(0); }
+
+@property --tw-rotate-y { syntax: "*"; inherits: false; initial-value: rota=
+teY(0); }
+
+@property --tw-rotate-z { syntax: "*"; inherits: false; initial-value: rota=
+teZ(0); }
+
+@property --tw-skew-x { syntax: "*"; inherits: false; initial-value: skewX(=
+0); }
+
+@property --tw-skew-y { syntax: "*"; inherits: false; initial-value: skewY(=
+0); }
+
+@property --tw-space-y-reverse { syntax: "*"; inherits: false; initial-valu=
+e: 0; }
+
+@property --tw-border-style { syntax: "*"; inherits: false; initial-value: =
+solid; }
+
+@property --tw-gradient-position { syntax: "*"; inherits: false; }
+
+@property --tw-gradient-from { syntax: "<color>"; inherits: false; initial-=
+value: #0000; }
+
+@property --tw-gradient-via { syntax: "<color>"; inherits: false; initial-v=
+alue: #0000; }
+
+@property --tw-gradient-to { syntax: "<color>"; inherits: false; initial-va=
+lue: #0000; }
+
+@property --tw-gradient-stops { syntax: "*"; inherits: false; }
+
+@property --tw-gradient-via-stops { syntax: "*"; inherits: false; }
+
+@property --tw-gradient-from-position { syntax: "<length-percentage>"; inhe=
+rits: false; initial-value: 0%; }
+
+@property --tw-gradient-via-position { syntax: "<length-percentage>"; inher=
+its: false; initial-value: 50%; }
+
+@property --tw-gradient-to-position { syntax: "<length-percentage>"; inheri=
+ts: false; initial-value: 100%; }
+
+@property --tw-leading { syntax: "*"; inherits: false; }
+
+@property --tw-font-weight { syntax: "*"; inherits: false; }
+
+@property --tw-shadow { syntax: "*"; inherits: false; initial-value: 0 0 #0=
+000; }
+
+@property --tw-shadow-color { syntax: "*"; inherits: false; }
+
+@property --tw-shadow-alpha { syntax: "<percentage>"; inherits: false; init=
+ial-value: 100%; }
+
+@property --tw-inset-shadow { syntax: "*"; inherits: false; initial-value: =
+0 0 #0000; }
+
+@property --tw-inset-shadow-color { syntax: "*"; inherits: false; }
+
+@property --tw-inset-shadow-alpha { syntax: "<percentage>"; inherits: false=
+; initial-value: 100%; }
+
+@property --tw-ring-color { syntax: "*"; inherits: false; }
+
+@property --tw-ring-shadow { syntax: "*"; inherits: false; initial-value: 0=
+ 0 #0000; }
+
+@property --tw-inset-ring-color { syntax: "*"; inherits: false; }
+
+@property --tw-inset-ring-shadow { syntax: "*"; inherits: false; initial-va=
+lue: 0 0 #0000; }
+
+@property --tw-ring-inset { syntax: "*"; inherits: false; }
+
+@property --tw-ring-offset-width { syntax: "<length>"; inherits: false; ini=
+tial-value: 0; }
+
+@property --tw-ring-offset-color { syntax: "*"; inherits: false; initial-va=
+lue: #fff; }
+
+@property --tw-ring-offset-shadow { syntax: "*"; inherits: false; initial-v=
+alue: 0 0 #0000; }
+
+@property --tw-outline-style { syntax: "*"; inherits: false; initial-value:=
+ solid; }
+
+@property --tw-blur { syntax: "*"; inherits: false; }
+
+@property --tw-brightness { syntax: "*"; inherits: false; }
+
+@property --tw-contrast { syntax: "*"; inherits: false; }
+
+@property --tw-grayscale { syntax: "*"; inherits: false; }
+
+@property --tw-hue-rotate { syntax: "*"; inherits: false; }
+
+@property --tw-invert { syntax: "*"; inherits: false; }
+
+@property --tw-opacity { syntax: "*"; inherits: false; }
+
+@property --tw-saturate { syntax: "*"; inherits: false; }
+
+@property --tw-sepia { syntax: "*"; inherits: false; }
+
+@property --tw-drop-shadow { syntax: "*"; inherits: false; }
+
+@property --tw-drop-shadow-color { syntax: "*"; inherits: false; }
+
+@property --tw-drop-shadow-alpha { syntax: "<percentage>"; inherits: false;=
+ initial-value: 100%; }
+
+@property --tw-drop-shadow-size { syntax: "*"; inherits: false; }
+
+@property --tw-backdrop-blur { syntax: "*"; inherits: false; }
+
+@property --tw-backdrop-brightness { syntax: "*"; inherits: false; }
+
+@property --tw-backdrop-contrast { syntax: "*"; inherits: false; }
+
+@property --tw-backdrop-grayscale { syntax: "*"; inherits: false; }
+
+@property --tw-backdrop-hue-rotate { syntax: "*"; inherits: false; }
+
+@property --tw-backdrop-invert { syntax: "*"; inherits: false; }
+
+@property --tw-backdrop-opacity { syntax: "*"; inherits: false; }
+
+@property --tw-backdrop-saturate { syntax: "*"; inherits: false; }
+
+@property --tw-backdrop-sepia { syntax: "*"; inherits: false; }
+
+@property --tw-duration { syntax: "*"; inherits: false; }
+------MultipartBoundary--LU558Jcbm5I4BnugMsddYrayqFGk25XK0hRJmfDlbH----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-479bd0dd-5159-4c90-9d91-d00f3276bb56@mhtml.blink
+
+@charset "utf-8";
+
+#container .css-vh2lqg { width: var(--viewport-width-scaled); min-height: v=
+ar(--viewport-height-scaled); height: 100%; top: 0px; }
+
+#container .css-tzn6qh { display: block; position: absolute; }
+
+#container .css-6gkcj1 { transform-origin: left top; --max-layout-width: 20=
+48px; --min-layout-width: 320px; --max-font-size: 288px; --min-font-size: 6=
+px; --viewport-width-scaled: calc(var(--100dvw) / var(--viewport-scale)); -=
+-viewport-height-scaled: calc(var(--100dvh) / var(--viewport-scale)); --con=
+tent-width-scaled: calc(var(--content-width-unscaled) / var(--viewport-scal=
+e)); --content-margin-x-scaled: max(calc((var(--viewport-width) - var(--max=
+-layout-width)) / var(--viewport-scale) / 2), 0px); }
+
+#container .css-myl2ny { position: relative; flex: 1 0 0px; display: block;=
+ }
+
+#container .css-exq74d { min-width: 1px; min-height: 1px; width: 100%; heig=
+ht: 100dvh; }
+
+#container .css-j9f0op { width: 100%; height: 100%; }
+------MultipartBoundary--LU558Jcbm5I4BnugMsddYrayqFGk25XK0hRJmfDlbH----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-ba219346-8ba1-433c-8bd9-3b9fdf2667f9@mhtml.blink
+
+@charset "utf-8";
+
+body:has([data-breakpoint-id=3D"node-0_4"]) { background-color: rgb(255, 25=
+5, 255); }
+------MultipartBoundary--LU558Jcbm5I4BnugMsddYrayqFGk25XK0hRJmfDlbH----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-d85f427a-965b-4f85-a142-fdd6f330ea0c@mhtml.blink
+
+@charset "utf-8";
+=0A
+------MultipartBoundary--LU558Jcbm5I4BnugMsddYrayqFGk25XK0hRJmfDlbH----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-3e6a650b-d8de-4e0f-a765-763caea07505@mhtml.blink
+
+@charset "utf-8";
+
+@layer figreset, figoverridable, reset, theme, base, figutils, components, =
+utilities;
+
+@layer figreset {
+  :root {
+  --100dvw: 100vw; --100dvh: 100vh; --banner-height: 48px; --banner-height-=
+v2: 40px; --full-height-with-banner: calc(100dvh - var(--banner-height)); f=
+ont-synthesis: none; text-align: left;
+  & button { text-align: left; }
+}
+  @supports (width:100dvw) {
+  :root { --100dvw: 100dvw; --100dvh: 100dvh; }
+}
+}
+
+@media (max-width: 600px) {
+  .banner-v2-container { left: 0px !important; right: 0px !important; margi=
+n: 0px auto !important; }
+}
+
+.wrapper-with-banner .min-h-screen { min-height: var(--full-height-with-ban=
+ner); }
+
+.wrapper-with-banner .h-screen { height: var(--full-height-with-banner); }
+------MultipartBoundary--LU558Jcbm5I4BnugMsddYrayqFGk25XK0hRJmfDlbH------

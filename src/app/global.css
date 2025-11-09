@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+/* Grid background pattern */
+.bg-grid-slate-100 {
+  background-image: linear-gradient(to right, rgb(241 245 249 / 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(241 245 249 / 0.5) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
