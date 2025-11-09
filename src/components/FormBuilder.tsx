@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { QuestionTypeModal } from '@/components/QuestionTypeModal';
@@ -14,9 +14,16 @@ import type { ShortTextQuestion, LongTextQuestion, ChoiceQuestion, RangeQuestion
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
 import { Button } from './ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
+import { BranchFlowDiagram } from './BranchFlowDiagram';
 import { Plus, Type, AlignLeft, CheckSquare, LayoutGrid, FileText, User, Mail, Phone, MapPin, Globe, ChevronDown, Users, Star, CircleCheck, Sliders } from 'lucide-react';
+import { saveSurveyDraftToCookie } from '@/utils/cookie';
 
-export function FormBuilder() {
+interface FormBuilderProps {
+    initialSurvey?: Survey | null;
+}
+
+export function FormBuilder({ initialSurvey = null }: FormBuilderProps) {
     // 기본 섹션 생성 함수
     const createDefaultSection = (): Section => ({
         id: `section-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
@@ -24,16 +31,37 @@ export function FormBuilder() {
         order: 0,
     });
 
-    const [survey, setSurvey] = useState<Survey>({
-        title: '제목 없는 설문조사',
-        questions: [],
-        sections: [createDefaultSection()],
-    });
+    // 초기 survey 상태 설정 (서버에서 받은 쿠키 데이터 또는 기본값)
+    const getInitialSurvey = (): Survey => {
+        if (initialSurvey) {
+            // 섹션이 없으면 기본 섹션 생성
+            if (!initialSurvey.sections || initialSurvey.sections.length === 0) {
+                return {
+                    ...initialSurvey,
+                    sections: [createDefaultSection()],
+                };
+            }
+            return initialSurvey;
+        }
+        return {
+            title: '제목 없는 설문조사',
+            questions: [],
+            sections: [createDefaultSection()],
+        };
+    };
 
+    const [survey, setSurvey] = useState<Survey>(getInitialSurvey);
     const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
     const [isQuestionTypeModalOpen, setIsQuestionTypeModalOpen] = useState(false);
     const [modalSectionId, setModalSectionId] = useState<string | undefined>(undefined);
     const [modalTargetIndex, setModalTargetIndex] = useState<number | undefined>(undefined);
+
+    // 서버에서 쿠키를 불러왔을 때 토스트 메시지 표시
+    useEffect(() => {
+        if (initialSurvey) {
+            toast.success('임시저장된 설문을 불러왔습니다');
+        }
+    }, []);
 
     // 섹션별로 정렬된 섹션 목록
     const sortedSections = useMemo(() => {
@@ -657,13 +685,25 @@ export function FormBuilder() {
         toast.success('문항이 섹션으로 이동되었습니다');
     }, []);
 
+    const [isFlowModalOpen, setIsFlowModalOpen] = useState(false);
+
     const handlePreview = () => {
         toast.info('미리보기 기능 - 곧 제공됩니다!');
     };
 
+    const handleFlow = () => {
+        setIsFlowModalOpen(true);
+    };
+
     const handleSaveDraft = () => {
-        toast.success('임시저장이 완료되었습니다');
-        console.log('설문 데이터:', survey);
+        try {
+            saveSurveyDraftToCookie(survey);
+            toast.success('임시저장이 완료되었습니다');
+            console.log('설문 데이터:', survey);
+        } catch (error) {
+            console.error('임시저장 실패:', error);
+            toast.error('임시저장에 실패했습니다');
+        }
     };
 
     const handlePublish = () => {
@@ -743,6 +783,7 @@ export function FormBuilder() {
                     surveyTitle={survey.title}
                     onTitleChange={(title) => setSurvey((prev) => ({ ...prev, title }))}
                     onPreview={handlePreview}
+                    onFlow={handleFlow}
                     onSaveDraft={handleSaveDraft}
                     onPublish={handlePublish}
                 />
@@ -981,6 +1022,24 @@ export function FormBuilder() {
                     sectionId={modalSectionId}
                     targetIndex={modalTargetIndex}
                 />
+
+                {/* Flow Diagram Modal */}
+                <Dialog open={isFlowModalOpen} onOpenChange={setIsFlowModalOpen}>
+                    <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
+                        <DialogHeader>
+                            <DialogTitle>브랜치 플로우</DialogTitle>
+                            <DialogDescription>
+                                branchRules와 showRules에 따른 질문 간 흐름을 시각화합니다.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="flex-1 overflow-auto mt-4">
+                            <BranchFlowDiagram 
+                                questions={survey.questions} 
+                                currentQuestionId={selectedQuestionId || undefined}
+                            />
+                        </div>
+                    </DialogContent>
+                </Dialog>
             </div>
         </DndProvider>
     );

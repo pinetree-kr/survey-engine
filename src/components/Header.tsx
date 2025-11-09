@@ -1,12 +1,13 @@
 'use client';
 
-import { Eye, Save, Rocket } from 'lucide-react';
+import { Eye, Save, Rocket, GitBranch } from 'lucide-react';
 import { Button } from './ui/button';
 
 interface HeaderProps {
   surveyTitle: string;
   onTitleChange: (title: string) => void;
   onPreview: () => void;
+  onFlow?: () => void;
   onSaveDraft: () => void;
   onPublish: () => void;
 }
@@ -15,6 +16,7 @@ export function Header({
   surveyTitle,
   onTitleChange,
   onPreview,
+  onFlow,
   onSaveDraft,
   onPublish,
 }: HeaderProps) {
@@ -37,6 +39,16 @@ export function Header({
         </div>
 
         <div className="flex items-center gap-3">
+          {onFlow && (
+            <Button
+              variant="outline"
+              onClick={onFlow}
+              className="gap-2"
+            >
+              <GitBranch className="w-4 h-4" />
+              플로우
+            </Button>
+          )}
           <Button
             variant="outline"
             onClick={onPreview}
