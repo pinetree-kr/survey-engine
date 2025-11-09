@@ -5,12 +5,15 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-export function AuthForm() {
+interface AuthFormProps {
+  onSuccess?: () => void;
+}
+
+export function AuthForm({ onSuccess }: AuthFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -35,6 +38,9 @@ export function AuthForm() {
       toast.success("회원가입이 완료되었습니다! 이메일을 확인해주세요.");
       setEmail("");
       setPassword("");
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error: any) {
       toast.error(error.message || "회원가입 중 오류가 발생했습니다.");
     } finally {
@@ -55,6 +61,9 @@ export function AuthForm() {
       if (error) throw error;
 
       toast.success("로그인되었습니다!");
+      if (onSuccess) {
+        onSuccess();
+      }
       router.push("/builder");
       router.refresh();
     } catch (error: any) {
@@ -65,14 +74,8 @@ export function AuthForm() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto shadow-xl border-2">
-      <CardHeader className="space-y-2">
-        <CardTitle className="text-2xl font-bold">계정 만들기 / 로그인</CardTitle>
-        <CardDescription className="text-base">
-          그리다 폼을 사용하려면 계정이 필요합니다.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+    <div className="w-full">
+      <div>
         <Tabs defaultValue="signin" className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-6">
             <TabsTrigger value="signin">로그인</TabsTrigger>
@@ -151,8 +154,8 @@ export function AuthForm() {
             </form>
           </TabsContent>
         </Tabs>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 

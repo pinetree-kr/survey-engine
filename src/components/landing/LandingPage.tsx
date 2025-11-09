@@ -10,15 +10,110 @@
 
 import { Button } from "@/components/ui/button";
 import { AuthForm } from "@/components/auth/AuthForm";
-import { ArrowRight, CheckCircle2, GitBranch, Layers, Grip, BarChart3, Play } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { ArrowRight, CheckCircle2, GitBranch, Layers, Grip, BarChart3, Play, BookOpen, FileText, Code, HelpCircle, Mail, MessageSquare, Phone } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import { toast } from "sonner";
+
+function ContactFormComponent() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // mailto: 프로토콜을 사용하여 이메일 클라이언트 열기
+    const recipientEmail = "jiho@histree.dev";
+    const mailtoSubject = encodeURIComponent(subject || "문의");
+    const mailtoBody = encodeURIComponent(
+      `이름: ${name}\n이메일: ${email}\n\n메시지:\n${message}`
+    );
+
+    const mailtoLink = `mailto:${recipientEmail}?subject=${mailtoSubject}&body=${mailtoBody}`;
+    
+    window.location.href = mailtoLink;
+    
+    toast.success("이메일 클라이언트가 열렸습니다. 이메일을 확인하고 전송해주세요.");
+    
+    // 폼 초기화
+    setName("");
+    setEmail("");
+    setSubject("");
+    setMessage("");
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <label htmlFor="contact-name" className="text-sm font-medium">이름</label>
+          <input
+            id="contact-name"
+            type="text"
+            placeholder="이름"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="w-full h-11 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+        <div className="space-y-2">
+          <label htmlFor="contact-email" className="text-sm font-medium">이메일</label>
+          <input
+            id="contact-email"
+            type="email"
+            placeholder="your@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full h-11 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+        </div>
+      </div>
+      <div className="space-y-2">
+        <label htmlFor="contact-subject" className="text-sm font-medium">제목</label>
+        <input
+          id="contact-subject"
+          type="text"
+          placeholder="문의 제목"
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+          required
+          className="w-full h-11 px-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        />
+      </div>
+      <div className="space-y-2">
+        <label htmlFor="contact-message" className="text-sm font-medium">메시지</label>
+        <textarea
+          id="contact-message"
+          rows={6}
+          placeholder="문의 내용을 입력해주세요..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          required
+          className="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+        />
+      </div>
+      <Button
+        type="submit"
+        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+      >
+        문의 보내기
+        <ArrowRight className="ml-2 w-5 h-5" />
+      </Button>
+    </form>
+  );
+}
 
 export function LandingPage() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const supabase = createClient();
 
   useEffect(() => {
@@ -45,8 +140,8 @@ export function LandingPage() {
           <p className="text-lg text-slate-600 mb-8">
             그리다 폼 빌더로 이동하여 첫 번째 설문을 만들어보세요.
           </p>
-          <Button 
-            size="lg" 
+          <Button
+            size="lg"
             onClick={() => router.push("/builder")}
             className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
           >
@@ -62,7 +157,7 @@ export function LandingPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+      <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 shadow-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600">
@@ -85,16 +180,16 @@ export function LandingPage() {
             </Link>
           </nav>
           <div className="flex items-center gap-3">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               className="hidden sm:inline-flex h-9"
-              onClick={() => document.getElementById('auth-form')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => setIsAuthModalOpen(true)}
             >
               로그인
             </Button>
-            <Button 
+            <Button
               className="h-9 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
-              onClick={() => document.getElementById('auth-form')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => setIsAuthModalOpen(true)}
             >
               회원가입
             </Button>
@@ -121,15 +216,15 @@ export function LandingPage() {
                   </p>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                  <Button 
+                  <Button
                     size="lg"
-                    onClick={() => document.getElementById('auth-form')?.scrollIntoView({ behavior: 'smooth' })}
+                    onClick={() => setIsAuthModalOpen(true)}
                     className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white h-10 px-6"
                   >
                     무료로 시작하기
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                  <Button 
+                  <Button
                     size="lg"
                     variant="outline"
                     className="h-10 px-6 border"
@@ -327,38 +422,174 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Auth Section */}
-        <section id="auth-form" className="py-20 md:py-32 bg-gradient-to-b from-white to-blue-50/30">
+        {/* Documentation Section */}
+        <section id="docs" className="py-20 md:py-32 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                {/* Left: Description */}
-                <div>
-                  <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-slate-900">
-                    오늘 바로 첫 번째 폼을 만들어보세요!
-                  </h2>
-                  <p className="text-lg sm:text-xl text-slate-600 mb-8 leading-relaxed">
-                    그리다 폼으로 더 똑똑하고 매력적인 설문을 만드는 수천 명의 전문가들과 함께하세요.
-                  </p>
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-700">무료 플랜 제공</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-700">신용카드 불필요</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-700">언제든지 취소 가능</span>
-                    </div>
-                  </div>
+            <div className="text-center space-y-4 mb-16">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
+                시작하기{" "}
+                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  가이드
+                </span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                그리다 폼을 빠르게 시작하고 활용하는 방법을 알아보세요.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+              <div className="bg-card text-card-foreground flex flex-col gap-4 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300 border border-gray-200 cursor-pointer group">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <BookOpen className="w-6 h-6 text-blue-600" />
                 </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold">시작 가이드</h3>
+                  <p className="text-sm text-gray-600">
+                    첫 번째 설문을 만드는 방법을 단계별로 알아보세요.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-blue-600 mt-auto">
+                  <span>자세히 보기</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="bg-card text-card-foreground flex flex-col gap-4 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300 border border-gray-200 cursor-pointer group">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <FileText className="w-6 h-6 text-blue-600" />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold">API 문서</h3>
+                  <p className="text-sm text-gray-600">
+                    RESTful API를 사용하여 설문을 프로그래밍 방식으로 관리하세요.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-blue-600 mt-auto">
+                  <span>자세히 보기</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="bg-card text-card-foreground flex flex-col gap-4 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300 border border-gray-200 cursor-pointer group">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Code className="w-6 h-6 text-blue-600" />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold">예제 및 샘플</h3>
+                  <p className="text-sm text-gray-600">
+                    다양한 사용 사례와 예제 코드를 확인하세요.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-blue-600 mt-auto">
+                  <span>자세히 보기</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="bg-card text-card-foreground flex flex-col gap-4 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300 border border-gray-200 cursor-pointer group">
+                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <HelpCircle className="w-6 h-6 text-blue-600" />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold">FAQ</h3>
+                  <p className="text-sm text-gray-600">
+                    자주 묻는 질문과 답변을 확인하세요.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-blue-600 mt-auto">
+                  <span>자세히 보기</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-                {/* Right: Auth Form */}
-                <div className="lg:sticky lg:top-8">
-                  <AuthForm />
+        {/* Contact Section */}
+        <section id="contact" className="py-20 md:py-32 bg-gradient-to-b from-white to-blue-50/30">
+          <div className="container mx-auto px-4">
+            <div className="text-center space-y-4 mb-16">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
+                문의하기
+              </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                궁금한 점이 있으신가요? 언제든지 연락주세요.
+              </p>
+            </div>
+            <div className="max-w-4xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-8 mb-12">
+                <div className="text-center space-y-4">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 to-purple-100">
+                    <Mail className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold">이메일</h3>
+                  <p className="text-sm text-gray-600">
+                    jiho@histree.dev
+                  </p>
+                </div>
+                {/* <div className="text-center space-y-4">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 to-purple-100">
+                    <MessageSquare className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold">채팅</h3>
+                  <p className="text-sm text-gray-600">
+                    실시간 채팅 지원
+                  </p>
+                </div> */}
+                <div className="text-center space-y-4">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-blue-100 to-purple-100">
+                    <Phone className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold">전화</h3>
+                  <p className="text-sm text-gray-600">
+                    010-5135-9662
+                  </p>
+                </div>
+              </div>
+              <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-gray-200">
+                <h3 className="text-2xl font-bold mb-6 text-center">문의 양식</h3>
+                <ContactFormComponent />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-20 md:py-32 bg-gradient-to-b from-white to-blue-50/30">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center space-y-8">
+              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900">
+                오늘 바로 첫 번째 폼을 만들어보세요!
+              </h2>
+              <p className="text-lg sm:text-xl text-slate-600 leading-relaxed">
+                그리다 폼으로 더 똑똑하고 매력적인 설문을 만드는 수천 명의 전문가들과 함께하세요.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button
+                  size="lg"
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white h-10 px-6"
+                >
+                  무료로 시작하기
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="h-10 px-6 border"
+                >
+                  로그인
+                </Button>
+              </div>
+              <div className="flex flex-col sm:flex-row items-center gap-6 text-sm text-gray-600 justify-center pt-4">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  <span>무료 플랜 제공</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  <span>신용카드 불필요</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-500" />
+                  <span>언제든지 취소 가능</span>
                 </div>
               </div>
             </div>
@@ -380,18 +611,18 @@ export function LandingPage() {
                 그리다 폼으로 더 똑똑하고 매력적인 설문을 만드는 수천 명의 전문가들과 함께하세요.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                <Button 
+                <Button
                   size="lg"
-                  onClick={() => document.getElementById('auth-form')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => setIsAuthModalOpen(true)}
                   className="bg-white text-blue-600 hover:bg-gray-100 h-10 px-6"
                 >
                   무료로 회원가입
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button 
+                <Button
                   size="lg"
                   variant="outline"
-                  onClick={() => document.getElementById('auth-form')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => setIsAuthModalOpen(true)}
                   className="border-white text-white hover:bg-white/10 h-10 px-6"
                 >
                   로그인
@@ -469,6 +700,21 @@ export function LandingPage() {
           </div>
         </div>
       </footer>
+
+      {/* Auth Modal */}
+      <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
+        <DialogContent className="sm:max-w-md p-0 overflow-hidden bg-white border-gray-200">
+          <DialogHeader className="px-6 py-4 border-b border-gray-200">
+            <DialogTitle>계정 만들기 / 로그인</DialogTitle>
+            <DialogDescription>
+              그리다 폼을 사용하려면 계정이 필요합니다.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="px-6 py-4 bg-white">
+            <AuthForm onSuccess={() => setIsAuthModalOpen(false)} />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
