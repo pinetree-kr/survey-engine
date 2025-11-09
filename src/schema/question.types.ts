@@ -92,6 +92,7 @@ export type BaseQuestion = {
   description?: string;
   images?: ImageObj[];
   required?: boolean;
+  branchRules?: BranchRule[];
   showRules?: ShowRule[];
   design?: {
     themeColor?: string;
@@ -128,7 +129,7 @@ export type ChoiceQuestion = BaseQuestion & {
   isMultiple?: boolean;
   isDropdown?: boolean;
   isBoolean?: boolean;
-  branchRules?: BranchRule[];
+  // branchRules?: BranchRule[];
 };
 
 export type RangeQuestion = BaseQuestion & {
@@ -140,7 +141,7 @@ export type ComplexChoiceQuestion = BaseQuestion & {
   type: 'complex_choice';
   complexItems: ComplexItem[];
   isMultiple?: boolean;
-  branchRules?: BranchRule[];
+  // branchRules?: BranchRule[];
 };
 
 export type ComplexInputQuestion = BaseQuestion & {

@@ -26,7 +26,7 @@ export function Header({
         <div className="flex items-center gap-4 flex-1">
           <div className="text-indigo-600">
             <svg className="w-8 h-8" viewBox="0 0 32 32" fill="currentColor">
-              <path d="M16 4L4 10v12l12 6 12-6V10L16 4zm0 2.5l9 4.5v9l-9 4.5-9-4.5v-9l9-4.5z"/>
+              <path d="M16 4L4 10v12l12 6 12-6V10L16 4zm0 2.5l9 4.5v9l-9 4.5-9-4.5v-9l9-4.5z" />
             </svg>
           </div>
           <input
@@ -46,7 +46,7 @@ export function Header({
               className="gap-2"
             >
               <GitBranch className="w-4 h-4" />
-              플로우
+              흐름도
             </Button>
           )}
           <Button
@@ -57,7 +57,7 @@ export function Header({
             <Eye className="w-4 h-4" />
             미리보기
           </Button>
-          
+
           <Button
             variant="outline"
             onClick={onSaveDraft}
@@ -66,7 +66,7 @@ export function Header({
             <Save className="w-4 h-4" />
             임시저장
           </Button>
-          
+
           <Button
             onClick={onPublish}
             className="gap-2 bg-indigo-600 hover:bg-indigo-700"

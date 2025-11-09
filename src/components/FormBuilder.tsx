@@ -1025,17 +1025,19 @@ export function FormBuilder({ initialSurvey = null }: FormBuilderProps) {
 
                 {/* Flow Diagram Modal */}
                 <Dialog open={isFlowModalOpen} onOpenChange={setIsFlowModalOpen}>
-                    <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
-                        <DialogHeader>
-                            <DialogTitle>브랜치 플로우</DialogTitle>
+                    <DialogContent className="w-screen h-screen max-w-none lg:max-w-none sm:max-w-none md:max-w-none max-h-none m-0 rounded-none overflow-hidden flex flex-col p-0">
+                        <DialogHeader className="px-6 py-4 border-b border-gray-200">
+                            <DialogTitle>문항 흐름도</DialogTitle>
                             <DialogDescription>
-                                branchRules와 showRules에 따른 질문 간 흐름을 시각화합니다.
+                                분기에 따른 문항 간 흐름을 시각화합니다. 문항을 드래그하여 위치를 변경할 수 있습니다.
                             </DialogDescription>
                         </DialogHeader>
-                        <div className="flex-1 overflow-auto mt-4">
-                            <BranchFlowDiagram 
-                                questions={survey.questions} 
+                        <div className="flex-1 overflow-auto">
+                            <BranchFlowDiagram
+                                questions={survey.questions}
                                 currentQuestionId={selectedQuestionId || undefined}
+                                onQuestionMove={handleMoveQuestion}
+                                onQuestionSelect={setSelectedQuestionId}
                             />
                         </div>
                     </DialogContent>
