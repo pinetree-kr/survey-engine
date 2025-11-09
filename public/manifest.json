@@ -1,6 +1,6 @@
 {
-  "name": "그리다 폼 (Grida Form)",
-  "short_name": "그리다 폼",
+  "name": "그리다, 폼 (Grida, Form)",
+  "short_name": "그리다, 폼",
   "description": "아름답고 직관적인 설문 만들기",
   "start_url": "/",
   "display": "standalone",

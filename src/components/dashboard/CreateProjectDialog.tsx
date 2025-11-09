@@ -6,13 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  Modal,
+  ModalContent,
+  ModalDescription,
+  ModalHeader,
+  ModalTitle,
+  ModalBody,
+  ModalActions,
+} from "@/components/ui/modal";
 import { toast } from "sonner";
 
 interface CreateProjectDialogProps {
@@ -42,7 +43,8 @@ export function CreateProjectDialog({
 
     setLoading(true);
     try {
-      const { data, error } = await supabase
+      // 프로젝트 생성
+      const { data: project, error: projectError } = await supabase
         .from("projects")
         .insert([
           {
@@ -54,7 +56,20 @@ export function CreateProjectDialog({
         .select()
         .single();
 
-      if (error) throw error;
+      if (projectError) throw projectError;
+
+      // 프로젝트 생성자를 project_members에 추가
+      const { error: memberError } = await supabase
+        .from("project_members")
+        .insert([
+          {
+            project_id: project.id,
+            user_id: userId,
+            role: "owner",
+          },
+        ]);
+
+      if (memberError) throw memberError;
 
       toast.success("프로젝트가 생성되었습니다.");
       setName("");
@@ -69,16 +84,16 @@ export function CreateProjectDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>새 프로젝트 만들기</DialogTitle>
-          <DialogDescription>
+    <Modal open={open} onOpenChange={onOpenChange}>
+      <ModalContent width="md">
+        <ModalHeader paddingBottom={true}>
+          <ModalTitle>새 프로젝트 만들기</ModalTitle>
+          <ModalDescription>
             프로젝트를 생성하여 설문 폼을 관리하세요.
-          </DialogDescription>
-        </DialogHeader>
+          </ModalDescription>
+        </ModalHeader>
         <form onSubmit={handleSubmit}>
-          <div className="space-y-4 py-4">
+          <ModalBody>
             <div className="space-y-2">
               <Label htmlFor="project-name">프로젝트 이름 *</Label>
               <Input
@@ -98,27 +113,18 @@ export function CreateProjectDialog({
                 placeholder="프로젝트에 대한 간단한 설명"
               />
             </div>
-          </div>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              disabled={loading}
-            >
-              취소
-            </Button>
-            <Button
-              type="submit"
-              disabled={loading}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
-            >
-              {loading ? "생성 중..." : "생성"}
-            </Button>
-          </DialogFooter>
+          </ModalBody>
+          <ModalActions
+            cancelLabel="취소"
+            confirmLabel={loading ? "생성 중..." : "생성"}
+            onCancel={() => onOpenChange(false)}
+            confirmType="submit"
+            isLoading={loading}
+            disabled={loading}
+          />
         </form>
-      </DialogContent>
-    </Dialog>
+      </ModalContent>
+    </Modal>
   );
 }
 

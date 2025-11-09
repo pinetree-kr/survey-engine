@@ -9,15 +9,14 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
 
-interface AuthFormProps {
+interface SignUpFormProps {
   onSuccess?: () => void;
 }
 
-export function AuthForm({ onSuccess }: AuthFormProps) {
+export function SignUpForm({ onSuccess }: SignUpFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
@@ -42,33 +41,11 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
       if (onSuccess) {
         onSuccess();
       }
-    } catch (error: any) {
-      toast.error(error.message || "회원가입 중 오류가 발생했습니다.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) throw error;
-
-      toast.success("로그인되었습니다!");
-      if (onSuccess) {
-        onSuccess();
-      }
-      router.push("/dashboard");
+      // 로그인 화면으로 리다이렉트
+      router.push("/auth/sign-in");
       router.refresh();
     } catch (error: any) {
-      toast.error(error.message || "로그인 중 오류가 발생했습니다.");
+      toast.error(error.message || "회원가입 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
@@ -78,18 +55,12 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
     <div className="w-full bg-white rounded-2xl shadow-xl p-8 md:p-10">
       {/* 제목 및 환영 메시지 */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          {isSignUp ? "회원가입" : "로그인"}
-        </h2>
-        <p className="text-sm text-gray-600">
-          {isSignUp
-            ? "그리다, 폼에 오신 것을 환영합니다"
-            : "그리다, 폼에 오신 것을 환영합니다"}
-        </p>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">회원가입</h2>
+        <p className="text-sm text-gray-600">그리다, 폼에 오신 것을 환영합니다</p>
       </div>
 
-      {/* 로그인/회원가입 폼 */}
-      <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-5">
+      {/* 회원가입 폼 */}
+      <form onSubmit={handleSignUp} className="space-y-5">
         <div className="space-y-2">
           <Label htmlFor="email" className="text-sm font-medium text-gray-700">
             이메일
@@ -111,70 +82,50 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
           <Input
             id="password"
             type="password"
-            placeholder={isSignUp ? "비밀번호를 입력하세요" : "비밀번호를 입력하세요"}
+            placeholder="비밀번호를 입력하세요"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            minLength={isSignUp ? 6 : undefined}
+            minLength={6}
             className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
           />
-          {isSignUp && (
-            <p className="text-xs text-gray-500">최소 6자 이상 입력해주세요.</p>
-          )}
+          <p className="text-xs text-gray-500">최소 6자 이상 입력해주세요.</p>
         </div>
 
-        {/* 로그인 버튼 */}
+        {/* 회원가입 버튼 */}
         <Button
           type="submit"
           className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-md"
           disabled={loading}
         >
-          {loading ? "처리 중..." : isSignUp ? "회원가입" : "로그인"}
+          {loading ? "처리 중..." : "회원가입"}
         </Button>
       </form>
 
-      {/* 약관 링크 (회원가입 모드일 때만) */}
-      {isSignUp && (
-        <div className="mt-4 text-center">
-          <p className="text-xs text-gray-500">
-            회원가입 시{" "}
-            <Link
-              href="/terms"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-700 underline"
-            >
-              이용약관
-            </Link>
-            {" 및 "}
-            <Link
-              href="/terms/privacy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-700 underline"
-            >
-              개인정보처리방침
-            </Link>
-            에 동의하게 됩니다.
-          </p>
-        </div>
-      )}
-
-      {/* 비밀번호 찾기 링크 (로그인 모드일 때만) */}
-      {!isSignUp && (
-        <div className="mt-4 text-center">
+      {/* 약관 링크 */}
+      <div className="mt-4 text-center">
+        <p className="text-xs text-gray-500">
+          회원가입 시{" "}
           <Link
-            href="#"
-            className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
-            onClick={(e) => {
-              e.preventDefault();
-              toast.info("비밀번호 찾기 기능은 준비 중입니다.");
-            }}
+            href="/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-700 underline"
           >
-            비밀번호를 잊으셨나요?
+            이용약관
           </Link>
-        </div>
-      )}
+          {" 및 "}
+          <Link
+            href="/terms/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 hover:text-blue-700 underline"
+          >
+            개인정보처리방침
+          </Link>
+          에 동의하게 됩니다.
+        </p>
+      </div>
 
       {/* 구분선 */}
       <div className="relative my-6">
@@ -215,21 +166,16 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
         </Button>
       </div>
 
-      {/* 회원가입/로그인 전환 링크 */}
+      {/* 로그인 링크 */}
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">
-          {isSignUp ? "이미 계정이 있으신가요? " : "계정이 없으신가요? "}
-          <button
-            type="button"
-            onClick={() => {
-              setIsSignUp(!isSignUp);
-              setEmail("");
-              setPassword("");
-            }}
+          이미 계정이 있으신가요?{" "}
+          <Link
+            href="/auth/sign-in"
             className="text-blue-600 hover:text-blue-700 font-medium"
           >
-            {isSignUp ? "로그인" : "회원가입"}
-          </button>
+            로그인
+          </Link>
         </p>
       </div>
     </div>

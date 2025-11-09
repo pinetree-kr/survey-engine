@@ -148,12 +148,7 @@ export type {
   ImageObj,
   Operator,
   Option,
-  CompositeItem,
-  SingleCondition,
-  ConditionGroup,
-  Condition,
   BranchRule,
-  ShowCondition,
+  ShowRule,
   Question,
 } from "./question.types";
-

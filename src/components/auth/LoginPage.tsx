@@ -12,14 +12,14 @@ export function LoginPage() {
         <div className="flex items-center justify-center gap-2 mb-3">
           <Image
             src="/icons/logo-192.png"
-            alt="그리다 폼 로고"
+            alt="그리다, 폼 로고"
             width={64}
             height={64}
             className="rounded-full shadow-md"
             priority
           />
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">그리다 폼</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">그리다, 폼</h1>
         <p className="text-sm text-gray-600">아름답고 직관적인 설문 만들기</p>
       </div>
 
@@ -31,7 +31,7 @@ export function LoginPage() {
       {/* 하단 저작권 정보 */}
       <div className="mt-8 text-center">
         <p className="text-xs text-gray-500">
-          © {new Date().getFullYear()} 그리다 폼 (Grida Form). All rights reserved.
+          © {new Date().getFullYear()} 그리다, 폼 (Grida, Form). All rights reserved.
         </p>
       </div>
     </div>

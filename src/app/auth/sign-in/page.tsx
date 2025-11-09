@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { SignInForm } from "@/components/auth/SignInForm";
 
-export default async function Home() {
+export default async function SignInPage() {
   const supabase = await createClient();
   const {
     data: { user },
@@ -12,7 +13,8 @@ export default async function Home() {
     redirect("/dashboard");
   }
 
-  // 로그인되지 않은 사용자는 로그인 페이지로 리다이렉트
-  redirect("/auth/sign-in");
+  return (
+    <SignInForm />
+  );
 }
 

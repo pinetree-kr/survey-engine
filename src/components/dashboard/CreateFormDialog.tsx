@@ -6,13 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  Modal,
+  ModalContent,
+  ModalDescription,
+  ModalHeader,
+  ModalTitle,
+  ModalBody,
+  ModalActions,
+} from "@/components/ui/modal";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -77,16 +78,16 @@ export function CreateFormDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>새 설문 폼 만들기</DialogTitle>
-          <DialogDescription>
+    <Modal open={open} onOpenChange={onOpenChange}>
+      <ModalContent width="md">
+        <ModalHeader>
+          <ModalTitle>새 설문 폼 만들기</ModalTitle>
+          <ModalDescription>
             프로젝트에 새로운 설문 폼을 추가하세요.
-          </DialogDescription>
-        </DialogHeader>
+          </ModalDescription>
+        </ModalHeader>
         <form onSubmit={handleSubmit}>
-          <div className="space-y-4 py-4">
+          <ModalBody>
             <div className="space-y-2">
               <Label htmlFor="form-name">설문 폼 이름 *</Label>
               <Input
@@ -97,27 +98,18 @@ export function CreateFormDialog({
                 required
               />
             </div>
-          </div>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-              disabled={loading}
-            >
-              취소
-            </Button>
-            <Button
-              type="submit"
-              disabled={loading || !projectId}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
-            >
-              {loading ? "생성 중..." : "생성"}
-            </Button>
-          </DialogFooter>
+          </ModalBody>
+          <ModalActions
+            cancelLabel="취소"
+            confirmLabel={loading ? "생성 중..." : "생성"}
+            onCancel={() => onOpenChange(false)}
+            confirmType="submit"
+            isLoading={loading}
+            disabled={loading || !projectId}
+          />
         </form>
-      </DialogContent>
-    </Dialog>
+      </ModalContent>
+    </Modal>
   );
 }
 

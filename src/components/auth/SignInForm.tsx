@@ -9,45 +9,16 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
 
-interface AuthFormProps {
+interface SignInFormProps {
   onSuccess?: () => void;
 }
 
-export function AuthForm({ onSuccess }: AuthFormProps) {
+export function SignInForm({ onSuccess }: SignInFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false);
   const router = useRouter();
   const supabase = createClient();
-
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${location.origin}/auth/callback`,
-        },
-      });
-
-      if (error) throw error;
-
-      toast.success("회원가입이 완료되었습니다! 이메일을 확인해주세요.");
-      setEmail("");
-      setPassword("");
-      if (onSuccess) {
-        onSuccess();
-      }
-    } catch (error: any) {
-      toast.error(error.message || "회원가입 중 오류가 발생했습니다.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,18 +49,12 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
     <div className="w-full bg-white rounded-2xl shadow-xl p-8 md:p-10">
       {/* 제목 및 환영 메시지 */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          {isSignUp ? "회원가입" : "로그인"}
-        </h2>
-        <p className="text-sm text-gray-600">
-          {isSignUp
-            ? "그리다, 폼에 오신 것을 환영합니다"
-            : "그리다, 폼에 오신 것을 환영합니다"}
-        </p>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">로그인</h2>
+        <p className="text-sm text-gray-600">그리다, 폼에 오신 것을 환영합니다</p>
       </div>
 
-      {/* 로그인/회원가입 폼 */}
-      <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-5">
+      {/* 로그인 폼 */}
+      <form onSubmit={handleSignIn} className="space-y-5">
         <div className="space-y-2">
           <Label htmlFor="email" className="text-sm font-medium text-gray-700">
             이메일
@@ -111,16 +76,12 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
           <Input
             id="password"
             type="password"
-            placeholder={isSignUp ? "비밀번호를 입력하세요" : "비밀번호를 입력하세요"}
+            placeholder="비밀번호를 입력하세요"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            minLength={isSignUp ? 6 : undefined}
             className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
           />
-          {isSignUp && (
-            <p className="text-xs text-gray-500">최소 6자 이상 입력해주세요.</p>
-          )}
         </div>
 
         {/* 로그인 버튼 */}
@@ -129,52 +90,23 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
           className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg shadow-md"
           disabled={loading}
         >
-          {loading ? "처리 중..." : isSignUp ? "회원가입" : "로그인"}
+          {loading ? "처리 중..." : "로그인"}
         </Button>
       </form>
 
-      {/* 약관 링크 (회원가입 모드일 때만) */}
-      {isSignUp && (
-        <div className="mt-4 text-center">
-          <p className="text-xs text-gray-500">
-            회원가입 시{" "}
-            <Link
-              href="/terms"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-700 underline"
-            >
-              이용약관
-            </Link>
-            {" 및 "}
-            <Link
-              href="/terms/privacy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-700 underline"
-            >
-              개인정보처리방침
-            </Link>
-            에 동의하게 됩니다.
-          </p>
-        </div>
-      )}
-
-      {/* 비밀번호 찾기 링크 (로그인 모드일 때만) */}
-      {!isSignUp && (
-        <div className="mt-4 text-center">
-          <Link
-            href="#"
-            className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
-            onClick={(e) => {
-              e.preventDefault();
-              toast.info("비밀번호 찾기 기능은 준비 중입니다.");
-            }}
-          >
-            비밀번호를 잊으셨나요?
-          </Link>
-        </div>
-      )}
+      {/* 비밀번호 찾기 링크 */}
+      <div className="mt-4 text-center">
+        <Link
+          href="#"
+          className="text-sm text-gray-600 hover:text-blue-600 transition-colors"
+          onClick={(e) => {
+            e.preventDefault();
+            toast.info("비밀번호 찾기 기능은 준비 중입니다.");
+          }}
+        >
+          비밀번호를 잊으셨나요?
+        </Link>
+      </div>
 
       {/* 구분선 */}
       <div className="relative my-6">
@@ -215,21 +147,16 @@ export function AuthForm({ onSuccess }: AuthFormProps) {
         </Button>
       </div>
 
-      {/* 회원가입/로그인 전환 링크 */}
+      {/* 회원가입 링크 */}
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">
-          {isSignUp ? "이미 계정이 있으신가요? " : "계정이 없으신가요? "}
-          <button
-            type="button"
-            onClick={() => {
-              setIsSignUp(!isSignUp);
-              setEmail("");
-              setPassword("");
-            }}
+          계정이 없으신가요?{" "}
+          <Link
+            href="/auth/sign-up"
             className="text-blue-600 hover:text-blue-700 font-medium"
           >
-            {isSignUp ? "로그인" : "회원가입"}
-          </button>
+            회원가입
+          </Link>
         </p>
       </div>
     </div>

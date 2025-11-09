@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * 그리다 폼 (Grida Form) Landing Page
+ * 그리다, 폼 (Grida, Form) Landing Page
  * 
  * Figma 디자인 기반 랜딩 페이지
  * 베이스: https://linter-set-72355018.figma.site/
@@ -138,7 +138,7 @@ export function LandingPage() {
             환영합니다!
           </h1>
           <p className="text-lg text-slate-600 mb-8">
-            그리다 폼 빌더로 이동하여 첫 번째 설문을 만들어보세요.
+            그리다, 폼 빌더로 이동하여 첫 번째 설문을 만들어보세요.
           </p>
           <Button
             size="lg"
@@ -163,7 +163,7 @@ export function LandingPage() {
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600">
               <span className="text-white text-sm font-bold">G</span>
             </div>
-            <span className="text-xl font-medium">그리다 폼</span>
+            <span className="text-xl font-medium">그리다, 폼</span>
           </div>
           <nav className="hidden md:flex items-center gap-8">
             <Link href="#features" className="text-gray-600 hover:text-gray-900 transition-colors">
@@ -249,7 +249,7 @@ export function LandingPage() {
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-gradient-to-br from-blue-100 to-purple-100 aspect-video flex items-center justify-center">
                   <div className="text-center p-8">
                     <div className="text-4xl mb-4">📊</div>
-                    <p className="text-gray-600">그리다 폼 대시보드</p>
+                    <p className="text-gray-600">그리다, 폼 대시보드</p>
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-600/20 to-transparent pointer-events-none"></div>
                 </div>
@@ -433,7 +433,7 @@ export function LandingPage() {
                 </span>
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                그리다 폼을 빠르게 시작하고 활용하는 방법을 알아보세요.
+                그리다, 폼을 빠르게 시작하고 활용하는 방법을 알아보세요.
               </p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -558,7 +558,7 @@ export function LandingPage() {
                 오늘 바로 첫 번째 폼을 만들어보세요!
               </h2>
               <p className="text-lg sm:text-xl text-slate-600 leading-relaxed">
-                그리다 폼으로 더 똑똑하고 매력적인 설문을 만드는 수천 명의 전문가들과 함께하세요.
+                그리다, 폼으로 더 똑똑하고 매력적인 설문을 만드는 수천 명의 전문가들과 함께하세요.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
@@ -608,7 +608,7 @@ export function LandingPage() {
                 오늘 바로 첫 번째 폼을 만들어보세요!
               </h2>
               <p className="text-xl text-blue-100">
-                그리다 폼으로 더 똑똑하고 매력적인 설문을 만드는 수천 명의 전문가들과 함께하세요.
+                그리다, 폼으로 더 똑똑하고 매력적인 설문을 만드는 수천 명의 전문가들과 함께하세요.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                 <Button
@@ -656,7 +656,7 @@ export function LandingPage() {
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-purple-600">
                   <span className="text-white text-sm font-bold">G</span>
                 </div>
-                <span className="text-white text-xl font-medium">그리다 폼</span>
+                <span className="text-white text-xl font-medium">그리다, 폼</span>
               </div>
               <p className="text-sm">
                 손쉬운 분기 로직과 적응형 폼으로 더 똑똑한 설문을 만드세요.
@@ -691,7 +691,7 @@ export function LandingPage() {
             </div>
           </div>
           <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-            <p>© 2025 그리다 폼 (Grida Form). All rights reserved.</p>
+            <p>© 2025 그리다, 폼 (Grida, Form). All rights reserved.</p>
             <div className="flex gap-6">
               <Link href="#twitter" className="hover:text-white transition-colors">트위터</Link>
               <Link href="#linkedin" className="hover:text-white transition-colors">링크드인</Link>
@@ -707,7 +707,7 @@ export function LandingPage() {
           <DialogHeader className="px-6 py-4 border-b border-gray-200">
             <DialogTitle>계정 만들기 / 로그인</DialogTitle>
             <DialogDescription>
-              그리다 폼을 사용하려면 계정이 필요합니다.
+              그리다, 폼을 사용하려면 계정이 필요합니다.
             </DialogDescription>
           </DialogHeader>
           <div className="px-6 py-4 bg-white">
