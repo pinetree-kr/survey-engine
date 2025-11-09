@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 import {
   ReactFlow,
   Node,
@@ -39,7 +39,8 @@ import {
   CircleCheck,
   ChevronDown,
   XCircle,
-  GitBranch
+  GitBranch,
+  Eye
 } from 'lucide-react';
 import { evaluateShowConditions } from '@/engine/visibility';
 import type { AnswersMap } from '@/engine/visibility';
@@ -120,8 +121,8 @@ function getQuestionBadgeColor(question: Question): string {
     case 'choice':
     case 'complex_choice':
       return 'bg-green-100 text-green-700';
-    case 'description':
-      return 'bg-blue-100 text-blue-700';
+    // case 'description':
+    //   return 'bg-blue-100 text-blue-700';
     default:
       return 'bg-gray-100 text-gray-700';
   }
@@ -187,79 +188,165 @@ function formatBranchNode(node: any, question: Question): string {
   return '';
 }
 
+// ShowNode 포맷팅 (refQuestionId로 참조 질문을 찾아서 포맷팅)
+function formatShowNode(node: any, refQuestion: Question | undefined): string {
+  if (!node) return '항상 표시';
+
+  if (!refQuestion) return '조건 없음';
+
+  if (node.kind === 'predicate') {
+    const operator = node.op || 'eq';
+    const value = node.value;
+
+    // choice 타입인 경우 선택지 라벨 찾기
+    if (isChoiceQuestion(refQuestion) && !isComplexChoiceQuestion(refQuestion) && refQuestion.options) {
+      const option = refQuestion.options.find(opt => opt.key === value);
+      if (option) {
+        if (operator === 'eq') {
+          return option.key;
+        }
+        const operatorSymbol: Record<string, string> = {
+          eq: '=',
+          ne: '≠',
+          gt: '>',
+          gte: '≥',
+          lt: '<',
+          lte: '≤',
+        };
+        return `(${operatorSymbol[operator] || operator} ${option.label})`;
+      }
+    }
+
+    const operatorSymbol: Record<string, string> = {
+      eq: '=',
+      ne: '≠',
+      gt: '>',
+      gte: '≥',
+      lt: '<',
+      lte: '≤',
+    };
+    return `(${operatorSymbol[operator] || operator} ${value})`;
+  }
+
+  if (node.kind === 'group') {
+    const children = node.children || [];
+    if (children.length === 0) return '';
+
+    const operator = node.op || 'and';
+    const formattedNodes = children
+      .map((n: any) => formatShowNode(n, refQuestion))
+      .filter((s: string) => s.length > 0);
+
+    if (formattedNodes.length === 0) return '';
+    if (formattedNodes.length === 1) return formattedNodes[0];
+
+    return `(${formattedNodes.join(` ${operator.toUpperCase()} `)})`;
+  }
+
+  return '';
+}
+
+
 // 커스텀 노드 컴포넌트
 function CustomNode({ data }: { data: any }) {
-  const { question, index, isCurrent, isHidden, hasBranchRules } = data;
+  const { question, index, isCurrent, isHidden, hasBranchRules, hasShowRules, showRules, allQuestions, isShowRulesActive, isHovered } = data;
   const Icon = getQuestionIcon(question);
   const badgeColor = getQuestionBadgeColor(question);
 
   return (
-    <div
-      className={`relative bg-white rounded-md border px-[6px] py-[3px] shadow-sm select-none ${isCurrent
-        ? 'border-indigo-500 shadow-lg'
-        : isHidden
-          ? 'border-purple-300 opacity-60'
-          : 'border-gray-200'
-        }`}
-      style={{ width: '140px', minHeight: '32px' }}
-    >
-      {/* Handle - 좌측 (들어오는 연결) */}
-      <Handle
-        id="left"
-        type="target"
-        position={Position.Left}
-        style={{ background: '#6b7280', width: '8px', height: '8px' }}
-      />
+    <>
+      <div
+        className={`relative bg-white rounded-md border px-[6px] py-[3px] shadow-sm select-none transition-all ${isHovered
+          ? hasShowRules
+            ? 'border-purple-300 shadow-md'
+            : hasBranchRules
+              ? 'border-green-300 shadow-md'
+              : 'border-blue-300 shadow-md'
+          : isCurrent
+            ? 'border-indigo-500 shadow-lg'
+            : isHidden
+              ? 'border-purple-300 opacity-60'
+              : 'border-gray-200'
+          }`}
+        style={{
+          width: '140px',
+          minHeight: '32px',
+          opacity: hasShowRules && !isShowRulesActive ? 0.75 : 1
+        }}
+      >
+        {/* Handle - 좌측 (들어오는 연결) */}
+        <Handle
+          id="left"
+          type="target"
+          position={Position.Left}
+          style={{ background: '#6b7280', width: '8px', height: '8px' }}
+        />
 
-      {/* Handle - 우측 (나가는 연결) */}
-      <Handle
-        id="right"
-        type="source"
-        position={Position.Right}
-        style={{ background: '#6b7280', width: '8px', height: '8px' }}
-      />
+        {/* Handle - 우측 (나가는 연결) */}
+        <Handle
+          id="right"
+          type="source"
+          position={Position.Right}
+          style={{ background: '#6b7280', width: '8px', height: '8px' }}
+        />
 
-      {/* 브랜치 아이콘 - 오른쪽 Handle 근처 */}
-      {hasBranchRules && (
-        <div className="absolute right-[-12px] top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center z-10">
-          <GitBranch className="w-2.5 h-2.5 text-green-600" />
-        </div>
-      )}
-
-      {/* 배지 */}
-      <div className={`absolute -left-3 -top-3 w-6 h-6 ${badgeColor} rounded-full flex items-center justify-center text-[0.525rem] font-semibold`}>
-        {index + 1}
-      </div>
-
-      {/* 내용 */}
-      <div className="mt-2">
-        {/* 타이틀과 타입 아이콘 */}
-        <div className="flex items-center gap-2 mb-1 min-w-0">
-          <div className="p-1 rounded-md bg-gray-100 flex-shrink-0">
-            <Icon className="w-3 h-3 text-gray-600" />
-          </div>
-          <div className="text-[0.525rem] text-gray-500 truncate min-w-0 flex-1">
-            {question.title || '제목 없음'}
-          </div>
-        </div>
-
-        {/* 숨김 표시 */}
-        {isHidden && (
-          <div className="flex items-center gap-1 text-[0.525rem] text-purple-600 mb-1">
-            <XCircle className="w-2.5 h-2.5" />
-            <span>조건부 숨김</span>
-          </div>
-        )}
-
-        {/* 분기 표시 */}
+        {/* 브랜치 아이콘 - 오른쪽 Handle 근처 */}
         {hasBranchRules && (
-          <div className="text-[0.525rem] text-green-600 mt-2">
-            <span>분기 규칙 {question.branchRules?.length}개</span>
+          <div className={`absolute right-[-12px] top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center z-10 transition-colors ${isHovered
+            ? 'bg-green-500'
+            : 'bg-green-100'
+            }`}>
+            <GitBranch className={`w-2.5 h-2.5 ${isHovered ? 'text-white' : 'text-green-600'}`} />
           </div>
         )}
-      </div>
 
-    </div>
+        {/* Eye 아이콘 - 왼쪽 Handle 근처 (진입점) */}
+        {hasShowRules && (
+          <div
+            className={`absolute left-[-12px] top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center z-10 transition-colors ${data.isShowRulesActive
+              ? 'bg-purple-500'
+              : 'bg-purple-400'
+              }`}
+            title="표시 규칙 관련 엣지 보기 (hover)"
+          >
+            <Eye className={`w-2.5 h-2.5 ${data.isShowRulesActive ? 'text-white' : 'text-white'}`} />
+          </div>
+        )}
+
+        {/* 배지 */}
+        <div className={`absolute -left-3 -top-3 w-6 h-6 ${badgeColor} rounded-full flex items-center justify-center text-[0.525rem] font-semibold`}>
+          {index + 1}
+        </div>
+
+        {/* 내용 */}
+        <div className="mt-2">
+          {/* 타이틀과 타입 아이콘 */}
+          <div className="flex items-center gap-2 mb-1 min-w-0">
+            <div className="p-1 rounded-md bg-gray-100 flex-shrink-0">
+              <Icon className="w-3 h-3 text-gray-600" />
+            </div>
+            <div className="text-[0.525rem] text-gray-500 truncate min-w-0 flex-1">
+              {question.title || '제목 없음'}
+            </div>
+          </div>
+
+          {/* 숨김 표시 */}
+          {isHidden && (
+            <div className="flex items-center gap-1 text-[0.525rem] text-purple-600 mb-1">
+              {/* <Eye className="w-2.5 h-2.5" /> */}
+              <span>조건부 숨김</span>
+            </div>
+          )}
+
+          {/* 분기 표시 */}
+          {hasBranchRules && (
+            <div className="text-[0.525rem] text-green-600 mt-2">
+              <span>분기 규칙 {question.branchRules?.length}개</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -276,7 +363,7 @@ function CustomEdge({
   markerEnd,
   data,
 }: any) {
-  const { label, isBranch, isDefault } = data || {};
+  const { label, isBranch, isDefault, isHighlighted } = data || {};
 
   // 앞문항 우측에서 뒷문항 좌측으로 연결
   const fromX = sourceX;
@@ -320,17 +407,24 @@ function CustomEdge({
   const midX = (fromX + toX) / 2;
   const midY = (fromY + toY) / 2;
 
+  const isShowRule = data?.isShowRule || false;
+  const isBranchEdgeFromHoveredNode = data?.isBranchEdgeFromHoveredNode || false;
+  const strokeColor = isShowRule
+    ? '#c4b5fd' // 파스텔톤 보라색 (purple-300)
+    : isBranchEdgeFromHoveredNode
+      ? '#86efac' // 파스텔톤 초록색 (green-300)
+      : isHighlighted
+        ? '#93c5fd' // 파스텔톤 파란색 (blue-300)
+        : '#6b7280'; // 기본 회색
+
   return (
     <>
       <path
         id={id}
         d={path}
         fill="none"
-        // stroke={isDefault ? '#9ca3af' : isBranch ? '#10b981' : '#6b7280'}
-        stroke={'#6b7280'}
-        // strokeWidth={isBranch ? 2 : 1.5}
-        // strokeDasharray={isDefault ? '4,4' : '0'}
-        strokeWidth={1.5}
+        stroke={strokeColor}
+        strokeWidth={isHighlighted ? 3 : 1.5}
         strokeDasharray={'0'}
         markerEnd={markerEnd}
         style={style}
@@ -484,6 +578,7 @@ export function BranchFlowDiagram({
       const isCurrent = question.id === currentQuestionId;
       const hasBranchRules = (isChoiceQuestion(question) || isComplexChoiceQuestion(question))
         && (question.branchRules?.length || 0) > 0;
+      const hasShowRules = (question.showRules?.length || 0) > 0;
 
       flowNodes.push({
         id: question.id,
@@ -495,6 +590,9 @@ export function BranchFlowDiagram({
           isCurrent,
           isHidden,
           hasBranchRules,
+          hasShowRules,
+          showRules: question.showRules || [],
+          allQuestions: questions,
         },
       });
     });
@@ -741,8 +839,150 @@ export function BranchFlowDiagram({
     return flowNodes;
   }, [questions, currentQuestionId, answers]);
 
+  const [highlightedEdgeIds, setHighlightedEdgeIds] = useState<Set<string>>(new Set());
+  const [showRulesEdgeIds, setShowRulesEdgeIds] = useState<Set<string>>(new Set());
+  const [activeShowRulesNodeId, setActiveShowRulesNodeId] = useState<string | null>(null);
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
+
+  // 엣지 하이라이트 핸들러 (hover 방식)
+  const handleHighlightEdges = useCallback((nodeId: string | null, edgeIds: string[]) => {
+    if (nodeId === null) {
+      // hover 해제
+      setActiveShowRulesNodeId(null);
+      setHighlightedEdgeIds(new Set());
+      setShowRulesEdgeIds(new Set());
+    } else {
+      // hover 시작
+      setActiveShowRulesNodeId(nodeId);
+      setHighlightedEdgeIds(new Set(edgeIds));
+      setShowRulesEdgeIds(new Set(edgeIds));
+    }
+  }, []);
+
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(edgesForRendering);
+
+  // hover된 노드가 branchRules가 있는지 확인
+  const hoveredNodeHasBranchRules = useMemo(() => {
+    if (!hoveredNodeId) return false;
+    const hoveredNode = nodes.find(n => n.id === hoveredNodeId);
+    if (!hoveredNode) return false;
+    const question = hoveredNode.data?.question as Question | undefined;
+    if (!question) return false;
+    return (isChoiceQuestion(question) || isComplexChoiceQuestion(question))
+      && (question.branchRules?.length || 0) > 0;
+  }, [hoveredNodeId, nodes]);
+
+  // activeShowRulesNodeId와 hoveredNodeId가 변경될 때마다 nodes의 상태 업데이트
+  const nodesWithActiveState = useMemo(() => {
+    return nodes.map(node => ({
+      ...node,
+      data: {
+        ...node.data,
+        isShowRulesActive: activeShowRulesNodeId === node.id,
+        isHovered: hoveredNodeId === node.id,
+      },
+    }));
+  }, [nodes, activeShowRulesNodeId, hoveredNodeId]);
+
+  // showRules 엣지 생성
+  const showRulesEdges = useMemo(() => {
+    const showEdges: Edge[] = [];
+
+    questions.forEach((question) => {
+      const showRules = question.showRules || [];
+      if (showRules.length === 0) return;
+
+      showRules.forEach((rule: any) => {
+        const refQuestionId = rule.refQuestionId;
+        const edgeId = `show-${refQuestionId}-${question.id}`;
+
+        // showRulesEdgeIds에 포함된 엣지만 생성
+        if (showRulesEdgeIds.has(edgeId)) {
+          const refQuestion = questions.find(q => q.id === refQuestionId);
+          if (refQuestion) {
+            const conditionText = rule.when
+              ? formatShowNode(rule.when, refQuestion)
+              : '항상 표시';
+
+            showEdges.push({
+              id: edgeId,
+              source: refQuestionId,
+              target: question.id,
+              type: 'custom',
+              sourceHandle: 'right',
+              targetHandle: 'left',
+              markerEnd: {
+                type: MarkerType.ArrowClosed,
+                width: 16,
+                height: 16,
+                color: '#c4b5fd', // 파스텔톤 보라색 (purple-300)
+              },
+              data: {
+                label: conditionText,
+                isBranch: false,
+                isShowRule: true,
+                isHighlighted: true,
+              },
+            });
+          }
+        }
+      });
+    });
+
+    return showEdges;
+  }, [questions, showRulesEdgeIds]);
+
+  // hover된 노드의 연결된 엣지 찾기
+  const hoveredEdgeIds = useMemo(() => {
+    if (!hoveredNodeId) return new Set<string>();
+
+    const relatedEdgeIds = new Set<string>();
+    edges.forEach(edge => {
+      if (edge.source === hoveredNodeId || edge.target === hoveredNodeId) {
+        relatedEdgeIds.add(edge.id);
+      }
+    });
+    return relatedEdgeIds;
+  }, [hoveredNodeId, edges]);
+
+  // 하이라이트된 엣지 업데이트 (기본 엣지 + showRules 엣지)
+  const edgesWithHighlight = useMemo(() => {
+    const baseEdges = edges.map(edge => {
+      const isShowRulesHighlighted = highlightedEdgeIds.has(edge.id);
+      const isHoveredHighlighted = hoveredEdgeIds.has(edge.id);
+      const isHighlighted = isShowRulesHighlighted || isHoveredHighlighted;
+
+      // branchRules가 있는 노드 hover 시 분기 엣지인지 확인
+      const isBranchEdge = edge.data?.isBranch || false;
+      const isBranchEdgeFromHoveredNode = hoveredNodeHasBranchRules
+        && isBranchEdge
+        && edge.source === hoveredNodeId;
+
+      return {
+        ...edge,
+        data: {
+          ...edge.data,
+          isHighlighted,
+          isBranchEdgeFromHoveredNode,
+        },
+        markerEnd: edge.markerEnd && typeof edge.markerEnd === 'object'
+          ? {
+            ...edge.markerEnd,
+            color: edge.data?.isShowRule
+              ? '#c4b5fd' // 파스텔톤 보라색 (purple-300)
+              : isBranchEdgeFromHoveredNode
+                ? '#86efac' // 파스텔톤 초록색 (green-300)
+                : isHighlighted
+                  ? '#93c5fd' // 파스텔톤 파란색 (blue-300)
+                  : '#6b7280', // 기본 회색
+          }
+          : edge.markerEnd,
+      };
+    });
+
+    return [...baseEdges, ...showRulesEdges];
+  }, [edges, highlightedEdgeIds, hoveredEdgeIds, showRulesEdges, hoveredNodeHasBranchRules, hoveredNodeId]);
 
   // 노드 변경 핸들러
   const handleNodesChange = useCallback((changes: NodeChange[]) => {
@@ -766,15 +1006,56 @@ export function BranchFlowDiagram({
     onQuestionSelect?.(node.id);
   }, [onQuestionSelect]);
 
+  const onNodeMouseEnter = useCallback((_event: React.MouseEvent, node: Node) => {
+    const question = node.data?.question as Question | undefined;
+    if (!question) return;
+
+    // 모든 노드에 대해 hover 상태 설정
+    setHoveredNodeId(question.id);
+
+    // showRules가 있는 경우 추가 처리
+    const showRules = question.showRules || [];
+    if (showRules.length > 0) {
+      // showRules의 refQuestionId에서 현재 노드로 향하는 엣지 ID들을 찾기
+      const relatedEdgeIds: string[] = [];
+      showRules.forEach((rule: any) => {
+        const refQuestionId = rule.refQuestionId;
+        // refQuestionId에서 현재 노드(question.id)로 향하는 엣지 찾기
+        const edgeId = `show-${refQuestionId}-${question.id}`;
+        relatedEdgeIds.push(edgeId);
+      });
+
+      // activeShowRulesNodeId 설정 및 엣지 하이라이트
+      handleHighlightEdges(question.id, relatedEdgeIds);
+    }
+  }, [handleHighlightEdges]);
+
+  const onNodeMouseLeave = useCallback((_event: React.MouseEvent, node: Node) => {
+    const question = node.data?.question as Question | undefined;
+    if (!question) return;
+
+    // hover 해제
+    setHoveredNodeId(null);
+
+    // showRules가 있는 경우 추가 처리
+    const showRules = question.showRules || [];
+    if (showRules.length > 0) {
+      // hover 해제
+      handleHighlightEdges(null, []);
+    }
+  }, [handleHighlightEdges]);
+
   return (
     <ReactFlowProvider>
       <div className="w-full h-full bg-gray-50">
         <ReactFlow
-          nodes={nodes}
-          edges={edges}
+          nodes={nodesWithActiveState as Node[]}
+          edges={edgesWithHighlight}
           onNodesChange={handleNodesChange}
           onEdgesChange={onEdgesChange}
           onNodeClick={onNodeClick}
+          onNodeMouseEnter={onNodeMouseEnter}
+          onNodeMouseLeave={onNodeMouseLeave}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           connectionMode={ConnectionMode.Loose}
