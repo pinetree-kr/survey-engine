@@ -124,7 +124,7 @@ function getQuestionBadgeColor(question: Question): string {
     // case 'description':
     //   return 'bg-blue-100 text-blue-700';
     default:
-      return 'bg-gray-100 text-gray-700';
+      return 'bg-blue-100 text-blue-700';
   }
 }
 
@@ -266,7 +266,11 @@ function CustomNode({ data }: { data: any }) {
             ? 'border-indigo-500 shadow-lg'
             : isHidden
               ? 'border-purple-300 opacity-60'
-              : 'border-gray-200'
+              : hasShowRules
+                ? 'border-purple-300'
+                : hasBranchRules
+                  ? 'border-green-200'
+                  : 'border-blue-200'
           }`}
         style={{
           width: '140px',
@@ -408,14 +412,15 @@ function CustomEdge({
   const midY = (fromY + toY) / 2;
 
   const isShowRule = data?.isShowRule || false;
-  const isBranchEdgeFromHoveredNode = data?.isBranchEdgeFromHoveredNode || false;
+  
+  // 엣지 타입에 따라 색상 결정
   const strokeColor = isShowRule
-    ? '#c4b5fd' // 파스텔톤 보라색 (purple-300)
-    : isBranchEdgeFromHoveredNode
-      ? '#86efac' // 파스텔톤 초록색 (green-300)
+    ? '#c4b5fd' // 파스텔톤 보라색 (purple-300) - showRules 엣지
+    : isBranch
+      ? '#86efac' // 파스텔톤 초록색 (green-300) - branchRules 분기 엣지
       : isHighlighted
-        ? '#93c5fd' // 파스텔톤 파란색 (blue-300)
-        : '#6b7280'; // 기본 회색
+        ? '#93c5fd' // 파스텔톤 파란색 (blue-300) - 일반 엣지 hover 시
+        : '#bfdbfe'; // 옅은 파스텔톤 파란색 (blue-200) - 기본 일반 엣지
 
   return (
     <>
@@ -531,7 +536,7 @@ export function BranchFlowDiagram({
                 type: MarkerType.ArrowClosed,
                 width: 16,
                 height: 16,
-                color: '#6b7280',
+                color: '#bfdbfe', // 옅은 파스텔톤 파란색 (blue-200)
               },
               data: {
                 isBranch: false,
@@ -953,36 +958,35 @@ export function BranchFlowDiagram({
       const isHoveredHighlighted = hoveredEdgeIds.has(edge.id);
       const isHighlighted = isShowRulesHighlighted || isHoveredHighlighted;
 
-      // branchRules가 있는 노드 hover 시 분기 엣지인지 확인
-      const isBranchEdge = edge.data?.isBranch || false;
-      const isBranchEdgeFromHoveredNode = hoveredNodeHasBranchRules
-        && isBranchEdge
-        && edge.source === hoveredNodeId;
+      const isShowRule = edge.data?.isShowRule || false;
+      const isBranch = edge.data?.isBranch || false;
+
+      // 엣지 타입에 따라 색상 결정
+      const edgeColor = isShowRule
+        ? '#c4b5fd' // 파스텔톤 보라색 (purple-300) - showRules 엣지
+        : isBranch
+          ? '#86efac' // 파스텔톤 초록색 (green-300) - branchRules 분기 엣지
+          : isHighlighted
+            ? '#93c5fd' // 파스텔톤 파란색 (blue-300) - 일반 엣지 hover 시
+            : '#bfdbfe'; // 옅은 파스텔톤 파란색 (blue-200) - 기본 일반 엣지
 
       return {
         ...edge,
         data: {
           ...edge.data,
           isHighlighted,
-          isBranchEdgeFromHoveredNode,
         },
         markerEnd: edge.markerEnd && typeof edge.markerEnd === 'object'
           ? {
-            ...edge.markerEnd,
-            color: edge.data?.isShowRule
-              ? '#c4b5fd' // 파스텔톤 보라색 (purple-300)
-              : isBranchEdgeFromHoveredNode
-                ? '#86efac' // 파스텔톤 초록색 (green-300)
-                : isHighlighted
-                  ? '#93c5fd' // 파스텔톤 파란색 (blue-300)
-                  : '#6b7280', // 기본 회색
-          }
+              ...edge.markerEnd,
+              color: edgeColor,
+            }
           : edge.markerEnd,
       };
     });
 
     return [...baseEdges, ...showRulesEdges];
-  }, [edges, highlightedEdgeIds, hoveredEdgeIds, showRulesEdges, hoveredNodeHasBranchRules, hoveredNodeId]);
+  }, [edges, highlightedEdgeIds, hoveredEdgeIds, showRulesEdges]);
 
   // 노드 변경 핸들러
   const handleNodesChange = useCallback((changes: NodeChange[]) => {
