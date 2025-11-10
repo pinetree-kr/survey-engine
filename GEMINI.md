@@ -78,3 +78,24 @@ npm run test:watch
     *   `src/components`: Contains the React components.
     *   `src/engine`: Contains the core survey engine logic.
     *   `src/schema`: Contains the Zod schemas for the survey data structures.
+
+## Codebase Analysis
+
+### Summary of Findings
+
+This project is a sophisticated survey builder named 'Grida, Form', built on a modern tech stack: Next.js, TypeScript, Supabase, and Tailwind CSS.
+
+The architecture is centered around a complex client-side form builder (`src/components/FormBuilder.tsx`). This builder provides a three-panel interface (question list, main canvas, inspector panel) and supports advanced features like multi-section forms, drag-and-drop reordering, and branching logic visualization. Application state, specifically the survey draft, is managed within the `FormBuilder` component and persisted to a browser cookie.
+
+The application uses Next.js route groups to separate authenticated routes (`(main)`) from others. A main layout (`src/app/(main)/layout.tsx`) protects these routes and sets up a consistent dashboard UI with a sidebar and header.
+
+**Crucially, the investigation did not cover the data schemas (`src/types`, `src/schema`), the core survey logic (`src/engine`), or the database schema (`supabase/migrations`).** A full understanding of the data model, validation rules, and the runtime engine that executes the survey's logic is missing. The current findings are heavily skewed towards the client-side architecture of the builder feature.
+
+### Relevant Locations
+
+*   **`src/app/builder/page.tsx`**: This is the server component entry point for the form builder. It's responsible for loading the initial survey data from a server-side cookie and passing it to the main client component.
+*   **`src/components/FormBuilder.tsx`**: This is the core, stateful client component for the entire survey building experience. It manages the survey's state, handles all user interactions (adding/editing/deleting questions and sections), and orchestrates the various UI panels and modals. Understanding this file is key to understanding the builder feature.
+*   **`src/app/(main)/layout.tsx`**: This layout acts as the gatekeeper for the main authenticated part of the application. It verifies user authentication and fetches initial data (like user projects) before rendering the main UI shell.
+*   **`src/components/layout/MainLayout.tsx`**: This component defines the primary visual structure for authenticated users, consisting of a persistent sidebar and a main content area with a header. It's the shell within which all main application pages are rendered.
+*   **`src/types/survey.ts`**: (Investigation Incomplete) This file is expected to define the core data structures for the survey. Its analysis is crucial for understanding the application's data model, but was not completed.
+*   **`src/engine/visibility.ts`**: (Investigation Incomplete) The `src/engine` directory appears to contain the core business logic for how a survey functions when being taken by a user. This file likely handles the logic for conditional question visibility based on previous answers. Its analysis is critical for a complete architectural understanding.
